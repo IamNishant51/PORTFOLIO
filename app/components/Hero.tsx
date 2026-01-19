@@ -147,13 +147,13 @@ const Hero = () => {
     return (
         <section
             ref={containerRef}
-            className="min-h-screen w-full flex items-center justify-center bg-white text-black overflow-hidden relative px-4 md:px-8 lg:px-16 py-20"
+            className="min-h-screen w-full flex items-center justify-center bg-white text-black overflow-hidden relative px-6 md:px-8 lg:px-16 py-16 md:py-20"
         >
             <div className="w-full max-w-7xl mx-auto z-10">
                 {/* Hero Image with brutalist frame */}
                 <div
                     ref={imageRef}
-                    className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-8 md:mb-12"
+                    className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12"
                 >
                     {/* Neon accent offset frame */}
                     <div className="absolute inset-0 bg-[#CCFF00] translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3" />
@@ -176,27 +176,27 @@ const Hero = () => {
                 </div>
 
                 {/* Name label */}
-                <div ref={nameLabelRef} className="flex justify-center mb-6 md:mb-8 opacity-0">
-                    <span className="text-xs md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 border border-black/20 px-4 py-2">
+                <div ref={nameLabelRef} className="flex justify-center mb-4 md:mb-8 opacity-0">
+                    <span className="text-[10px] md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 border border-black/20 px-3 py-1.5 md:px-4 md:py-2">
                         Nishant
                     </span>
                 </div>
 
                 {/* Two-line headline with proper word breaks */}
-                <h1 className="text-[12vw] md:text-[10vw] lg:text-[9vw] font-black leading-[0.85] tracking-[-0.04em] uppercase text-center overflow-hidden">
+                <h1 className="text-[13vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] font-black leading-[0.85] tracking-[-0.04em] uppercase text-center overflow-hidden">
                     <span ref={line1Ref} className="block">CREATIVE</span>
                     <span ref={line2Ref} className="block text-gray-400">DEVELOPER</span>
                 </h1>
 
                 {/* Subtext */}
-                <p ref={subtextRef} className="text-center mt-8 md:mt-12 text-sm md:text-base lg:text-lg opacity-0 max-w-md mx-auto">
+                <p ref={subtextRef} className="text-center mt-6 md:mt-12 text-xs md:text-base lg:text-lg opacity-0 max-w-md mx-auto px-4">
                     Full-Stack Developer crafting digital experiences with code and creativity.
                 </p>
 
                 {/* Scroll Indicator */}
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-                    <span className="text-xs uppercase tracking-widest">Scroll</span>
-                    <div className="w-px h-12 bg-current animate-pulse" />
+                <div className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+                    <span className="text-[10px] md:text-xs uppercase tracking-widest">Scroll</span>
+                    <div className="w-px h-10 md:h-12 bg-current animate-pulse" />
                 </div>
             </div>
 

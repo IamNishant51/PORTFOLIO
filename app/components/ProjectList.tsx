@@ -200,27 +200,27 @@ const ProjectList = () => {
                     onClick={closeModal}
                 >
                     {/* Backdrop */}
-                    <div className="absolute inset-0 bg-black/95 backdrop-blur-sm" />
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
 
                     {/* Modal Content */}
                     <div
-                        className="modal-content relative w-full sm:w-[95%] max-w-4xl max-h-[70vh] sm:max-h-[85vh] bg-black border-t sm:border border-white/10 flex flex-col"
+                        className="modal-content relative w-full sm:w-[95%] max-w-4xl h-[75vh] sm:max-h-[85vh] bg-black border-t sm:border border-white/10 flex flex-col"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Close Button */}
                         <button
                             onClick={closeModal}
-                            className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 z-10 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border border-white/20 hover:border-white/60 hover:bg-white/10 transition-all duration-300 bg-black/50 backdrop-blur-sm"
+                            className="absolute top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 z-10 w-7 h-7 sm:w-10 sm:h-10 flex items-center justify-center border border-white/20 hover:border-white/60 hover:bg-white/10 transition-all duration-300 bg-black/50 backdrop-blur-sm"
                         >
-                            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-3 h-3 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
 
                         {/* Scrollable Content Area */}
-                        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+                        <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0">
                             {/* Project Image */}
-                            <div className="relative w-full h-24 sm:h-48 md:h-64 overflow-hidden flex-shrink-0">
+                            <div className="relative w-full h-32 sm:h-48 md:h-64 overflow-hidden flex-shrink-0">
                                 <Image
                                     src={selectedProject.src}
                                     alt={selectedProject.title}
@@ -232,9 +232,9 @@ const ProjectList = () => {
                             </div>
 
                             {/* Project Info */}
-                            <div className="p-3 sm:p-6 md:p-10">
+                            <div className="p-4 sm:p-6 md:p-10">
                                 {/* Category & Number */}
-                                <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-4">
+                                <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-4">
                                     <span className="text-xs sm:text-sm font-mono text-[#CCFF00]">
                                         0{selectedProject.id}
                                     </span>
@@ -249,16 +249,16 @@ const ProjectList = () => {
                                 </h3>
 
                                 {/* Description */}
-                                <p className="text-xs sm:text-base md:text-lg text-white/70 leading-relaxed mb-3 sm:mb-8 max-w-2xl">
+                                <p className="text-xs sm:text-base md:text-lg text-white/70 leading-relaxed mb-3 sm:mb-8 max-w-2xl line-clamp-4 sm:line-clamp-none">
                                     {selectedProject.description}
                                 </p>
 
                                 {/* Technologies */}
-                                <div className="flex flex-wrap gap-1 sm:gap-2">
+                                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                                     {selectedProject.technologies.map((tech, i) => (
                                         <span
                                             key={i}
-                                            className="px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-xs md:text-sm font-mono uppercase tracking-wider border border-white/20 text-white/60"
+                                            className="px-2 py-1 sm:px-3 sm:py-1 text-[9px] sm:text-xs md:text-sm font-mono uppercase tracking-wider border border-white/20 text-white/60"
                                         >
                                             {tech}
                                         </span>
@@ -268,7 +268,7 @@ const ProjectList = () => {
                         </div>
 
                         {/* GitHub Button - Fixed at bottom */}
-                        <div className="flex-shrink-0 p-2 sm:p-6 md:px-10 md:pb-10 bg-black border-t border-white/10">
+                        <div className="flex-shrink-0 min-h-[70px] p-4 sm:p-6 md:px-10 md:pb-10 bg-black border-t border-white/10">
                             <a
                                 href={selectedProject.link}
                                 target="_blank"

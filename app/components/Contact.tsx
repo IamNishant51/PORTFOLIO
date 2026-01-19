@@ -2,19 +2,45 @@
 import React, { useState } from "react";
 
 const Contact = () => {
-    const [status, setStatus] = useState("");
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: ""
+    });
+    const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setStatus("Sending...");
+        setStatus("sending");
 
-        // Example integration
-        const res = await fetch("/api/contact", {
-            method: "POST",
-            body: JSON.stringify({}), // Logic to gather inputs
-        });
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
 
-        if (res.ok) setStatus("Message sent!");
+            if (res.ok) {
+                setStatus("success");
+                setFormData({ name: "", email: "", message: "" });
+                setTimeout(() => setStatus("idle"), 3000);
+            } else {
+                setStatus("error");
+                setTimeout(() => setStatus("idle"), 3000);
+            }
+        } catch (error) {
+            setStatus("error");
+            setTimeout(() => setStatus("idle"), 3000);
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }));
     };
 
     return (
@@ -34,7 +60,11 @@ const Contact = () => {
                         <div className="relative border-b border-white/20 group">
                             <input
                                 type="text"
+                                name="name"
+                                value={formData.name || ""}
+                                onChange={handleChange}
                                 placeholder="Your Name"
+                                required
                                 className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 transition-colors"
                             />
                             <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
@@ -42,15 +72,23 @@ const Contact = () => {
                         <div className="relative border-b border-white/20 group">
                             <input
                                 type="email"
+                                name="email"
+                                value={formData.email || ""}
+                                onChange={handleChange}
                                 placeholder="Your Email"
+                                required
                                 className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 transition-colors"
                             />
                             <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
                         </div>
                         <div className="relative border-b border-white/20 group">
                             <textarea
+                                name="message"
+                                value={formData.message || ""}
+                                onChange={handleChange}
                                 placeholder="Tell me about your project"
                                 rows={3}
+                                required
                                 className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 resize-none transition-colors"
                             />
                             <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
@@ -58,12 +96,34 @@ const Contact = () => {
 
                         <button
                             type="submit"
-                            className="w-full sm:w-auto px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 border border-white/50 rounded-full uppercase text-xs sm:text-sm md:text-base tracking-widest hover:bg-[#CCFF00] hover:text-black hover:border-[#CCFF00] transition-all duration-500 font-medium"
+                            disabled={status === "sending"}
+                            className={`
+                                relative w-full sm:w-auto px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 
+                                border border-white/50 rounded-full uppercase text-xs sm:text-sm md:text-base 
+                                tracking-widest font-medium overflow-hidden
+                                transition-all duration-500
+                                ${status === "sending" ? "bg-white text-black border-white cursor-wait" : ""}
+                                ${status === "success" ? "bg-[#CCFF00] text-black border-[#CCFF00]" : ""}
+                                ${status === "error" ? "bg-red-500 text-white border-red-500" : ""}
+                                ${status === "idle" ? "hover:bg-[#CCFF00] hover:text-black hover:border-[#CCFF00]" : ""}
+                            `}
                         >
-                            Send Message
-                        </button>
+                            {/* Loading animation */}
+                            {status === "sending" && (
+                                <span className="absolute inset-0 flex items-center justify-center">
+                                    <span className="flex gap-1">
+                                        <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                                        <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                                        <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                                    </span>
+                                </span>
+                            )}
 
-                        {status && <p className="mt-3 sm:mt-4 text-xs sm:text-sm opacity-70">{status}</p>}
+                            {/* Button text */}
+                            <span className={status === "sending" ? "invisible" : ""}>
+                                {status === "success" ? "Email Sent ✓" : status === "error" ? "Failed. Try Again" : "Send Email"}
+                            </span>
+                        </button>
                     </form>
                 </div>
             </div>
