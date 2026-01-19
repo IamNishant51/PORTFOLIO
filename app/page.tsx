@@ -12,20 +12,22 @@ export default function Home() {
   const [timelineComplete, setTimelineComplete] = useState(false);
 
   return (
-    <main className="relative w-full">
+    <main className="relative w-full" role="main">
       <Preloader onComplete={() => setTimelineComplete(true)} />
       <Cursor />
 
       {/* Main Content Wrapper - Z-Index 10 to scroll OVER the footer */}
       <div className="relative z-10 bg-white shadow-2xl">
         <Hero />
-        <div className="bg-black text-white">
+        <section id="projects" className="bg-black text-white" aria-label="Projects">
           <ProjectList />
-        </div>
-        <SkillsMarquee />
-        <div className="bg-black text-white">
+        </section>
+        <section id="skills" aria-label="Skills and Technologies">
+          <SkillsMarquee />
+        </section>
+        <section id="contact" className="bg-black text-white" aria-label="Contact">
           <Contact />
-        </div>
+        </section>
       </div>
 
       {/* Fixed Footer - revealed by the margin-bottom of the last element in Content Wrapper */}

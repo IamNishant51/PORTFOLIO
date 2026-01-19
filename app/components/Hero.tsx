@@ -166,7 +166,7 @@ const Hero = () => {
                     <div className="relative w-full h-full overflow-hidden border-2 md:border-4 border-black">
                         <Image
                             src="https://ik.imagekit.io/9pfz6g8ri/avatars/nishant.jpg"
-                            alt="Nishant - Full-Stack Developer"
+                            alt="Nishant Unavane - Full-Stack Developer specializing in React, Next.js, and TypeScript"
                             fill
                             className="object-cover grayscale hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
                             priority
@@ -197,14 +197,7 @@ const Hero = () => {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-6 md:mt-10 mb-16 md:mb-20 opacity-0" ref={(el) => {
-                    if (el) {
-                        gsap.fromTo(el,
-                            { opacity: 0, y: 20 },
-                            { opacity: 1, y: 0, duration: 0.8, ease: "power4.out", delay: 2.9 }
-                        );
-                    }
-                }}>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-6 md:mt-10 mb-16 md:mb-20">
                     <button
                         onClick={() => {
                             const contactSection = document.querySelector('section:has(form)');

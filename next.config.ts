@@ -13,7 +13,10 @@ const nextConfig: NextConfig = {
         hostname: 'ik.imagekit.io',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
+  compress: true,
+  poweredByHeader: false,
 };
 
 export default nextConfig;

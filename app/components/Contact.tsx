@@ -98,16 +98,26 @@ const Contact = () => {
                             type="submit"
                             disabled={status === "sending"}
                             className={`
-                                relative w-full sm:w-auto px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 
-                                border border-white/50 rounded-full uppercase text-xs sm:text-sm md:text-base 
-                                tracking-widest font-medium overflow-hidden
-                                transition-all duration-500
+                                group relative w-full sm:w-auto px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 
+                                border-2 rounded-full uppercase text-xs sm:text-sm md:text-base 
+                                tracking-widest font-bold overflow-hidden
+                                transition-all duration-500 active:scale-95
                                 ${status === "sending" ? "bg-white text-black border-white cursor-wait" : ""}
                                 ${status === "success" ? "bg-[#CCFF00] text-black border-[#CCFF00]" : ""}
                                 ${status === "error" ? "bg-red-500 text-white border-red-500" : ""}
-                                ${status === "idle" ? "hover:bg-[#CCFF00] hover:text-black hover:border-[#CCFF00]" : ""}
+                                ${status === "idle" ? "bg-white text-black border-white" : ""}
                             `}
                         >
+                            {/* Hover animation background */}
+                            {status === "idle" && (
+                                <>
+                                    <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
+                                    <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
+                                        <span className="text-black font-bold">Send Email</span>
+                                    </span>
+                                </>
+                            )}
+
                             {/* Loading animation */}
                             {status === "sending" && (
                                 <span className="absolute inset-0 flex items-center justify-center">
@@ -120,7 +130,7 @@ const Contact = () => {
                             )}
 
                             {/* Button text */}
-                            <span className={status === "sending" ? "invisible" : ""}>
+                            <span className={`relative z-10 ${status === "sending" ? "invisible" : ""}`}>
                                 {status === "success" ? "Email Sent ✓" : status === "error" ? "Failed. Try Again" : "Send Email"}
                             </span>
                         </button>
