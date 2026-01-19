@@ -153,39 +153,39 @@ const Hero = () => {
                 {/* Hero Image with brutalist frame */}
                 <div
                     ref={imageRef}
-                    className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12"
+                    className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12 group cursor-pointer"
                 >
                     {/* Neon accent offset frame */}
-                    <div className="absolute inset-0 bg-[#CCFF00] translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3" />
+                    <div className="absolute inset-0 bg-[#CCFF00] translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3 sm:group-hover:translate-x-4 sm:group-hover:translate-y-4" />
                     {/* Black border frame */}
-                    <div className="absolute inset-0 border-2 md:border-4 border-black bg-white" />
+                    <div className="absolute inset-0 border-2 md:border-4 border-black bg-white transition-transform duration-300 group-hover:scale-105" />
                     {/* Image container */}
                     <div className="relative w-full h-full overflow-hidden border-2 md:border-4 border-black">
                         <Image
                             src="https://ik.imagekit.io/9pfz6g8ri/avatars/nishant.jpg"
-                            alt="Nishant - Creative Developer"
+                            alt="Nishant - Full-Stack Developer"
                             fill
-                            className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                            className="object-cover grayscale hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
                             priority
                             sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 1024px) 224px, 256px"
                         />
                     </div>
                     {/* Corner accents */}
-                    <div className="absolute -top-1 -left-1 w-3 h-3 md:w-4 md:h-4 bg-black" />
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-black" />
+                    <div className="absolute -top-1 -left-1 w-3 h-3 md:w-4 md:h-4 bg-black transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
+                    <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-black transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
                 </div>
 
                 {/* Name label */}
                 <div ref={nameLabelRef} className="flex justify-center mb-4 md:mb-8 opacity-0">
-                    <span className="text-[10px] md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 border border-black/20 px-3 py-1.5 md:px-4 md:py-2">
+                    <span className="text-[10px] md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 border border-black/20 px-3 py-1.5 md:px-4 md:py-2 hover:border-[#CCFF00] hover:text-[#CCFF00] hover:tracking-[0.4em] transition-all duration-500 cursor-default">
                         Nishant
                     </span>
                 </div>
 
                 {/* Two-line headline with proper word breaks */}
                 <h1 className="text-[13vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] font-black leading-[0.85] tracking-[-0.04em] uppercase text-center overflow-hidden">
-                    <span ref={line1Ref} className="block">CREATIVE</span>
-                    <span ref={line2Ref} className="block text-gray-400">DEVELOPER</span>
+                    <span ref={line1Ref} className="block">CODE MEETS</span>
+                    <span ref={line2Ref} className="block text-gray-400">CREATIVITY</span>
                 </h1>
 
                 {/* Subtext */}
@@ -193,10 +193,48 @@ const Hero = () => {
                     Full-Stack Developer crafting digital experiences with code and creativity.
                 </p>
 
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 md:mt-12 opacity-0" ref={(el) => {
+                    if (el) {
+                        gsap.fromTo(el,
+                            { opacity: 0, y: 20 },
+                            { opacity: 1, y: 0, duration: 0.8, ease: "power4.out", delay: 2.9 }
+                        );
+                    }
+                }}>
+                    <button
+                        onClick={() => {
+                            const contactSection = document.querySelector('section:has(form)');
+                            contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }}
+                        className="group relative px-6 sm:px-8 md:px-10 py-3 sm:py-4 bg-black text-white border-2 border-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold overflow-hidden transition-all duration-500 hover:bg-transparent hover:text-black active:scale-95"
+                    >
+                        <span className="relative z-10">Let's Talk</span>
+                        <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0"></div>
+                        <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10">
+                            <span className="text-black font-bold">Let's Talk</span>
+                        </span>
+                    </button>
+
+                    <a
+                        href="/resume.pdf"
+                        download="Nishant_Resume.pdf"
+                        className="group relative px-6 sm:px-8 md:px-10 py-3 sm:py-4 border-2 border-black text-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold transition-all duration-500 hover:bg-black hover:text-white active:scale-95 flex items-center gap-2 sm:gap-3"
+                    >
+                        <span>Download CV</span>
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </a>
+                </div>
+
                 {/* Scroll Indicator */}
-                <div className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-                    <span className="text-[10px] md:text-xs uppercase tracking-widest">Scroll</span>
-                    <div className="w-px h-10 md:h-12 bg-current animate-pulse" />
+                <div
+                    onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+                    className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-100 transition-opacity duration-300 cursor-pointer group"
+                >
+                    <span className="text-[10px] md:text-xs uppercase tracking-widest group-hover:tracking-[0.3em] transition-all duration-300">Scroll</span>
+                    <div className="w-px h-10 md:h-12 bg-current animate-pulse group-hover:h-14 md:group-hover:h-16 transition-all duration-300" />
                 </div>
             </div>
 

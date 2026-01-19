@@ -2,11 +2,17 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const skills = [
-    "React", "Node.js", "GSAP", "Next.js", "TypeScript", "Tailwind", "WebGL", "Three.js", "Figma", "Design"
+    { name: "Figma", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/figma.png" },
+    { name: "GSAP", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/gsap.png" },
+    { name: "Next.js", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/next_js.png" },
+    { name: "React", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/react.png" },
+    { name: "Tailwind", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/tailwind.png" },
+    { name: "TypeScript", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/typescript.png" },
 ];
 
 const SkillsMarquee = () => {
@@ -60,13 +66,22 @@ const SkillsMarquee = () => {
         <section className="py-8 sm:py-10 md:py-16 lg:py-20 bg-white text-black overflow-hidden whitespace-nowrap">
             <div
                 ref={marqueeRef}
-                className="flex items-center gap-4 sm:gap-6 md:gap-10 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold uppercase tracking-tighter"
+                className="flex items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16"
                 style={{ width: "fit-content" }}
             >
                 {skills.map((skill, index) => (
-                    <span key={index} className="skill-item flex items-center gap-4 sm:gap-6 md:gap-10">
-                        {skill} <span className="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-[#CCFF00]">●</span>
-                    </span>
+                    <div key={index} className="skill-item flex items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16">
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-500 hover:scale-110">
+                            <Image
+                                src={skill.logo}
+                                alt={skill.name}
+                                fill
+                                className="object-contain"
+                                sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, (max-width: 1024px) 96px, (max-width: 1280px) 112px, 128px"
+                            />
+                        </div>
+                        <span className="w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-[#CCFF00] rounded-full flex-shrink-0" />
+                    </div>
                 ))}
             </div>
         </section>
