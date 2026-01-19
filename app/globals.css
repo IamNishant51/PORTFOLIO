@@ -1,19 +1,16 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --color-accent-color: var(--accent-color);
-  --color-swiss-red: #FF3B30;
-  --color-swiss-offwhite: #F5F5F7;
-  --color-neon-lime: #CCFF00;
-}
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 245, 245, 247;
   --accent-color: #CCFF00;
   /* Neon Lime */
   --font-inter: "Inter", sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-accent-color: var(--accent-color);
+  --color-swiss-red: #FF3B30;
+  --color-swiss-offwhite: #F5F5F7;
+  --color-neon-lime: #CCFF00;
 }
 
 @media (prefers-color-scheme: dark) {

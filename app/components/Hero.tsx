@@ -10,7 +10,7 @@ const Hero = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const line1Ref = useRef<HTMLSpanElement>(null);
     const line2Ref = useRef<HTMLSpanElement>(null);
-    const imageRef = useRef<HTMLDivElement>(null);
+    const imageRef = useRef<HTMLAnchorElement>(null);
     const nameLabelRef = useRef<HTMLDivElement>(null);
     const subtextRef = useRef<HTMLParagraphElement>(null);
 
@@ -151,9 +151,12 @@ const Hero = () => {
         >
             <div className="w-full max-w-7xl mx-auto z-10">
                 {/* Hero Image with brutalist frame */}
-                <div
+                <a
+                    href="https://github.com/IamNishant51"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     ref={imageRef}
-                    className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12 group cursor-pointer"
+                    className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12 group cursor-pointer block"
                 >
                     {/* Neon accent offset frame */}
                     <div className="absolute inset-0 bg-[#CCFF00] translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3 sm:group-hover:translate-x-4 sm:group-hover:translate-y-4" />
@@ -173,7 +176,7 @@ const Hero = () => {
                     {/* Corner accents */}
                     <div className="absolute -top-1 -left-1 w-3 h-3 md:w-4 md:h-4 bg-black transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
                     <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-black transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
-                </div>
+                </a>
 
                 {/* Name label */}
                 <div ref={nameLabelRef} className="flex justify-center mb-4 md:mb-8 opacity-0">
@@ -217,8 +220,10 @@ const Hero = () => {
                     </button>
 
                     <a
-                        href="/resume.pdf"
-                        download="Nishant_Resume.pdf"
+                        href="https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf"
+                        download="Nishant_Unavane_Resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 border-2 border-black text-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold transition-all duration-500 hover:bg-black hover:text-white active:scale-95 flex items-center justify-center gap-2 sm:gap-3"
                     >
                         <span>Download CV</span>
