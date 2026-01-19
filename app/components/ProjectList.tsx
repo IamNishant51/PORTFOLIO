@@ -124,7 +124,7 @@ const ProjectList = () => {
     };
 
     return (
-        <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-black text-white relative z-10 px-4 sm:px-6 md:px-8 lg:px-16">
+        <section className="py-16 sm:py-16 md:py-24 lg:py-32 pb-32 sm:pb-16 bg-black text-white relative z-10 px-4 sm:px-6 md:px-8 lg:px-16">
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 sm:mb-12 md:mb-16 border-b border-white/10 pb-6 sm:pb-8">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white/40">Selected Work</h2>

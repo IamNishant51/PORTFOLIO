@@ -147,7 +147,7 @@ const Hero = () => {
     return (
         <section
             ref={containerRef}
-            className="min-h-screen w-full flex items-center justify-center bg-white text-black overflow-hidden relative px-6 md:px-8 lg:px-16 py-16 md:py-20"
+            className="min-h-screen w-full flex items-center justify-center bg-white text-black overflow-hidden relative px-6 md:px-8 lg:px-16 py-16 md:py-20 pb-24 md:pb-28"
         >
             <div className="w-full max-w-7xl mx-auto z-10">
                 {/* Hero Image with brutalist frame */}
@@ -194,7 +194,7 @@ const Hero = () => {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 md:mt-12 opacity-0" ref={(el) => {
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-6 md:mt-10 mb-16 md:mb-20 opacity-0" ref={(el) => {
                     if (el) {
                         gsap.fromTo(el,
                             { opacity: 0, y: 20 },
@@ -207,7 +207,7 @@ const Hero = () => {
                             const contactSection = document.querySelector('section:has(form)');
                             contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }}
-                        className="group relative px-6 sm:px-8 md:px-10 py-3 sm:py-4 bg-black text-white border-2 border-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold overflow-hidden transition-all duration-500 hover:bg-transparent hover:text-black active:scale-95"
+                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-black text-white border-2 border-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold overflow-hidden transition-all duration-500 hover:bg-transparent hover:text-black active:scale-95"
                     >
                         <span className="relative z-10">Let's Talk</span>
                         <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0"></div>
@@ -219,7 +219,7 @@ const Hero = () => {
                     <a
                         href="/resume.pdf"
                         download="Nishant_Resume.pdf"
-                        className="group relative px-6 sm:px-8 md:px-10 py-3 sm:py-4 border-2 border-black text-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold transition-all duration-500 hover:bg-black hover:text-white active:scale-95 flex items-center gap-2 sm:gap-3"
+                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 border-2 border-black text-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold transition-all duration-500 hover:bg-black hover:text-white active:scale-95 flex items-center justify-center gap-2 sm:gap-3"
                     >
                         <span>Download CV</span>
                         <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
