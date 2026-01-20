@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import MagneticButton from "./MagneticButton";
+import { Github, Linkedin, Mail, Download } from "lucide-react";
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -136,6 +137,47 @@ const Contact = () => {
                             </span>
                         </MagneticButton>
                     </form>
+                </div>
+
+                {/* Social Links */}
+                <div className="mt-16 sm:mt-20 md:mt-24 pt-12 sm:pt-16 border-t border-white/10">
+                    <p className="text-xs sm:text-sm uppercase tracking-widest text-white/40 mb-6 sm:mb-8 text-center">Connect With Me</p>
+                    <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+                        <a
+                            href="https://github.com/IamNishant51"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                        >
+                            <Github className="w-5 h-5 text-white group-hover:text-black transition-colors" />
+                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">GitHub</span>
+                        </a>
+                        <a
+                            href="https://www.linkedin.com/in/nishant-unavane-008291275/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                        >
+                            <Linkedin className="w-5 h-5 text-white group-hover:text-black transition-colors" />
+                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">LinkedIn</span>
+                        </a>
+                        <a
+                            href="mailto:nishant.unavane@outlook.com"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                        >
+                            <Mail className="w-5 h-5 text-white group-hover:text-black transition-colors" />
+                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">Email</span>
+                        </a>
+                        <a
+                            href="https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                        >
+                            <Download className="w-5 h-5 text-white group-hover:text-black transition-colors" />
+                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">Resume</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

@@ -1,28 +1,41 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 
 const QuickLinks = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        if (!containerRef.current) return;
+        const toggleVisibility = () => {
+            if (window.scrollY > 500) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
+
+        window.addEventListener("scroll", toggleVisibility, { passive: true });
+        return () => window.removeEventListener("scroll", toggleVisibility);
+    }, []);
+
+    useEffect(() => {
+        if (!containerRef.current || !isVisible) return;
 
         const links = containerRef.current.querySelectorAll('.quick-link');
         gsap.fromTo(
             links,
-            { opacity: 0, x: -20 },
+            { opacity: 0, y: 20 },
             {
                 opacity: 1,
-                x: 0,
+                y: 0,
                 duration: 0.5,
                 stagger: 0.1,
                 ease: "power3.out",
-                delay: 3, // Appear after preloader
             }
         );
-    }, []);
+    }, [isVisible]);
 
     const socialLinks = [
         {
@@ -52,10 +65,15 @@ const QuickLinks = () => {
         },
     ];
 
+    if (!isVisible) return null;
+
     return (
         <div
             ref={containerRef}
-            className="fixed left-6 bottom-1/2 translate-y-1/2 z-[9996] hidden xl:flex flex-col gap-4"
+            className="fixed z-[9996] 
+                       bottom-6 left-1/2 -translate-x-1/2 flex-row gap-4
+                       sm:left-20 sm:bottom-8 sm:translate-x-0 sm:translate-y-0 sm:flex-row sm:gap-4
+                       flex"
         >
             {socialLinks.map((link, index) => {
                 const Icon = link.icon;
@@ -66,13 +84,13 @@ const QuickLinks = () => {
                         target={link.download ? "_blank" : "_blank"}
                         rel="noopener noreferrer"
                         download={link.download}
-                        className="quick-link group relative w-12 h-12 bg-white dark:bg-black border-2 border-black dark:border-white rounded-full flex items-center justify-center hover:bg-[#CCFF00] hover:border-[#CCFF00] transition-all duration-300 hover:scale-110"
+                        className="quick-link group relative w-11 h-11 sm:w-12 sm:h-12 bg-white dark:bg-black border-2 border-black dark:border-white rounded-full flex items-center justify-center hover:bg-[#CCFF00] hover:border-[#CCFF00] transition-all duration-300 hover:scale-110"
                         aria-label={link.label}
                     >
                         <Icon className="w-5 h-5 text-black dark:text-white group-hover:text-black transition-colors duration-300" />
 
                         {/* Tooltip */}
-                        <span className="absolute left-full ml-4 bg-black dark:bg-white text-white dark:text-black px-3 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200">
+                        <span className="absolute left-full ml-4 bg-black dark:bg-white text-white dark:text-black px-3 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 hidden sm:inline">
                             {link.label}
                         </span>
                     </a>

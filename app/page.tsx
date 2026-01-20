@@ -27,7 +27,6 @@ const Testimonials = dynamic(() => import("./components/Testimonials"), {
 });
 const FloatingMenu = dynamic(() => import("./components/FloatingMenu"), { ssr: false });
 const ScrollToTop = dynamic(() => import("./components/ScrollToTop"), { ssr: false });
-const QuickLinks = dynamic(() => import("./components/QuickLinks"), { ssr: false });
 
 export default function Home() {
   const [timelineComplete, setTimelineComplete] = useState(false);
@@ -48,7 +47,6 @@ export default function Home() {
           <ThemeToggle />
           <FloatingMenu />
           <ScrollToTop />
-          <QuickLinks />
         </>
       )}
 
