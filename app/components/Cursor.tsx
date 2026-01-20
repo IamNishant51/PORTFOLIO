@@ -31,39 +31,32 @@ const Cursor = () => {
         const cursor = cursorRef.current;
         if (!cursor) return;
 
-        // Center cursor on mouse
-        gsap.set(cursor, { xPercent: -50, yPercent: -50 });
-
         const moveCursor = (e: MouseEvent) => {
-            gsap.to(cursor, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.1, // Slight lag for fluid heavy feel
-                ease: "power2.out"
-            });
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
         };
 
         const onHoverEnter = () => {
-            gsap.to(cursor, { scale: 4, duration: 0.3 });
+            cursor.style.transition = 'transform 0.3s ease';
+            cursor.style.transform = `translate(${cursor.offsetLeft}px, ${cursor.offsetTop}px) translate(-50%, -50%) scale(4)`;
         };
 
         const onHoverLeave = () => {
-            gsap.to(cursor, { scale: 1, duration: 0.3 });
+            cursor.style.transition = 'transform 0.3s ease';
+            const currentTransform = cursor.style.transform;
+            const matches = currentTransform.match(/translate\(([^,]+),\s*([^)]+)\)/);
+            if (matches) {
+                cursor.style.transform = `translate(${matches[1]}, ${matches[2]}) translate(-50%, -50%) scale(1)`;
+            }
         };
 
         window.addEventListener("mousemove", moveCursor);
 
         // Add hover listeners to clickable elements
-        // This is a global listener approach
         const clickables = document.querySelectorAll("a, button, input, textarea, .cursor-hover");
         clickables.forEach((el) => {
             el.addEventListener("mouseenter", onHoverEnter);
             el.addEventListener("mouseleave", onHoverLeave);
         });
-
-        // MutationObserver to attach to new elements? 
-        // For simplicity, we just attach to existing. 
-        // In a real SPA, we might need a context or use delegate event listeners.
 
         return () => {
             window.removeEventListener("mousemove", moveCursor);

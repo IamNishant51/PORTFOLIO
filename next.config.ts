@@ -25,6 +25,19 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   poweredByHeader: false,
+
+  // Production optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // Optimize bundle size
+  experimental: {
+    optimizePackageImports: ['gsap', 'lucide-react', 'three'],
+  },
+
+  // Turbopack config (required for Next.js 16+)
+  turbopack: {},
 };
 
 export default nextConfig;

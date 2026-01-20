@@ -1,16 +1,27 @@
 "use client";
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Preloader from "./components/Preloader";
 import Hero from "./components/Hero";
-import ProjectList from "./components/ProjectList";
-import SkillsMarquee from "./components/SkillsMarquee";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
 import Cursor from "./components/Cursor";
 import ThemeToggle from "./components/ThemeToggle";
-import Testimonials from "./components/Testimonials";
-import FloatingMenu from "./components/FloatingMenu";
-import ScrollToTop from "./components/ScrollToTop";
+
+// Lazy load components that are not critical for initial render
+const ProjectList = dynamic(() => import("./components/ProjectList"), {
+  loading: () => <div className="min-h-screen bg-black" />,
+});
+const SkillsMarquee = dynamic(() => import("./components/SkillsMarquee"), {
+  loading: () => <div className="min-h-[50vh] bg-white dark:bg-black" />,
+});
+const Contact = dynamic(() => import("./components/Contact"), {
+  loading: () => <div className="min-h-screen bg-black" />,
+});
+const Footer = dynamic(() => import("./components/Footer"));
+const Testimonials = dynamic(() => import("./components/Testimonials"), {
+  loading: () => <div className="min-h-screen bg-white dark:bg-black" />,
+});
+const FloatingMenu = dynamic(() => import("./components/FloatingMenu"));
+const ScrollToTop = dynamic(() => import("./components/ScrollToTop"));
 
 export default function Home() {
   const [timelineComplete, setTimelineComplete] = useState(false);

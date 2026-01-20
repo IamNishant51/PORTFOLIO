@@ -4,7 +4,13 @@ import "./globals.css";
 import SmoothScrolling from "./components/SmoothScrolling";
 import { ThemeProvider } from "./components/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: 'swap' });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
+});
 
 export const metadata: Metadata = {
   title: "Nishant Unavane - Full-Stack Developer Portfolio",
@@ -94,12 +100,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Resource hints for performance */}
+        <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://ik.imagekit.io" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+        {/* PWA */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#CCFF00" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A0A0A" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#CCFF00" />
-        <link rel="preconnect" href="https://ik.imagekit.io" />
-        <link rel="dns-prefetch" href="https://ik.imagekit.io" />
+
+        {/* Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

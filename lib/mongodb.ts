@@ -3,6 +3,11 @@ import { MongoClient } from 'mongodb';
 const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/';
 const options = {};
 
+// Declare global type for MongoDB client promise
+declare global {
+    var _mongoClientPromise: Promise<MongoClient> | undefined;
+}
+
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 

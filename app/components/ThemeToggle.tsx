@@ -27,14 +27,14 @@ const ThemeToggle = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="hidden lg:block fixed top-6 right-6 z-[9999] w-12 h-12 rounded-full bg-black dark:bg-white border-2 border-white dark:border-black flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group shadow-lg"
+            className="hidden lg:flex fixed top-6 right-6 z-[9999] w-12 h-12 rounded-full bg-black dark:bg-white border-2 border-white dark:border-black items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group shadow-lg"
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
             title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
         >
             {!isDark ? (
-                <Sun className="w-6 h-6 text-white" />
+                <Sun className="w-6 h-6 text-white" strokeWidth={2} />
             ) : (
-                <Moon className="w-6 h-6 text-black" />
+                <Moon className="w-6 h-6 text-black" strokeWidth={2} />
             )}
         </button>
     );
