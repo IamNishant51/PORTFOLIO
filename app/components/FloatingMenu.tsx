@@ -47,20 +47,21 @@ const FloatingMenu = () => {
                             item.action();
                             setIsOpen(false);
                         }}
-                        className={`absolute bottom-0 right-0 w-11 h-11 sm:w-12 sm:h-12 bg-white dark:bg-black border-2 border-black dark:border-white rounded-full flex items-center justify-center transition-all duration-300 hover:bg-[#CCFF00] hover:border-[#CCFF00] group shadow-lg ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                        className={`absolute bottom-0 right-0 w-11 h-11 sm:w-12 sm:h-12 bg-white dark:bg-black border-2 border-black dark:border-white rounded-full flex items-center justify-center group shadow-lg hover:!bg-[#CCFF00] hover:!border-[#CCFF00] ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                             }`}
                         style={{
                             transform: isOpen
                                 ? `translateY(-${(index + 1) * 55}px)`
                                 : "translateY(0)",
                             transitionDelay: isOpen ? `${index * 50}ms` : "0ms",
-                            transitionProperty: "transform, opacity",
+                            transitionProperty: "transform, opacity, background-color, border-color",
+                            transitionDuration: "300ms",
                         }}
                         aria-label={item.label}
                         title={item.label}
                     >
-                        <item.Icon className={`w-4 h-4 sm:w-5 sm:h-5 text-black dark:text-white group-hover:text-black`} />
-                        <span className="absolute right-12 sm:right-14 bg-black dark:bg-white text-white dark:text-black px-2 sm:px-3 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none" style={{ transitionProperty: "opacity", transitionDuration: "200ms" }}>
+                        <item.Icon className={`w-4 h-4 sm:w-5 sm:h-5 text-black dark:text-white group-hover:text-black transition-colors duration-300`} />
+                        <span className="absolute right-12 sm:right-14 bg-black dark:bg-white text-white dark:text-black px-2 sm:px-3 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200">
                             {item.label}
                         </span>
                     </button>
