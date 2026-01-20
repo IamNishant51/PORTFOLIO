@@ -118,9 +118,13 @@ const Testimonials = () => {
                     </div>
                     <button
                         onClick={() => setShowForm(!showForm)}
-                        className="px-6 py-3 bg-[#CCFF00] text-black font-bold uppercase text-sm tracking-wider hover:bg-[#b3e600] transition-all duration-300 whitespace-nowrap self-start sm:self-auto"
+                        className="group relative px-6 py-3 bg-white dark:bg-white text-black border-2 border-white dark:border-white font-bold uppercase text-sm tracking-wider whitespace-nowrap self-start sm:self-auto rounded-full overflow-hidden transition-all duration-500 active:scale-95"
                     >
-                        {showForm ? "Close Form" : "Leave Testimonial"}
+                        <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
+                        <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
+                            <span className="text-black font-bold">{showForm ? "Close Form" : "Leave Testimonial"}</span>
+                        </span>
+                        <span className="relative z-10">{showForm ? "Close Form" : "Leave Testimonial"}</span>
                     </button>
                 </div>
 
@@ -267,9 +271,13 @@ const Testimonials = () => {
                     <div className="mt-12 md:mt-16 text-center">
                         <Link
                             href="/testimonials"
-                            className="inline-block px-8 py-4 bg-[#CCFF00] text-black font-bold uppercase text-sm tracking-wider hover:bg-[#b3e600] transition-all duration-300"
+                            className="group relative inline-block px-8 py-4 bg-white dark:bg-white text-black border-2 border-white dark:border-white font-bold uppercase text-sm tracking-wider rounded-full overflow-hidden transition-all duration-500 active:scale-95"
                         >
-                            See All Testimonials ({testimonialsList.length})
+                            <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
+                            <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
+                                <span className="text-black font-bold">See All Testimonials ({testimonialsList.length})</span>
+                            </span>
+                            <span className="relative z-10">See All Testimonials ({testimonialsList.length})</span>
                         </Link>
                     </div>
                 )}

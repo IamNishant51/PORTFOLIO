@@ -34,7 +34,6 @@
     color: rgb(var(--foreground-rgb));
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
     overflow-x: hidden;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Text Selection */
@@ -72,6 +71,22 @@
     font-weight: 800;
     letter-spacing: -0.04em;
     text-transform: uppercase;
+  }
+
+  /* Prevent color transitions globally to avoid flickering on theme change */
+  *,
+  *::before,
+  *::after {
+    transition-property: transform, opacity, filter, box-shadow !important;
+  }
+
+  /* Allow color transitions only on interactive elements for hover effects */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    transition-property: transform, opacity, background-color, border-color, box-shadow !important;
   }
 }
 

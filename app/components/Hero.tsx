@@ -131,7 +131,7 @@ const Hero = () => {
         // Parallax effect on image during scroll
         if (imageContainer) {
             gsap.to(imageContainer, {
-                y: 100,
+                y: 50,
                 ease: "none",
                 scrollTrigger: {
                     trigger: containerRef.current,
@@ -156,7 +156,7 @@ const Hero = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     ref={imageRef}
-                    className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12 group cursor-pointer block"
+                    className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12 group cursor-pointer block isolate"
                 >
                     {/* Neon accent offset frame */}
                     <div className="absolute inset-0 bg-[#CCFF00] translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3 sm:group-hover:translate-x-4 sm:group-hover:translate-y-4" />
@@ -179,16 +179,16 @@ const Hero = () => {
                 </a>
 
                 {/* Name label */}
-                <div ref={nameLabelRef} className="flex justify-center mb-4 md:mb-8 opacity-0">
-                    <span className="text-[10px] md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 dark:text-white/50 border border-black/20 dark:border-white/20 px-3 py-1.5 md:px-4 md:py-2 hover:border-[#CCFF00] hover:text-[#CCFF00] hover:tracking-[0.4em] transition-all duration-500 cursor-default">
+                <div ref={nameLabelRef} className="flex justify-center mb-4 md:mb-8 opacity-0 relative z-20 pointer-events-none">
+                    <span className="text-[10px] md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 dark:text-white/50 border border-black/20 dark:border-white/20 px-3 py-1.5 md:px-4 md:py-2 hover:border-[#CCFF00] hover:text-[#CCFF00] hover:tracking-[0.4em] transition-all duration-500 cursor-default pointer-events-auto">
                         Nishant
                     </span>
                 </div>
 
                 {/* Two-line headline with proper word breaks */}
-                <h1 className="text-[13vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] font-black leading-[0.85] tracking-[-0.04em] uppercase text-center overflow-hidden">
-                    <span ref={line1Ref} className="block">CODE MEETS</span>
-                    <span ref={line2Ref} className="block text-gray-400 dark:text-gray-600">CREATIVITY</span>
+                <h1 className="text-[13vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] font-black leading-[0.85] tracking-[-0.04em] uppercase text-center overflow-hidden" style={{ transitionProperty: "none" }}>
+                    <span ref={line1Ref} className="block" style={{ transitionProperty: "none" }}>CODE MEETS</span>
+                    <span ref={line2Ref} className="block text-gray-400 dark:text-gray-600" style={{ transitionProperty: "none" }}>CREATIVITY</span>
                 </h1>
 
                 {/* Subtext */}
@@ -203,7 +203,8 @@ const Hero = () => {
                             const contactSection = document.querySelector('section:has(form)');
                             contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }}
-                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold overflow-hidden transition-all duration-500 hover:bg-transparent dark:hover:bg-transparent hover:text-black dark:hover:text-white active:scale-95"
+                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold overflow-hidden hover:bg-transparent dark:hover:bg-transparent hover:text-black dark:hover:text-white active:scale-95"
+                        style={{ transitionProperty: "transform, background-color, border-color", transitionDuration: "500ms" }}
                     >
                         <span className="relative z-10">Let's Talk</span>
                         <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0"></div>
@@ -217,7 +218,8 @@ const Hero = () => {
                         download="Nishant_Unavane_Resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 border-2 border-black dark:border-white text-black dark:text-white uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold transition-all duration-500 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black active:scale-95 flex items-center justify-center gap-2 sm:gap-3"
+                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 border-2 border-black dark:border-white text-black dark:text-white uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black active:scale-95 flex items-center justify-center gap-2 sm:gap-3"
+                        style={{ transitionProperty: "transform, background-color, border-color", transitionDuration: "500ms" }}
                     >
                         <span>Download CV</span>
                         <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
