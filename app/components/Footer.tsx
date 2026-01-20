@@ -1,10 +1,9 @@
 export default function Footer() {
     return (
         <footer
-            className="fixed bottom-0 left-0 w-full h-[50vh] flex items-center justify-center -z-10"
-            style={{ backgroundColor: '#CCFF00' }}
+            className="fixed bottom-0 left-0 w-full h-[50vh] flex items-center justify-center -z-10 bg-[#CCFF00] dark:bg-[#CCFF00]"
         >
-            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 flex flex-col items-center justify-center text-center text-black">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 flex flex-col items-center justify-center text-center text-black dark:text-black">
                 <h2 className="text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[8vw] font-black leading-none tracking-[-0.04em] uppercase hover:scale-105 transition-transform duration-300 cursor-default">
                     LET'S TALK
                 </h2>

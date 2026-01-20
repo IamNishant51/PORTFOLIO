@@ -63,7 +63,7 @@ const SkillsMarquee = () => {
     }, []);
 
     return (
-        <section className="py-8 sm:py-10 md:py-16 lg:py-20 bg-white text-black overflow-hidden whitespace-nowrap">
+        <section className="py-8 sm:py-10 md:py-16 lg:py-20 bg-white dark:bg-black text-black dark:text-white overflow-hidden whitespace-nowrap">
             <div
                 ref={marqueeRef}
                 className="flex items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16"

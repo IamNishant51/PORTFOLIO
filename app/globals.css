@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-accent: #CCFF00;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 245, 245, 247;
@@ -13,19 +19,33 @@
   --color-neon-lime: #CCFF00;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-rgb: 10, 10, 10;
-  }
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 10, 10, 10;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: rgb(var(--background-rgb));
     color: rgb(var(--foreground-rgb));
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Text Selection */
+  ::selection {
+    background-color: var(--accent-color);
+    color: #000000;
+  }
+
+  ::-moz-selection {
+    background-color: var(--accent-color);
+    color: #000000;
   }
 
   /* Noise Overlay */
@@ -79,4 +99,84 @@
   .reveal-text {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
+
+  /* Performance Optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Smooth Transitions */
+  * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+  }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus Visible for Accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
+}
+
+/* Remove autofill/autocomplete borders and backgrounds */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Remove all input borders */
+input,
+textarea,
+select {
+  border: none;
+  outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--background-rgb));
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b3e600;
 }

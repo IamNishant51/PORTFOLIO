@@ -47,10 +47,14 @@ type Project = typeof projects[0];
 const ProjectList = () => {
     const [hoveredProject, setHoveredProject] = useState<number | null>(null);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [filter, setFilter] = useState<string>("All");
     const revealRef = useRef<HTMLDivElement>(null);
     const modalRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const scrollYRef = useRef<number>(0);
+
+    const categories = ["All", ...Array.from(new Set(projects.map(p => p.category)))];
+    const filteredProjects = filter === "All" ? projects : projects.filter(p => p.category === filter);
 
     useEffect(() => {
         // Move the reveal image container with mouse
@@ -126,13 +130,29 @@ const ProjectList = () => {
     return (
         <section className="py-16 sm:py-16 md:py-24 lg:py-32 pb-32 sm:pb-16 bg-black text-white relative z-10 px-4 sm:px-6 md:px-8 lg:px-16">
             <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 sm:mb-12 md:mb-16 border-b border-white/10 pb-6 sm:pb-8">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white/40">Selected Work</h2>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 sm:mb-12 md:mb-16 border-b border-white/10 dark:border-white/10 pb-6 sm:pb-8">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white/40 dark:text-white/40">Selected Work</h2>
                     <p className="text-xs sm:text-sm opacity-50 mt-3 sm:mt-4 md:mt-0 max-w-xs">Featured projects and experiments</p>
                 </div>
 
+                {/* Filter Buttons */}
+                <div className="flex flex-wrap gap-3 mb-8 md:mb-12">
+                    {categories.map((category) => (
+                        <button
+                            key={category}
+                            onClick={() => setFilter(category)}
+                            className={`px-4 py-2 text-xs md:text-sm font-medium uppercase tracking-wider border transition-all duration-300 ${filter === category
+                                ? "bg-[#CCFF00] text-black border-[#CCFF00]"
+                                : "bg-transparent text-white/60 border-white/20 hover:border-[#CCFF00] hover:text-[#CCFF00]"
+                                }`}
+                        >
+                            {category}
+                        </button>
+                    ))}
+                </div>
+
                 <ul ref={listRef} className="space-y-4 sm:space-y-6 md:space-y-8">
-                    {projects.map((project, index) => (
+                    {filteredProjects.map((project, index) => (
                         <li
                             key={project.id}
                             className="border-b border-white/10 pb-4 sm:pb-6 md:pb-8 cursor-pointer group transition-all duration-500 hover:pl-2 sm:hover:pl-4 hover:border-[#CCFF00]/30 hover:bg-white/[0.02] active:scale-[0.99]"
@@ -175,7 +195,7 @@ const ProjectList = () => {
                 ref={revealRef}
                 className="fixed top-0 left-0 w-[250px] h-[250px] pointer-events-none z-20 overflow-hidden opacity-0 scale-0 hidden md:block rounded-full border-4 border-[#CCFF00]/50 shadow-lg shadow-[#CCFF00]/20"
             >
-                {projects.map((project) => (
+                {filteredProjects.map((project) => (
                     <div
                         key={project.id}
                         className="absolute inset-0 w-full h-full rounded-full overflow-hidden"

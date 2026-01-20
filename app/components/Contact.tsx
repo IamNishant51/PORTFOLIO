@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import MagneticButton from "./MagneticButton";
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -49,7 +50,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-24">
                     {/* Left Column - Heading */}
                     <div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase leading-[0.9] mb-4 sm:mb-6">Let's build<br /><span className="text-white/40">something great</span></h2>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase leading-[0.9] mb-4 sm:mb-6">Let's build<br /><span className="text-white/40 dark:text-white/40">something great</span></h2>
                         <p className="text-xs sm:text-sm md:text-base opacity-50 max-w-sm">
                             Have a project in mind? I'd love to hear about it. Drop me a message and let's create something extraordinary together.
                         </p>
@@ -94,7 +95,7 @@ const Contact = () => {
                             <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
                         </div>
 
-                        <button
+                        <MagneticButton
                             type="submit"
                             disabled={status === "sending"}
                             className={`
@@ -133,7 +134,7 @@ const Contact = () => {
                             <span className={`relative z-10 ${status === "sending" ? "invisible" : ""}`}>
                                 {status === "success" ? "Email Sent ✓" : status === "error" ? "Failed. Try Again" : "Send Email"}
                             </span>
-                        </button>
+                        </MagneticButton>
                     </form>
                 </div>
             </div>

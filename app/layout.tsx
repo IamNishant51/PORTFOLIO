@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google"; // Using Inter as the variable font
 import "./globals.css";
 import SmoothScrolling from "./components/SmoothScrolling";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: 'swap' });
 
@@ -91,19 +92,25 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#CCFF00" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A0A0A" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#CCFF00" />
+        <link rel="preconnect" href="https://ik.imagekit.io" />
+        <link rel="dns-prefetch" href="https://ik.imagekit.io" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} antialiased selection:bg-accent-color selection:text-black`} suppressHydrationWarning>
-        <SmoothScrolling>
-          {children}
-        </SmoothScrolling>
+      <body className={`${inter.variable} antialiased`} suppressHydrationWarning>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} storageKey="portfolio-theme">
+          <SmoothScrolling>
+            {children}
+          </SmoothScrolling>
+        </ThemeProvider>
       </body>
     </html>
   );
