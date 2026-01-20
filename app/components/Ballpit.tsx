@@ -635,7 +635,8 @@ function processPointerInteraction() {
 
 function onTouchStart(e: TouchEvent) {
     if (e.touches.length > 0) {
-        e.preventDefault();
+        // Don't preventDefault on mobile - it blocks scrolling!
+        // Only prevent default if we're actually interacting with the canvas
         pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
         for (const [elem, data] of pointerMap) {
             const rect = elem.getBoundingClientRect();
@@ -654,7 +655,7 @@ function onTouchStart(e: TouchEvent) {
 
 function onTouchMove(e: TouchEvent) {
     if (e.touches.length > 0) {
-        e.preventDefault();
+        // Don't preventDefault - it blocks scrolling on mobile!
         pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
         for (const [elem, data] of pointerMap) {
             const rect = elem.getBoundingClientRect();
@@ -847,9 +848,21 @@ function createBallpit(canvas: HTMLCanvasElement, config: any = {}): CreateBallp
     const intersectionPoint = new Vector3();
     let isPaused = false;
 
-    canvas.style.touchAction = 'none';
-    canvas.style.userSelect = 'none';
-    (canvas.style as any).webkitUserSelect = 'none';
+    // Allow touch scrolling on mobile, prevent on desktop for interaction
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+    if (isMobileDevice) {
+        // On mobile: allow all touch interactions to pass through
+        canvas.style.touchAction = 'auto';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.userSelect = 'none';
+        (canvas.style as any).webkitUserSelect = 'none';
+    } else {
+        // On desktop: allow Ballpit interaction
+        canvas.style.touchAction = 'none';
+        canvas.style.userSelect = 'none';
+        (canvas.style as any).webkitUserSelect = 'none';
+    }
 
     const pointerData = createPointerData({
         domElement: canvas,

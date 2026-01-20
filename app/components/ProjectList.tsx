@@ -87,13 +87,18 @@ const ProjectList = () => {
     useEffect(() => {
         // Modal animation and scroll lock
         if (selectedProject && modalRef.current) {
-            // Store current scroll position and lock body
+            // Store current scroll position and lock body (desktop only)
+            const isMobile = window.innerWidth < 768;
             scrollYRef.current = window.scrollY;
-            document.body.style.position = "fixed";
-            document.body.style.top = `-${scrollYRef.current}px`;
-            document.body.style.left = "0";
-            document.body.style.right = "0";
-            document.body.style.overflow = "hidden";
+
+            if (!isMobile) {
+                // Only lock scroll on desktop
+                document.body.style.position = "fixed";
+                document.body.style.top = `-${scrollYRef.current}px`;
+                document.body.style.left = "0";
+                document.body.style.right = "0";
+                document.body.style.overflow = "hidden";
+            }
 
             gsap.fromTo(
                 modalRef.current,
@@ -114,13 +119,16 @@ const ProjectList = () => {
                 opacity: 0,
                 duration: 0.2,
                 onComplete: () => {
-                    // Restore scroll position after animation completes
-                    document.body.style.position = "";
-                    document.body.style.top = "";
-                    document.body.style.left = "";
-                    document.body.style.right = "";
-                    document.body.style.overflow = "";
-                    window.scrollTo(0, scrollYRef.current);
+                    const isMobile = window.innerWidth < 768;
+                    if (!isMobile) {
+                        // Restore scroll position after animation completes (desktop only)
+                        document.body.style.position = "";
+                        document.body.style.top = "";
+                        document.body.style.left = "";
+                        document.body.style.right = "";
+                        document.body.style.overflow = "";
+                        window.scrollTo(0, scrollYRef.current);
+                    }
                     setSelectedProject(null);
                 }
             });

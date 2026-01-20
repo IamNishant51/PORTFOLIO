@@ -6,7 +6,7 @@ export default function Footer() {
             className="fixed bottom-0 left-0 w-full h-[50vh] flex items-center justify-center -z-10 bg-[#CCFF00] dark:bg-[#CCFF00] overflow-hidden"
         >
             {/* Ballpit Background */}
-            <div className="absolute inset-0 w-full h-full" style={{ willChange: 'auto' }}>
+            <div className="absolute inset-0 w-full h-full md:pointer-events-auto pointer-events-none" style={{ willChange: 'auto' }}>
                 <Ballpit
                     count={25}
                     gravity={0.8}

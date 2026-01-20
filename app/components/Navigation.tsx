@@ -47,7 +47,8 @@ const Navigation = () => {
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
+            // Use native scrollIntoView with smooth for better mobile support
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     };
 

@@ -34,9 +34,17 @@
     color: rgb(var(--foreground-rgb));
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
     overflow-x: hidden;
+    overflow-y: auto;
+    /* Ensure scrolling works on mobile */
+    -webkit-overflow-scrolling: touch;
     /* GPU acceleration for smooth scrolling */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   /* Text Selection */
@@ -132,6 +140,18 @@
     transition-property: background-color, border-color, color, fill, stroke;
     transition-duration: 0.3s;
     transition-timing-function: ease;
+  }
+}
+
+/* Mobile-specific fixes to ensure scrolling always works */
+@media (max-width: 768px) {
+
+  html,
+  body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    height: auto !important;
   }
 }
 

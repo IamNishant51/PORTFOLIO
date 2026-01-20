@@ -7,7 +7,27 @@ export default function useSmoothScroll() {
     const [lenis, setLenis] = useState<Lenis | null>(null);
 
     useEffect(() => {
-        // Initialize Lenis
+        // Check if it's a mobile/touch device
+        const isMobile =
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+            'ontouchstart' in window ||
+            navigator.maxTouchPoints > 0 ||
+            window.innerWidth < 768;
+
+        // Don't initialize Lenis on mobile devices to prevent touch/scroll issues
+        if (isMobile) {
+            // Ensure body is scrollable on mobile - force it!
+            document.body.style.overflow = 'visible';
+            document.body.style.overflowY = 'auto';
+            document.body.style.overflowX = 'hidden';
+            document.documentElement.style.overflow = 'visible';
+            document.documentElement.style.overflowY = 'auto';
+            document.documentElement.style.overflowX = 'hidden';
+            // Don't do anything else - exit early
+            return () => { };
+        }
+
+        // Initialize Lenis for desktop only
         const lenisInstance = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential smoothing

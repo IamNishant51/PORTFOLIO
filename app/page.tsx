@@ -25,10 +25,17 @@ const ScrollToTop = dynamic(() => import("./components/ScrollToTop"));
 
 export default function Home() {
   const [timelineComplete, setTimelineComplete] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  const handlePreloaderComplete = () => {
+    setTimelineComplete(true);
+    // Remove preloader from DOM completely
+    setTimeout(() => setShowPreloader(false), 100);
+  };
 
   return (
     <main className="relative w-full" role="main">
-      <Preloader onComplete={() => setTimelineComplete(true)} />
+      {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
       <Cursor />
       {timelineComplete && (
         <>
