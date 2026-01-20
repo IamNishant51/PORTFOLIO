@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  reactStrictMode: true,
+
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+
   images: {
     remotePatterns: [
       {
@@ -25,11 +32,6 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   poweredByHeader: false,
-
-  // Production optimizations
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-  },
 
   // Optimize bundle size
   experimental: {

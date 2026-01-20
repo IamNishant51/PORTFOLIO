@@ -3,25 +3,31 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import Preloader from "./components/Preloader";
 import Hero from "./components/Hero";
+import About from "./components/About";
 import Cursor from "./components/Cursor";
 import ThemeToggle from "./components/ThemeToggle";
 
-// Lazy load components that are not critical for initial render
+// Lazy load non-critical components
 const ProjectList = dynamic(() => import("./components/ProjectList"), {
+  ssr: false,
   loading: () => <div className="min-h-screen bg-black" />,
 });
 const SkillsMarquee = dynamic(() => import("./components/SkillsMarquee"), {
+  ssr: false,
   loading: () => <div className="min-h-[50vh] bg-white dark:bg-black" />,
 });
 const Contact = dynamic(() => import("./components/Contact"), {
+  ssr: false,
   loading: () => <div className="min-h-screen bg-black" />,
 });
 const Footer = dynamic(() => import("./components/Footer"));
 const Testimonials = dynamic(() => import("./components/Testimonials"), {
+  ssr: false,
   loading: () => <div className="min-h-screen bg-white dark:bg-black" />,
 });
-const FloatingMenu = dynamic(() => import("./components/FloatingMenu"));
-const ScrollToTop = dynamic(() => import("./components/ScrollToTop"));
+const FloatingMenu = dynamic(() => import("./components/FloatingMenu"), { ssr: false });
+const ScrollToTop = dynamic(() => import("./components/ScrollToTop"), { ssr: false });
+const QuickLinks = dynamic(() => import("./components/QuickLinks"), { ssr: false });
 
 export default function Home() {
   const [timelineComplete, setTimelineComplete] = useState(false);
@@ -42,12 +48,14 @@ export default function Home() {
           <ThemeToggle />
           <FloatingMenu />
           <ScrollToTop />
+          <QuickLinks />
         </>
       )}
 
       {/* Main Content Wrapper - Z-Index 10 to scroll OVER the footer */}
       <div className="relative z-10 bg-white dark:bg-black shadow-2xl">
         <Hero />
+        <About />
         <section id="projects" className="bg-black dark:bg-black text-white" aria-label="Projects">
           <ProjectList />
         </section>

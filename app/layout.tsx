@@ -14,8 +14,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Nishant Unavane - Full-Stack Developer Portfolio",
-  description: "Full-Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies. Creating stunning digital experiences with code and creativity.",
-  keywords: ["Nishant Unavane", "Full-Stack Developer", "React Developer", "Next.js", "TypeScript", "Web Developer", "Frontend Developer", "Backend Developer", "Portfolio", "GSAP", "Tailwind CSS"],
+  description: "Hey! I'm Nishant, a passionate Full-Stack Developer who loves building VS Code extensions and modern web apps. Turning coffee into code, one project at a time. ☕",
+  keywords: ["Nishant Unavane", "Full-Stack Developer", "VS Code Extension Developer", "React Developer", "Next.js", "TypeScript", "Web Developer", "Frontend Developer", "Backend Developer", "Portfolio", "GSAP", "Tailwind CSS", "Node.js", "MongoDB"],
   authors: [{ name: "Nishant Unavane" }],
   creator: "Nishant Unavane",
   publisher: "Nishant Unavane",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://nishant-unavane.vercel.app',
     title: "Nishant Unavane - Full-Stack Developer Portfolio",
-    description: "Full-Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies. Creating stunning digital experiences with code and creativity.",
+    description: "Hey! I'm Nishant, a passionate Full-Stack Developer who loves building VS Code extensions and modern web apps. Let's create something amazing together!",
     siteName: "Nishant Unavane Portfolio",
     images: [
       {

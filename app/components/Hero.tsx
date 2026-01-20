@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import TypingAnimation from "./TypingAnimation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -193,7 +194,7 @@ const Hero = () => {
 
                 {/* Subtext */}
                 <p ref={subtextRef} className="text-center mt-6 md:mt-12 text-xs md:text-base lg:text-lg opacity-0 max-w-md mx-auto px-4">
-                    Full-Stack Developer crafting digital experiences with code and creativity.
+                    <TypingAnimation />
                 </p>
 
                 {/* CTA Buttons */}
