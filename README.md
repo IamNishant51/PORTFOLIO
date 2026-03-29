@@ -2,6 +2,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+## Environment Variables
+
+Create a `.env.local` file in the project root with:
+
+```bash
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<db>?retryWrites=true&w=majority
+```
+
+Notes:
+
+- In development, if `MONGODB_URI` is not set, the app falls back to `mongodb://localhost:27017/`.
+- In production (including Vercel), `MONGODB_URI` is required.
+- For Vercel, add `MONGODB_URI` in Project Settings -> Environment Variables for Production (and Preview if needed), then redeploy.
+
 First, run the development server:
 
 ```bash

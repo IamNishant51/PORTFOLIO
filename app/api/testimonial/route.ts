@@ -1,6 +1,17 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
+function isDatabaseUnavailable(error: unknown) {
+    if (!(error instanceof Error)) {
+        return false;
+    }
+
+    return (
+        error.message.includes("MONGODB_URI is not set") ||
+        error.message.includes("ECONNREFUSED")
+    );
+}
+
 export async function GET() {
     try {
         const client = await clientPromise;
@@ -14,6 +25,14 @@ export async function GET() {
         return NextResponse.json(testimonials, { status: 200 });
     } catch (error) {
         console.error("Testimonial fetch error:", error);
+
+        if (isDatabaseUnavailable(error)) {
+            return NextResponse.json(
+                { error: "Database is not configured or currently unavailable" },
+                { status: 503 }
+            );
+        }
+
         return NextResponse.json(
             { error: "Failed to fetch testimonials" },
             { status: 500 }
@@ -54,6 +73,14 @@ export async function POST(request: Request) {
         );
     } catch (error) {
         console.error("Testimonial submission error:", error);
+
+        if (isDatabaseUnavailable(error)) {
+            return NextResponse.json(
+                { error: "Database is not configured or currently unavailable" },
+                { status: 503 }
+            );
+        }
+
         return NextResponse.json(
             { error: "Failed to submit testimonial" },
             { status: 500 }

@@ -1,7 +1,12 @@
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/';
+const isDevelopment = process.env.NODE_ENV === 'development';
+const uri = process.env.MONGODB_URI || (isDevelopment ? 'mongodb://localhost:27017/' : undefined);
 const options = {};
+
+if (!uri) {
+    throw new Error('MONGODB_URI is not set. Configure it in your deployment environment.');
+}
 
 // Declare global type for MongoDB client promise
 declare global {
