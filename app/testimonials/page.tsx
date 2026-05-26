@@ -116,9 +116,9 @@ const TestimonialsPage = () => {
     };
 
     return (
-        <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+        <main className="min-h-screen bg-white text-black">
             {/* Header */}
-            <section className="py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-16 border-b border-black/10 dark:border-white/10">
+            <section className="py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-16 border-b border-black/10">
                 <div className="max-w-7xl mx-auto">
                     <Link
                         href="/"
@@ -142,7 +142,7 @@ const TestimonialsPage = () => {
                         {/* Filter Button */}
                         <button
                             onClick={() => setShowFilterMenu(!showFilterMenu)}
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#CCFF00] text-black font-bold uppercase text-sm tracking-wider hover:bg-[#b3e600] transition-all duration-300 self-start lg:self-auto"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[black] text-black font-bold uppercase text-sm tracking-wider hover:bg-[black] transition-all duration-300 self-start lg:self-auto"
                         >
                             <Filter className="w-4 h-4" />
                             Filter by Date
@@ -151,10 +151,10 @@ const TestimonialsPage = () => {
 
                     {/* Filter Menu */}
                     {showFilterMenu && (
-                        <div className="mt-8 p-6 md:p-8 border-2 border-[#CCFF00] bg-white dark:bg-black relative">
+                        <div className="mt-8 p-6 md:p-8 border-2 border-[black] bg-white relative">
                             <button
                                 onClick={() => setShowFilterMenu(false)}
-                                className="absolute top-4 right-4 p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                                className="absolute top-4 right-4 p-2 hover:bg-black/5 rounded-full transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -168,8 +168,8 @@ const TestimonialsPage = () => {
                                 <button
                                     onClick={() => setDateFilter("all")}
                                     className={`px-4 py-3 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${dateFilter === "all"
-                                            ? "bg-[#CCFF00] text-black"
-                                            : "border-2 border-black/20 dark:border-white/20 hover:border-[#CCFF00]"
+                                            ? "bg-[black] text-black"
+                                            : "border-2 border-black/20 hover:border-[black]"
                                         }`}
                                 >
                                     All Time
@@ -177,8 +177,8 @@ const TestimonialsPage = () => {
                                 <button
                                     onClick={() => setDateFilter("today")}
                                     className={`px-4 py-3 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${dateFilter === "today"
-                                            ? "bg-[#CCFF00] text-black"
-                                            : "border-2 border-black/20 dark:border-white/20 hover:border-[#CCFF00]"
+                                            ? "bg-[black] text-black"
+                                            : "border-2 border-black/20 hover:border-[black]"
                                         }`}
                                 >
                                     Today
@@ -186,8 +186,8 @@ const TestimonialsPage = () => {
                                 <button
                                     onClick={() => setDateFilter("week")}
                                     className={`px-4 py-3 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${dateFilter === "week"
-                                            ? "bg-[#CCFF00] text-black"
-                                            : "border-2 border-black/20 dark:border-white/20 hover:border-[#CCFF00]"
+                                            ? "bg-[black] text-black"
+                                            : "border-2 border-black/20 hover:border-[black]"
                                         }`}
                                 >
                                     Last 7 Days
@@ -195,8 +195,8 @@ const TestimonialsPage = () => {
                                 <button
                                     onClick={() => setDateFilter("month")}
                                     className={`px-4 py-3 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${dateFilter === "month"
-                                            ? "bg-[#CCFF00] text-black"
-                                            : "border-2 border-black/20 dark:border-white/20 hover:border-[#CCFF00]"
+                                            ? "bg-[black] text-black"
+                                            : "border-2 border-black/20 hover:border-[black]"
                                         }`}
                                 >
                                     Last 30 Days
@@ -204,8 +204,8 @@ const TestimonialsPage = () => {
                                 <button
                                     onClick={() => setDateFilter("custom")}
                                     className={`px-4 py-3 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${dateFilter === "custom"
-                                            ? "bg-[#CCFF00] text-black"
-                                            : "border-2 border-black/20 dark:border-white/20 hover:border-[#CCFF00]"
+                                            ? "bg-[black] text-black"
+                                            : "border-2 border-black/20 hover:border-[black]"
                                         }`}
                                 >
                                     Custom Range
@@ -214,14 +214,14 @@ const TestimonialsPage = () => {
 
                             {/* Custom Date Range */}
                             {dateFilter === "custom" && (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-black/10 dark:border-white/10">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-black/10">
                                     <div>
                                         <label className="block text-sm font-medium mb-2">Start Date</label>
                                         <input
                                             type="date"
                                             value={startDate}
                                             onChange={(e) => setStartDate(e.target.value)}
-                                            className="w-full bg-transparent border-2 border-black/20 dark:border-white/20 px-4 py-3 focus:border-[#CCFF00] focus:outline-none transition-colors"
+                                            className="w-full bg-transparent border-2 border-black/20 px-4 py-3 focus:border-[black] focus:outline-none transition-colors"
                                         />
                                     </div>
                                     <div>
@@ -230,13 +230,13 @@ const TestimonialsPage = () => {
                                             type="date"
                                             value={endDate}
                                             onChange={(e) => setEndDate(e.target.value)}
-                                            className="w-full bg-transparent border-2 border-black/20 dark:border-white/20 px-4 py-3 focus:border-[#CCFF00] focus:outline-none transition-colors"
+                                            className="w-full bg-transparent border-2 border-black/20 px-4 py-3 focus:border-[black] focus:outline-none transition-colors"
                                         />
                                     </div>
                                     {(startDate || endDate) && (
                                         <button
                                             onClick={clearCustomDates}
-                                            className="sm:col-span-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:underline"
+                                            className="sm:col-span-2 px-4 py-2 text-sm text-red-600 hover:underline"
                                         >
                                             Clear Custom Dates
                                         </button>
@@ -253,7 +253,7 @@ const TestimonialsPage = () => {
                 <div className="max-w-7xl mx-auto">
                     {loading ? (
                         <div className="text-center py-20">
-                            <div className="inline-block w-16 h-16 border-4 border-[#CCFF00] border-t-transparent rounded-full animate-spin mb-4"></div>
+                            <div className="inline-block w-16 h-16 border-4 border-[black] border-t-transparent rounded-full animate-spin mb-4"></div>
                             <p className="text-lg opacity-50">Loading testimonials...</p>
                         </div>
                     ) : filteredTestimonials.length === 0 ? (
@@ -266,7 +266,7 @@ const TestimonialsPage = () => {
                             {dateFilter !== "all" && (
                                 <button
                                     onClick={() => setDateFilter("all")}
-                                    className="mt-4 px-6 py-3 bg-[#CCFF00] text-black font-bold uppercase text-sm tracking-wider hover:bg-[#b3e600] transition-all duration-300"
+                                    className="mt-4 px-6 py-3 bg-[black] text-black font-bold uppercase text-sm tracking-wider hover:bg-[black] transition-all duration-300"
                                 >
                                     Show All Testimonials
                                 </button>
@@ -282,16 +282,16 @@ const TestimonialsPage = () => {
                                 return (
                                     <div
                                         key={testimonialId}
-                                        className="group relative p-6 md:p-8 border-2 border-black/10 dark:border-white/10 hover:border-[#CCFF00] transition-all duration-500 hover:shadow-2xl bg-white dark:bg-black overflow-hidden"
+                                        className="group relative p-6 md:p-8 border-2 border-black/10 hover:border-[black] transition-all duration-500 hover:shadow-2xl bg-white overflow-hidden"
                                     >
-                                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-[#CCFF00] border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-[black] border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                         {/* Rating */}
                                         <div className="flex gap-1 mb-4">
                                             {[...Array(testimonial.rating)].map((_, i) => (
                                                 <svg
                                                     key={i}
-                                                    className="w-5 h-5 text-[#CCFF00]"
+                                                    className="w-5 h-5 text-[black]"
                                                     fill="currentColor"
                                                     viewBox="0 0 20 20"
                                                 >
@@ -308,7 +308,7 @@ const TestimonialsPage = () => {
                                         {/* Author Info */}
                                         <div className="flex items-center justify-between gap-4 flex-wrap">
                                             <div className="flex items-center gap-3">
-                                                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#CCFF00]">
+                                                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[black]">
                                                     <Image
                                                         src={avatarImage}
                                                         alt={`${testimonial.name} testimonial`}

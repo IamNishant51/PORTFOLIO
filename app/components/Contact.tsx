@@ -51,7 +51,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-24">
                     {/* Left Column - Heading */}
                     <div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase leading-[1.1] sm:leading-[0.9] mb-4 sm:mb-6">Let's build<br /><span className="text-white/40 dark:text-white/40">something great</span></h2>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase leading-[1.1] sm:leading-[0.9] mb-4 sm:mb-6">Let's build <span className="text-black">something great</span></h2>
                         <p className="text-xs sm:text-sm md:text-base opacity-50 max-w-sm">
                             Have a project in mind? I'd love to hear about it. Drop me a message and let's create something extraordinary together.
                         </p>
@@ -69,7 +69,7 @@ const Contact = () => {
                                 required
                                 className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 transition-colors"
                             />
-                            <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
+                            <div className="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-500 group-focus-within:w-full" />
                         </div>
                         <div className="relative border-b border-white/20 group">
                             <input
@@ -81,7 +81,7 @@ const Contact = () => {
                                 required
                                 className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 transition-colors"
                             />
-                            <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
+                            <div className="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-500 group-focus-within:w-full" />
                         </div>
                         <div className="relative border-b border-white/20 group">
                             <textarea
@@ -93,7 +93,7 @@ const Contact = () => {
                                 required
                                 className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 resize-none transition-colors"
                             />
-                            <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
+                            <div className="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-500 group-focus-within:w-full" />
                         </div>
 
                         <MagneticButton
@@ -105,7 +105,7 @@ const Contact = () => {
                                 tracking-widest font-bold overflow-hidden
                                 transition-all duration-500 active:scale-95
                                 ${status === "sending" ? "bg-white text-black border-white cursor-wait" : ""}
-                                ${status === "success" ? "bg-[#CCFF00] text-black border-[#CCFF00]" : ""}
+                                ${status === "success" ? "bg-black text-black border-black" : ""}
                                 ${status === "error" ? "bg-red-500 text-white border-red-500" : ""}
                                 ${status === "idle" ? "bg-white text-black border-white" : ""}
                             `}
@@ -113,8 +113,8 @@ const Contact = () => {
                             {/* Hover animation background */}
                             {status === "idle" && (
                                 <>
-                                    <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
-                                    <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
+                                    <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
+                                    <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
                                         <span className="text-black font-bold">Send Email</span>
                                     </span>
                                 </>
@@ -147,7 +147,7 @@ const Contact = () => {
                             href="https://github.com/IamNishant51"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
                         >
                             <Github className="w-5 h-5 text-white group-hover:text-black transition-colors" />
                             <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">GitHub</span>
@@ -156,14 +156,14 @@ const Contact = () => {
                             href="https://www.linkedin.com/in/nishant-unavane-008291275/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
                         >
                             <Linkedin className="w-5 h-5 text-white group-hover:text-black transition-colors" />
                             <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">LinkedIn</span>
                         </a>
                         <a
                             href="mailto:nishant.unavane@outlook.com"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
                         >
                             <Mail className="w-5 h-5 text-white group-hover:text-black transition-colors" />
                             <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">Email</span>
@@ -172,7 +172,7 @@ const Contact = () => {
                             href="https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] rounded-full transition-all duration-300 hover:scale-105"
+                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
                         >
                             <Download className="w-5 h-5 text-white group-hover:text-black transition-colors" />
                             <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">Resume</span>

@@ -117,7 +117,7 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
             {/* Animated background elements */}
             <div className="absolute inset-0 opacity-[0.02]">
                 <div className="w-full h-full" style={{
-                    backgroundImage: 'linear-gradient(to right, #CCFF00 1px, transparent 1px), linear-gradient(to bottom, #CCFF00 1px, transparent 1px)',
+                    backgroundImage: 'linear-gradient(to right, black 1px, transparent 1px), linear-gradient(to bottom, black 1px, transparent 1px)',
                     backgroundSize: '60px 60px',
                     animation: 'gridSlide 30s linear infinite'
                 }} />
@@ -152,7 +152,7 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
                     {/* Loading bar container */}
                     <div ref={progressBarRef} className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mb-4 origin-left">
                         <div
-                            className="h-full bg-gradient-to-r from-[#CCFF00] to-[#A0D900] transition-all duration-300 ease-out rounded-full relative"
+                            className="h-full bg-gradient-to-r from-[black] to-[#A0D900] transition-all duration-300 ease-out rounded-full relative"
                             style={{ width: `${percentage}%` }}
                         >
                             <div className="absolute inset-0 bg-white/30 animate-pulse" />
@@ -169,7 +169,7 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
                                             percentage < 100 ? 'Almost There...' : 'Complete'}
                             </span>
                         </div>
-                        <div ref={textRef} className="text-3xl sm:text-4xl md:text-5xl font-black tabular-nums text-[#CCFF00]">
+                        <div ref={textRef} className="text-3xl sm:text-4xl md:text-5xl font-black tabular-nums text-[black]">
                             {Math.min(percentage, 100)}
                             <span className="text-2xl sm:text-3xl md:text-4xl">%</span>
                         </div>
@@ -179,8 +179,8 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
 
             {/* Bottom corner decorations */}
             <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 w-12 h-12 md:w-16 md:h-16 border-2 border-white/10" />
-            <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 w-12 h-12 md:w-16 md:h-16 border-2 border-[#CCFF00]/20">
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-[#CCFF00]" />
+            <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 w-12 h-12 md:w-16 md:h-16 border-2 border-[black]/20">
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-[black]" />
             </div>
 
             <style jsx>{`

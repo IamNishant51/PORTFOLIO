@@ -63,7 +63,7 @@ const SkillsMarquee = () => {
     }, []);
 
     return (
-        <section className="py-8 sm:py-10 md:py-16 lg:py-20 bg-white dark:bg-black text-black dark:text-white overflow-hidden whitespace-nowrap">
+        <section className="py-8 sm:py-10 md:py-16 lg:py-20 bg-white text-black overflow-hidden whitespace-nowrap">
             <div
                 ref={marqueeRef}
                 className="flex items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16"
@@ -80,7 +80,7 @@ const SkillsMarquee = () => {
                                 sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, (max-width: 1024px) 96px, (max-width: 1280px) 112px, 128px"
                             />
                         </div>
-                        <span className="w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-[#CCFF00] rounded-full flex-shrink-0" />
+                        <span className="w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-[black] rounded-full flex-shrink-0" />
                     </div>
                 ))}
             </div>

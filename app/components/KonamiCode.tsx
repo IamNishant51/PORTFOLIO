@@ -34,7 +34,7 @@ const KonamiCode = () => {
         <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fadeIn">
             <div className="text-center space-y-6 animate-bounce">
                 <div className="text-8xl">🎮</div>
-                <h2 className="text-4xl md:text-6xl font-black text-[#CCFF00] uppercase">
+                <h2 className="text-4xl md:text-6xl font-black text-[black] uppercase">
                     You Found It!
                 </h2>
                 <p className="text-xl text-white/80">

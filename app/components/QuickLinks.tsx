@@ -54,13 +54,13 @@ const QuickLinks = () => {
             icon: Mail,
             label: "Email",
             href: "mailto:nishant.unavane@outlook.com",
-            color: "#CCFF00"
+            color: "black"
         },
         {
             icon: Download,
             label: "Resume",
             href: "https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf",
-            color: "#FF6B6B",
+            color: "black",
             download: true
         },
     ];
@@ -84,13 +84,13 @@ const QuickLinks = () => {
                         target={link.download ? "_blank" : "_blank"}
                         rel="noopener noreferrer"
                         download={link.download}
-                        className="quick-link group relative w-11 h-11 sm:w-12 sm:h-12 bg-white dark:bg-black border-2 border-black dark:border-white rounded-full flex items-center justify-center hover:bg-[#CCFF00] hover:border-[#CCFF00] transition-all duration-300 hover:scale-110"
+                        className="quick-link group relative w-11 h-11 sm:w-12 sm:h-12 bg-white border-2 border-black rounded-full flex items-center justify-center hover:bg-[black] hover:border-[black] transition-all duration-300 hover:scale-110"
                         aria-label={link.label}
                     >
-                        <Icon className="w-5 h-5 text-black dark:text-white group-hover:text-black transition-colors duration-300" />
+                        <Icon className="w-5 h-5 text-black group-hover:text-black transition-colors duration-300" />
 
                         {/* Tooltip */}
-                        <span className="absolute left-full ml-4 bg-black dark:bg-white text-white dark:text-black px-3 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 hidden sm:inline">
+                        <span className="absolute left-full ml-4 bg-white text-black px-3 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 hidden sm:inline">
                             {link.label}
                         </span>
                     </a>

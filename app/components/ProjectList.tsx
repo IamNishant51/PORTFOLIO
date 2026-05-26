@@ -138,8 +138,8 @@ const ProjectList = () => {
     return (
         <section className="py-16 sm:py-16 md:py-24 lg:py-32 pb-32 sm:pb-16 bg-black text-white relative z-10 px-4 sm:px-6 md:px-8 lg:px-16">
             <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 sm:mb-12 md:mb-16 border-b border-white/10 dark:border-white/10 pb-6 sm:pb-8">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white/40 dark:text-white/40">Selected Work</h2>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 sm:mb-12 md:mb-16 border-b border-white/10 pb-6 sm:pb-8">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-black">Work</h2>
                     <p className="text-xs sm:text-sm opacity-50 mt-3 sm:mt-4 md:mt-0 max-w-xs">Featured projects and experiments</p>
                 </div>
 
@@ -150,8 +150,8 @@ const ProjectList = () => {
                             key={category}
                             onClick={() => setFilter(category)}
                             className={`px-4 py-2 text-xs md:text-sm font-medium uppercase tracking-wider border transition-all duration-300 ${filter === category
-                                ? "bg-[#CCFF00] text-black border-[#CCFF00]"
-                                : "bg-transparent text-white/60 border-white/20 hover:border-[#CCFF00] hover:text-[#CCFF00]"
+                                ? "bg-[black] text-black border-[black]"
+                                : "bg-transparent text-white/60 border-white/20 hover:border-[black] hover:text-[black]"
                                 }`}
                         >
                             {category}
@@ -163,14 +163,14 @@ const ProjectList = () => {
                     {filteredProjects.map((project, index) => (
                         <li
                             key={project.id}
-                            className="border-b border-white/10 pb-4 sm:pb-6 md:pb-8 cursor-pointer group transition-all duration-500 hover:pl-2 sm:hover:pl-4 hover:border-[#CCFF00]/30 hover:bg-white/[0.02] active:scale-[0.99]"
+                            className="border-b border-white/10 pb-4 sm:pb-6 md:pb-8 cursor-pointer group transition-all duration-500 hover:pl-2 sm:hover:pl-4 hover:border-[black]/30 hover:bg-white/[0.02] active:scale-[0.99]"
                             onMouseEnter={() => setHoveredProject(project.id)}
                             onMouseLeave={() => setHoveredProject(null)}
                             onClick={() => setSelectedProject(project)}
                         >
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
                                 <div className="flex items-baseline gap-3 sm:gap-4 md:gap-8">
-                                    <span className="text-xs sm:text-sm md:text-base font-mono opacity-30 group-hover:opacity-100 group-hover:text-[#CCFF00] transition-all duration-300 group-hover:scale-110">
+                                    <span className="text-xs sm:text-sm md:text-base font-mono opacity-30 group-hover:opacity-100 group-hover:text-[black] transition-all duration-300 group-hover:scale-110">
                                         0{index + 1}
                                     </span>
                                     <h3 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase tracking-tight transition-all duration-300 group-hover:text-white/60 group-hover:tracking-tighter break-words">
@@ -178,12 +178,12 @@ const ProjectList = () => {
                                     </h3>
                                 </div>
                                 <div className="flex items-center gap-3 sm:gap-4 ml-8 sm:ml-0">
-                                    <span className="text-xs sm:text-sm md:text-base uppercase tracking-widest opacity-40 group-hover:opacity-100 group-hover:text-[#CCFF00] transition-all duration-300 whitespace-nowrap">
+                                    <span className="text-xs sm:text-sm md:text-base uppercase tracking-widest opacity-40 group-hover:opacity-100 group-hover:text-[black] transition-all duration-300 whitespace-nowrap">
                                         {project.category}
                                     </span>
-                                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:border-[#CCFF00] group-hover:rotate-90 transition-all duration-500 flex-shrink-0">
+                                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:border-[black] group-hover:rotate-90 transition-all duration-500 flex-shrink-0">
                                         <svg
-                                            className="w-3 h-3 sm:w-4 sm:h-4 group-hover:text-[#CCFF00]"
+                                            className="w-3 h-3 sm:w-4 sm:h-4 group-hover:text-[black]"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -201,7 +201,7 @@ const ProjectList = () => {
             {/* Floating Image Reveal */}
             <div
                 ref={revealRef}
-                className="fixed top-0 left-0 w-[250px] h-[250px] pointer-events-none z-20 overflow-hidden opacity-0 scale-0 hidden md:block rounded-full border-4 border-[#CCFF00]/50 shadow-lg shadow-[#CCFF00]/20"
+                className="fixed top-0 left-0 w-[250px] h-[250px] pointer-events-none z-20 overflow-hidden opacity-0 scale-0 hidden md:block rounded-full border-4 border-[black]/50 shadow-lg shadow-[black]/20"
             >
                 {filteredProjects.map((project) => (
                     <div
@@ -263,7 +263,7 @@ const ProjectList = () => {
                             <div className="p-4 sm:p-6 md:p-10">
                                 {/* Category & Number */}
                                 <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-4">
-                                    <span className="text-xs sm:text-sm font-mono text-[#CCFF00]">
+                                    <span className="text-xs sm:text-sm font-mono text-[black]">
                                         0{selectedProject.id}
                                     </span>
                                     <span className="text-xs sm:text-sm uppercase tracking-widest text-white/50">
@@ -301,7 +301,7 @@ const ProjectList = () => {
                                 href={selectedProject.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-2 sm:gap-3 w-full px-4 py-3 sm:py-3 md:px-8 md:py-4 bg-[#CCFF00] text-black font-bold uppercase tracking-wider text-xs sm:text-sm md:text-base hover:bg-white transition-colors duration-300 group"
+                                className="flex items-center justify-center gap-2 sm:gap-3 w-full px-4 py-3 sm:py-3 md:px-8 md:py-4 bg-[black] text-black font-bold uppercase tracking-wider text-xs sm:text-sm md:text-base hover:bg-white transition-colors duration-300 group"
                             >
                                 <svg className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />

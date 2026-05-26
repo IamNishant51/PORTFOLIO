@@ -148,7 +148,7 @@ const Hero = () => {
     return (
         <section
             ref={containerRef}
-            className="min-h-screen w-full flex items-center justify-center bg-white dark:bg-black text-black dark:text-white overflow-hidden relative px-6 md:px-8 lg:px-16 py-16 md:py-20 pb-24 md:pb-28"
+            className="min-h-screen w-full flex items-center justify-center bg-white text-black overflow-hidden relative px-6 md:px-8 lg:px-16 py-16 md:py-20 pb-24 md:pb-28"
         >
             <div className="w-full max-w-7xl mx-auto z-10">
                 {/* Hero Image with brutalist frame */}
@@ -160,11 +160,11 @@ const Hero = () => {
                     className="relative w-44 h-44 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-6 md:mb-12 group cursor-pointer block isolate"
                 >
                     {/* Neon accent offset frame */}
-                    <div className="absolute inset-0 bg-[#CCFF00] translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3 sm:group-hover:translate-x-4 sm:group-hover:translate-y-4" />
+                    <div className="absolute inset-0 bg-black translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3 sm:group-hover:translate-x-4 sm:group-hover:translate-y-4" />
                     {/* Black border frame */}
-                    <div className="absolute inset-0 border-2 md:border-4 border-black dark:border-white bg-white dark:bg-black transition-transform duration-300 group-hover:scale-105" />
+                    <div className="absolute inset-0 border-2 md:border-4 border-black bg-white transition-transform duration-300 group-hover:scale-105" />
                     {/* Image container */}
-                    <div className="relative w-full h-full overflow-hidden border-2 md:border-4 border-black dark:border-white">
+                    <div className="relative w-full h-full overflow-hidden border-2 md:border-4 border-black">
                         <Image
                             src="https://ik.imagekit.io/9pfz6g8ri/avatars/nishant.jpg"
                             alt="Nishant Unavane - Full-Stack Developer specializing in React, Next.js, and TypeScript"
@@ -175,13 +175,13 @@ const Hero = () => {
                         />
                     </div>
                     {/* Corner accents */}
-                    <div className="absolute -top-1 -left-1 w-3 h-3 md:w-4 md:h-4 bg-black dark:bg-white transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-black dark:bg-white transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
+                    <div className="absolute -top-1 -left-1 w-3 h-3 md:w-4 md:h-4 bg-white transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
+                    <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-white transition-all duration-300 group-hover:w-4 group-hover:h-4 md:group-hover:w-5 md:group-hover:h-5" />
                 </a>
 
                 {/* Name label */}
                 <div ref={nameLabelRef} className="flex justify-center mb-4 md:mb-8 opacity-0 relative z-20 pointer-events-none">
-                    <span className="text-[10px] md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 dark:text-white/50 border border-black/20 dark:border-white/20 px-3 py-1.5 md:px-4 md:py-2 hover:border-[#CCFF00] hover:text-[#CCFF00] hover:tracking-[0.4em] transition-all duration-500 cursor-default pointer-events-auto">
+                    <span className="text-[10px] md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 border border-black/20 px-3 py-1.5 md:px-4 md:py-2 hover:border-black hover:text-black hover:tracking-[0.4em] transition-all duration-500 cursor-default pointer-events-auto">
                         Nishant
                     </span>
                 </div>
@@ -189,7 +189,7 @@ const Hero = () => {
                 {/* Two-line headline with proper word breaks */}
                 <h1 className="text-[13vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] font-black leading-[0.85] tracking-[-0.04em] uppercase text-center overflow-hidden" style={{ transitionProperty: "none" }}>
                     <span ref={line1Ref} className="block" style={{ transitionProperty: "none" }}>CODE MEETS</span>
-                    <span ref={line2Ref} className="block text-gray-400 dark:text-gray-600" style={{ transitionProperty: "none" }}>CREATIVITY</span>
+                    <span ref={line2Ref} className="block text-gray-400" style={{ transitionProperty: "none" }}>CREATIVITY</span>
                 </h1>
 
                 {/* Subtext */}
@@ -204,13 +204,13 @@ const Hero = () => {
                             const contactSection = document.querySelector('section:has(form)');
                             contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }}
-                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold overflow-hidden hover:bg-transparent dark:hover:bg-transparent hover:text-black dark:hover:text-white active:scale-95"
+                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-white text-black border-2 border-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold overflow-hidden hover:bg-transparent hover:text-black active:scale-95"
                         style={{ transitionProperty: "transform, background-color, border-color", transitionDuration: "500ms" }}
                     >
                         <span className="relative z-10">Let's Talk</span>
-                        <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0"></div>
-                        <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10">
-                            <span className="text-black dark:text-black font-bold">Let's Talk</span>
+                        <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0"></div>
+                        <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10">
+                            <span className="text-black font-bold">Let's Talk</span>
                         </span>
                     </button>
 
@@ -219,7 +219,7 @@ const Hero = () => {
                         download="Nishant_Unavane_Resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 border-2 border-black dark:border-white text-black dark:text-white uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black active:scale-95 flex items-center justify-center gap-2 sm:gap-3"
+                        className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 border-2 border-black text-black uppercase text-xs sm:text-sm md:text-base tracking-widest font-bold hover:bg-black hover:text-white active:scale-95 flex items-center justify-center gap-2 sm:gap-3"
                         style={{ transitionProperty: "transform, background-color, border-color", transitionDuration: "500ms" }}
                     >
                         <span>Download CV</span>

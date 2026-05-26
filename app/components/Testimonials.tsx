@@ -103,7 +103,7 @@ const Testimonials = () => {
         <section
             ref={sectionRef}
             id="testimonials"
-            className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white dark:bg-black text-black dark:text-white px-4 sm:px-6 md:px-8 lg:px-16"
+            className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white text-black px-4 sm:px-6 md:px-8 lg:px-16"
             aria-label="Client Testimonials"
         >
             <div className="max-w-7xl mx-auto">
@@ -118,10 +118,10 @@ const Testimonials = () => {
                     </div>
                     <button
                         onClick={() => setShowForm(!showForm)}
-                        className="group relative px-6 py-3 bg-white dark:bg-white text-black border-2 border-white dark:border-white font-bold uppercase text-sm tracking-wider whitespace-nowrap self-start sm:self-auto rounded-full overflow-hidden transition-all duration-500 active:scale-95"
+                        className="group relative px-6 py-3 bg-white text-black border-2 border-white font-bold uppercase text-sm tracking-wider whitespace-nowrap self-start sm:self-auto rounded-full overflow-hidden transition-all duration-500 active:scale-95"
                     >
-                        <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
-                        <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
+                        <div className="absolute inset-0 bg-[black] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
+                        <span className="absolute inset-0 bg-[black] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
                             <span className="text-black font-bold">{showForm ? "Close Form" : "Leave Testimonial"}</span>
                         </span>
                         <span className="relative z-10">{showForm ? "Close Form" : "Leave Testimonial"}</span>
@@ -129,11 +129,11 @@ const Testimonials = () => {
                 </div>
 
                 {showForm && (
-                    <div className="mb-12 md:mb-16 p-6 md:p-8 lg:p-10 border-2 border-[#CCFF00] bg-white dark:bg-black">
+                    <div className="mb-12 md:mb-16 p-6 md:p-8 lg:p-10 border-2 border-[black] bg-white">
                         <h3 className="text-2xl md:text-3xl font-bold uppercase mb-6">Share Your Experience</h3>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="relative border-b border-black/20 dark:border-white/20 group">
+                                <div className="relative border-b border-black/20 group">
                                     <input
                                         type="text"
                                         name="name"
@@ -141,12 +141,12 @@ const Testimonials = () => {
                                         onChange={handleChange}
                                         placeholder="Your Name"
                                         required
-                                        className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 dark:placeholder:text-white/30 transition-colors"
+                                        className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 transition-colors"
                                         style={{ boxShadow: 'none' }}
                                     />
-                                    <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
+                                    <div className="absolute bottom-0 left-0 w-0 h-px bg-[black] transition-all duration-500 group-focus-within:w-full" />
                                 </div>
-                                <div className="relative border-b border-black/20 dark:border-white/20 group">
+                                <div className="relative border-b border-black/20 group">
                                     <input
                                         type="text"
                                         name="role"
@@ -154,13 +154,13 @@ const Testimonials = () => {
                                         onChange={handleChange}
                                         placeholder="Your Role/Company"
                                         required
-                                        className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 dark:placeholder:text-white/30 transition-colors"
+                                        className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 transition-colors"
                                         style={{ boxShadow: 'none' }}
                                     />
-                                    <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
+                                    <div className="absolute bottom-0 left-0 w-0 h-px bg-[black] transition-all duration-500 group-focus-within:w-full" />
                                 </div>
                             </div>
-                            <div className="relative border-b border-black/20 dark:border-white/20 group">
+                            <div className="relative border-b border-black/20 group">
                                 <textarea
                                     name="message"
                                     value={formData.message}
@@ -168,10 +168,10 @@ const Testimonials = () => {
                                     placeholder="Your Testimonial"
                                     rows={4}
                                     required
-                                    className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 dark:placeholder:text-white/30 resize-none transition-colors"
+                                    className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 resize-none transition-colors"
                                     style={{ boxShadow: 'none' }}
                                 />
-                                <div className="absolute bottom-0 left-0 w-0 h-px bg-[#CCFF00] transition-all duration-500 group-focus-within:w-full" />
+                                <div className="absolute bottom-0 left-0 w-0 h-px bg-[black] transition-all duration-500 group-focus-within:w-full" />
                             </div>
                             <div className="flex items-center gap-4">
                                 <label className="text-sm md:text-base font-medium">Rating:</label>
@@ -179,7 +179,7 @@ const Testimonials = () => {
                                     name="rating"
                                     value={formData.rating}
                                     onChange={handleChange}
-                                    className="bg-transparent border-2 border-black/20 dark:border-white/20 px-4 py-2 focus:border-[#CCFF00] focus:outline-none focus:ring-0 transition-colors"
+                                    className="bg-transparent border-2 border-black/20 px-4 py-2 focus:border-[black] focus:outline-none focus:ring-0 transition-colors"
                                 >
                                     <option value={5}>⭐⭐⭐⭐⭐ (5 stars)</option>
                                     <option value={4}>⭐⭐⭐⭐ (4 stars)</option>
@@ -194,7 +194,7 @@ const Testimonials = () => {
                                 className={`px-8 py-3 font-bold uppercase text-sm tracking-wider transition-all duration-300 ${status === "sending" ? "bg-gray-400 cursor-wait" :
                                     status === "success" ? "bg-green-500" :
                                         status === "error" ? "bg-red-500" :
-                                            "bg-[#CCFF00] hover:bg-[#b3e600]"
+                                            "bg-[black] hover:bg-[#b3e600]"
                                     } text-black`}
                             >
                                 {status === "sending" ? "Submitting..." :
@@ -225,15 +225,15 @@ const Testimonials = () => {
                                 <div
                                     key={testimonialId}
                                     ref={(el) => { if (el) cardsRef.current[index] = el; }}
-                                    className="group relative p-6 md:p-8 lg:p-10 border-2 border-black/10 dark:border-white/10 hover:border-[#CCFF00] transition-all duration-500 hover:shadow-2xl bg-white dark:bg-black overflow-hidden"
+                                    className="group relative p-6 md:p-8 lg:p-10 border-2 border-black/10 hover:border-[black] transition-all duration-500 hover:shadow-2xl bg-white overflow-hidden"
                                 >
-                                    <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-[#CCFF00] border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-[black] border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                     <div className="flex gap-1 mb-4">
                                         {[...Array(testimonial.rating)].map((_, i) => (
                                             <svg
                                                 key={i}
-                                                className="w-5 h-5 text-[#CCFF00]"
+                                                className="w-5 h-5 text-[black]"
                                                 fill="currentColor"
                                                 viewBox="0 0 20 20"
                                             >
@@ -247,7 +247,7 @@ const Testimonials = () => {
                                     </p>
 
                                     <div className="flex items-center gap-4">
-                                        <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#CCFF00]">
+                                        <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[black]">
                                             <Image
                                                 src={avatarImage}
                                                 alt={`${testimonial.name} testimonial`}
@@ -271,10 +271,10 @@ const Testimonials = () => {
                     <div className="mt-12 md:mt-16 text-center">
                         <Link
                             href="/testimonials"
-                            className="group relative inline-block px-8 py-4 bg-white dark:bg-white text-black border-2 border-white dark:border-white font-bold uppercase text-sm tracking-wider rounded-full overflow-hidden transition-all duration-500 active:scale-95"
+                            className="group relative inline-block px-8 py-4 bg-white text-black border-2 border-white font-bold uppercase text-sm tracking-wider rounded-full overflow-hidden transition-all duration-500 active:scale-95"
                         >
-                            <div className="absolute inset-0 bg-[#CCFF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
-                            <span className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
+                            <div className="absolute inset-0 bg-[black] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
+                            <span className="absolute inset-0 bg-[black] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
                                 <span className="text-black font-bold">See All Testimonials ({testimonialsList.length})</span>
                             </span>
                             <span className="relative z-10">See All Testimonials ({testimonialsList.length})</span>

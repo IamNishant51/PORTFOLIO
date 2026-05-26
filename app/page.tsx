@@ -13,7 +13,7 @@ const ProjectList = dynamic(() => import("./components/ProjectList"), {
 });
 const SkillsMarquee = dynamic(() => import("./components/SkillsMarquee"), {
   ssr: false,
-  loading: () => <div className="min-h-[50vh] bg-white dark:bg-black" />,
+  loading: () => <div className="min-h-[50vh] bg-white" />,
 });
 const Contact = dynamic(() => import("./components/Contact"), {
   ssr: false,
@@ -22,7 +22,7 @@ const Contact = dynamic(() => import("./components/Contact"), {
 const Footer = dynamic(() => import("./components/Footer"));
 const Testimonials = dynamic(() => import("./components/Testimonials"), {
   ssr: false,
-  loading: () => <div className="min-h-screen bg-white dark:bg-black" />,
+  loading: () => <div className="min-h-screen bg-white" />,
 });
 const FloatingMenu = dynamic(() => import("./components/FloatingMenu"), { ssr: false });
 const ScrollToTop = dynamic(() => import("./components/ScrollToTop"), { ssr: false });
@@ -49,17 +49,17 @@ export default function Home() {
       )}
 
       {/* Main Content Wrapper - Z-Index 10 to scroll OVER the footer */}
-      <div className="relative z-10 bg-white dark:bg-black shadow-2xl">
+      <div className="relative z-10 bg-white shadow-2xl">
         <Hero />
         <About />
-        <section id="projects" className="bg-black dark:bg-black text-white" aria-label="Projects">
+        <section id="projects" className="bg-black text-white" aria-label="Projects">
           <ProjectList />
         </section>
         <section id="skills" aria-label="Skills and Technologies">
           <SkillsMarquee />
         </section>
         <Testimonials />
-        <section id="contact" className="bg-black dark:bg-black text-white" aria-label="Contact">
+        <section id="contact" className="bg-black text-white" aria-label="Contact">
           <Contact />
         </section>
       </div>

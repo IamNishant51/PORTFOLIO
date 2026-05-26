@@ -30,11 +30,11 @@ const ScrollToTop = () => {
     return (
         <button
             onClick={scrollToTop}
-            className="fixed bottom-8 left-8 z-[9997] w-12 h-12 bg-[#CCFF00] border-2 border-black dark:border-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg hover:shadow-2xl group"
+            className="fixed bottom-8 left-8 z-[9997] w-12 h-12 bg-[black] border-2 border-black rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg hover:shadow-2xl group"
             aria-label="Scroll to top"
         >
             <svg
-                className="w-6 h-6 text-black dark:text-black transform group-hover:-translate-y-1 transition-transform duration-300"
+                className="w-6 h-6 text-black transform group-hover:-translate-y-1 transition-transform duration-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
