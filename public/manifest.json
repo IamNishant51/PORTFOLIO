@@ -4,8 +4,8 @@
     "description": "Full-Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#000000",
-    "theme_color": "#CCFF00",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
     "orientation": "portrait-primary",
     "icons": [
         {

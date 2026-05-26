@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // Using Inter as the variable font
+import { Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "./components/SmoothScrolling";
-import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -108,9 +107,7 @@ export default function RootLayout({
 
         {/* PWA */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#CCFF00" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A0A0A" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#CCFF00" />
+        <meta name="theme-color" content="#ffffff" />
 
         {/* Structured Data */}
         <script
@@ -118,12 +115,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} antialiased`} suppressHydrationWarning>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} storageKey="portfolio-theme">
-          <SmoothScrolling>
-            {children}
-          </SmoothScrolling>
-        </ThemeProvider>
+      <body className={`${inter.variable} antialiased bg-white text-black`} suppressHydrationWarning>
+        <SmoothScrolling>
+          {children}
+        </SmoothScrolling>
       </body>
     </html>
   );

@@ -35,7 +35,7 @@ const nextConfig: NextConfig = {
 
   // Optimize bundle size
   experimental: {
-    optimizePackageImports: ['gsap', 'lucide-react', 'three'],
+    optimizePackageImports: ['gsap', 'lucide-react'],
   },
 
   // Turbopack config (required for Next.js 16+)

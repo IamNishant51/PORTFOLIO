@@ -5,7 +5,6 @@ import Preloader from "./components/Preloader";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Cursor from "./components/Cursor";
-import ThemeToggle from "./components/ThemeToggle";
 
 // Lazy load non-critical components
 const ProjectList = dynamic(() => import("./components/ProjectList"), {
@@ -44,7 +43,6 @@ export default function Home() {
       <Cursor />
       {timelineComplete && (
         <>
-          <ThemeToggle />
           <FloatingMenu />
           <ScrollToTop />
         </>

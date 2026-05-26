@@ -1,7 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-const uri = process.env.MONGODB_URI || (isDevelopment ? 'mongodb://localhost:27017/' : undefined);
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/';
 const options = {};
 
 if (!uri) {
@@ -14,12 +13,12 @@ declare global {
 }
 
 let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
 
 if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
     global._mongoClientPromise = client.connect();
 }
-clientPromise = global._mongoClientPromise;
+
+const clientPromise = global._mongoClientPromise;
 
 export default clientPromise;
