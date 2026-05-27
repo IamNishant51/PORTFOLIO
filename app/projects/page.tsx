@@ -6,24 +6,12 @@ import ProjectCard from "@/app/components/projects/ProjectCard";
 import type { Project } from "@/lib/github";
 
 const fallbackProjects: Project[] = [
-  {
-    id: 1, name: "Ollama-Agent-vs-code-extension", description: "A powerful VS Code extension integrating Ollama AI models.", url: "https://github.com/IamNishant51/Ollama-Agent-vs-code-extension", stars: 12, forks: 3, language: "TypeScript", topics: ["vs-code", "ai", "ollama"], updatedAt: "", createdAt: "",
-  },
-  {
-    id: 2, name: "GIT-HUB-ACTIVITY-DASHBOARD-Vscode-extension", description: "Track GitHub contributions within VS Code.", url: "https://github.com/IamNishant51/GIT-HUB-ACTIVITY-DASHBOARD-Vscode-extension", stars: 8, forks: 2, language: "TypeScript", topics: ["vs-code", "github"], updatedAt: "", createdAt: "",
-  },
-  {
-    id: 3, name: "CODE-RUNNER-vscode-extension", description: "Execute code in 40+ languages with one click.", url: "https://github.com/IamNishant51/CODE-RUNNER-vscode-extension", stars: 15, forks: 4, language: "TypeScript", topics: ["vs-code", "code-runner"], updatedAt: "", createdAt: "",
-  },
-  {
-    id: 4, name: "API-TESTING-vs-code-extension-", description: "REST API testing tool built into VS Code.", url: "https://github.com/IamNishant51/API-TESTING-vs-code-extension-", stars: 6, forks: 1, language: "TypeScript", topics: ["vs-code", "api"], updatedAt: "", createdAt: "",
-  },
-  {
-    id: 5, name: "portfolio", description: "Personal portfolio website built with Next.js and Three.js.", url: "https://github.com/IamNishant51/PORTFOLIO", stars: 5, forks: 1, language: "TypeScript", topics: ["nextjs", "threejs", "portfolio"], updatedAt: "", createdAt: "",
-  },
-  {
-    id: 6, name: "claude-code-helper", description: "VS Code extension for AI-powered code assistance.", url: "https://github.com/IamNishant51", stars: 3, forks: 0, language: "TypeScript", topics: ["vs-code", "ai"], updatedAt: "", createdAt: "",
-  },
+  { id: 1, name: "Ollama-Agent-vs-code-extension", description: "A powerful VS Code extension integrating Ollama AI models.", url: "https://github.com/IamNishant51/Ollama-Agent-vs-code-extension", stars: 12, forks: 3, language: "TypeScript", topics: ["vs-code", "ai", "ollama"], updatedAt: "", createdAt: "" },
+  { id: 2, name: "GIT-HUB-ACTIVITY-DASHBOARD-Vscode-extension", description: "Track GitHub contributions within VS Code.", url: "https://github.com/IamNishant51/GIT-HUB-ACTIVITY-DASHBOARD-Vscode-extension", stars: 8, forks: 2, language: "TypeScript", topics: ["vs-code", "github"], updatedAt: "", createdAt: "" },
+  { id: 3, name: "CODE-RUNNER-vscode-extension", description: "Execute code in 40+ languages with one click.", url: "https://github.com/IamNishant51/CODE-RUNNER-vscode-extension", stars: 15, forks: 4, language: "TypeScript", topics: ["vs-code", "code-runner"], updatedAt: "", createdAt: "" },
+  { id: 4, name: "API-TESTING-vs-code-extension-", description: "REST API testing tool built into VS Code.", url: "https://github.com/IamNishant51/API-TESTING-vs-code-extension-", stars: 6, forks: 1, language: "TypeScript", topics: ["vs-code", "api"], updatedAt: "", createdAt: "" },
+  { id: 5, name: "portfolio", description: "Personal portfolio website built with Next.js and GSAP.", url: "https://github.com/IamNishant51/PORTFOLIO", stars: 5, forks: 1, language: "TypeScript", topics: ["nextjs", "gsap", "portfolio"], updatedAt: "", createdAt: "" },
+  { id: 6, name: "claude-code-helper", description: "VS Code extension for AI-powered code assistance.", url: "https://github.com/IamNishant51", stars: 3, forks: 0, language: "TypeScript", topics: ["vs-code", "ai"], updatedAt: "", createdAt: "" },
 ];
 
 export default function ProjectsPage() {
@@ -34,110 +22,83 @@ export default function ProjectsPage() {
   const [sortBy, setSortBy] = useState<"stars" | "updated" | "name">("stars");
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    (async () => {
       try {
         const mod = await import("@/lib/github");
         const all = await mod.getGithubProjects();
-        if (all.length > 0) {
-          setProjects(all);
-          setFiltered(all);
-        }
-      } catch {
-        // fallback
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjects();
+        if (all.length > 0) { setProjects(all); setFiltered(all); }
+      } catch { /* use fallback */ }
+      finally { setLoading(false); }
+    })();
   }, []);
 
-  const languages = Array.from(
-    new Set(projects.map((p) => p.language).filter(Boolean))
-  ) as string[];
+  const languages = Array.from(new Set(projects.map((p) => p.language).filter(Boolean))) as string[];
 
   useEffect(() => {
     let result = [...projects];
-    if (activeLanguage) {
-      result = result.filter((p) => p.language === activeLanguage);
-    }
-    switch (sortBy) {
-      case "stars":
-        result.sort((a, b) => b.stars - a.stars);
-        break;
-      case "name":
-        result.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case "updated":
-        result.sort(
-          (a, b) =>
-            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-        );
-        break;
-    }
+    if (activeLanguage) result = result.filter((p) => p.language === activeLanguage);
+    if (sortBy === "stars") result.sort((a, b) => b.stars - a.stars);
+    if (sortBy === "name") result.sort((a, b) => a.name.localeCompare(b.name));
+    if (sortBy === "updated") result.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
     setFiltered(result);
   }, [activeLanguage, sortBy, projects]);
 
   return (
-    <main className="min-h-screen bg-white bg-white text-black text-black">
-      <section id="projects" className="pt-20 sm:pt-24 md:pt-28 lg:pt-36 pb-16 sm:pb-20 md:pb-24 lg:pb-32 px-4 sm:px-6 md:px-8 lg:px-16 border-b border-black/10 border-black/10">
-        <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen" style={{ background: "var(--bg)", color: "var(--fg)" }}>
+      {/* Header */}
+      <section
+        className="pt-24 md:pt-32 pb-16 md:pb-20"
+        style={{ borderBottom: "1px solid var(--border)" }}
+      >
+        <div className="section-container">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 mb-8 text-sm md:text-base text-black/60 hover:text-black transition-colors"
+            className="inline-flex items-center gap-2 mb-10 text-mono"
+            style={{ color: "rgba(240,237,230,0.4)" }}
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </Link>
 
-          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-6">
-            <div>
-              <span className="text-xs md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 mb-2 block">
-                Archive
-              </span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight mb-4">
-                All Projects
-              </h1>
-              <p className="text-sm md:text-base text-black/50 text-black/50 max-w-2xl">
-                {filtered.length} {filtered.length === 1 ? "project" : "projects"}
-                {activeLanguage && ` in ${activeLanguage}`}
-              </p>
-            </div>
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-mono" style={{ color: "var(--accent)" }}>Archive</span>
+            <span className="w-8 h-px" style={{ background: "var(--accent)" }} />
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 mt-8">
-            <Filter className="w-4 h-4 text-black/40 text-black/40" />
-            <button
-              onClick={() => setActiveLanguage(null)}
-              className={`px-3 py-1.5 text-xs font-mono uppercase tracking-wider border transition-all duration-300 ${
-                !activeLanguage
-                  ? "bg-black text-white border-black"
-                  : "border-black/20 text-black/60 hover:border-black hover:text-black"
-              }`}
-            >
-              All
-            </button>
-            {languages.map((lang) => (
+          <h1 className="text-h1 mb-4" style={{ color: "var(--fg)" }}>
+            All <span style={{ color: "var(--accent)" }}>Projects</span>
+          </h1>
+          <p className="text-body" style={{ color: "rgba(240,237,230,0.4)" }}>
+            {filtered.length} {filtered.length === 1 ? "project" : "projects"}
+            {activeLanguage && ` in ${activeLanguage}`}
+          </p>
+
+          {/* Filters */}
+          <div className="flex flex-wrap items-center gap-3 mt-10">
+            <Filter className="w-4 h-4" style={{ color: "rgba(240,237,230,0.3)" }} />
+            {[null, ...languages].map((lang) => (
               <button
-                key={lang}
+                key={lang ?? "all"}
                 onClick={() => setActiveLanguage(lang)}
-                className={`px-3 py-1.5 text-xs font-mono uppercase tracking-wider border transition-all duration-300 ${
-                  activeLanguage === lang
-                    ? "bg-black text-white border-black"
-                    : "border-black/20 text-black/60 hover:border-black hover:text-black"
-                }`}
+                className="px-4 py-2 text-mono"
+                style={{
+                  background: activeLanguage === lang ? "var(--accent)" : "transparent",
+                  color: activeLanguage === lang ? "#000" : "rgba(240,237,230,0.5)",
+                  border: "1px solid",
+                  borderColor: activeLanguage === lang ? "var(--accent)" : "var(--border-mid)",
+                }}
               >
-                {lang}
+                {lang ?? "All"}
               </button>
             ))}
-            <div className="ml-auto flex items-center gap-2 text-xs text-black/40 text-black/40">
-              <span>Sort:</span>
+            <div className="ml-auto flex items-center gap-2">
+              <span className="text-mono" style={{ color: "rgba(240,237,230,0.3)" }}>Sort:</span>
               {(["stars", "updated", "name"] as const).map((s) => (
                 <button
                   key={s}
                   onClick={() => setSortBy(s)}
-                  className={`uppercase tracking-wider px-2 py-1 transition-colors ${
-                    sortBy === s ? "text-black" : "hover:text-black/70"
-                  }`}
+                  className="text-mono px-2 py-1"
+                  style={{ color: sortBy === s ? "var(--accent)" : "rgba(240,237,230,0.35)" }}
                 >
                   {s}
                 </button>
@@ -147,29 +108,34 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-16">
-        <div className="max-w-7xl mx-auto">
+      {/* Grid */}
+      <section className="py-16 md:py-24">
+        <div className="section-container">
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {Array.from({ length: 9 }).map((_, i) => (
                 <div
                   key={i}
-                  className="h-[200px] sm:h-[240px] bg-white/5 border border-white/10 animate-pulse"
+                  className="h-48 animate-pulse"
+                  style={{ background: "rgba(240,237,230,0.04)", border: "1px solid var(--border)" }}
                 />
               ))}
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-xl text-black/50">No projects found for this filter.</p>
+              <p className="text-body mb-6" style={{ color: "rgba(240,237,230,0.4)" }}>
+                No projects found for this filter.
+              </p>
               <button
                 onClick={() => setActiveLanguage(null)}
-                className="mt-4 px-6 py-3 bg-black text-white font-bold uppercase text-sm tracking-wider hover:bg-black/90 transition-all"
+                className="px-8 py-4 font-bold text-sm uppercase tracking-widest"
+                style={{ background: "var(--accent)", color: "#000" }}
               >
                 Clear Filter
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {filtered.map((project) => (
                 <ProjectCard key={project.id} project={project} variant="grid" />
               ))}

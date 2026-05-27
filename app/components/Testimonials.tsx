@@ -18,247 +18,241 @@ interface Testimonial {
     rating: number;
 }
 
-const Testimonials = () => {
+export default function Testimonials() {
     const sectionRef = useRef<HTMLElement>(null);
-    const cardsRef = useRef<HTMLDivElement[]>([]);
+    const headingRef = useRef<HTMLDivElement>(null);
+    const gridRef = useRef<HTMLDivElement>(null);
+
     const [showForm, setShowForm] = useState(false);
-    const [testimonialsList, setTestimonialsList] = useState<Testimonial[]>([]);
+    const [list, setList] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
-    const [formData, setFormData] = useState({
-        name: "",
-        role: "",
-        message: "",
-        rating: 5
-    });
+    const [formData, setFormData] = useState({ name: "", role: "", message: "", rating: 5 });
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-    // Fetch testimonials from database
     useEffect(() => {
-        const fetchTestimonials = async () => {
-            try {
-                const res = await fetch("/api/testimonial");
-                if (res.ok) {
-                    const data = await res.json();
-                    setTestimonialsList(data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch testimonials:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchTestimonials();
+        fetch("/api/testimonial")
+            .then((r) => r.ok ? r.json() : [])
+            .then(setList)
+            .catch(() => { })
+            .finally(() => setLoading(false));
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus("sending");
-
         try {
             const res = await fetch("/api/testimonial", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-
             if (res.ok) {
                 const data = await res.json();
                 setStatus("success");
-
-                const newTestimonial: Testimonial = {
-                    _id: data.testimonial._id,
-                    name: formData.name,
-                    role: formData.role,
-                    message: formData.message,
-                    rating: Number(formData.rating)
-                };
-                setTestimonialsList(prev => [newTestimonial, ...prev]);
-
+                setList((prev) => [{ _id: data.testimonial._id, ...formData, rating: Number(formData.rating) }, ...prev]);
                 setFormData({ name: "", role: "", message: "", rating: 5 });
-                setTimeout(() => {
-                    setStatus("idle");
-                    setShowForm(false);
-                }, 2000);
+                setTimeout(() => { setStatus("idle"); setShowForm(false); }, 2000);
             } else {
                 setStatus("error");
                 setTimeout(() => setStatus("idle"), 3000);
             }
-        } catch (error) {
+        } catch {
             setStatus("error");
             setTimeout(() => setStatus("idle"), 3000);
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    };
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(headingRef.current,
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1, ease: "power4.out",
+                    scrollTrigger: { trigger: headingRef.current, start: "top 85%", once: true }
+                }
+            );
+            if (gridRef.current) {
+                gsap.fromTo(Array.from(gridRef.current.children),
+                    { y: 40, opacity: 0 },
+                    {
+                        y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out",
+                        scrollTrigger: { trigger: gridRef.current, start: "top 85%", once: true }
+                    }
+                );
+            }
+        }, sectionRef);
+        return () => ctx.revert();
+    }, [list]);
 
     return (
         <section
             ref={sectionRef}
             id="testimonials"
-            className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white text-black px-4 sm:px-6 md:px-8 lg:px-16"
-            aria-label="Client Testimonials"
+            className="relative py-24 md:py-32 lg:py-40 overflow-hidden"
+            style={{ background: "var(--bg)" }}
         >
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-12 md:mb-16 lg:mb-20 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+            <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--border-hi)" }} />
+
+            <div className="section-container">
+                {/* Label */}
+                <div className="flex items-center gap-4 mb-12">
+                    <span className="text-caption" style={{ color: "var(--accent)" }}>05</span>
+                    <span className="w-12 h-px" style={{ background: "var(--accent)" }} />
+                    <span className="text-caption" style={{ color: "var(--color-muted-ash)" }}>Testimonials</span>
+                </div>
+
+                {/* Heading */}
+                <div ref={headingRef} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-16">
                     <div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-4">
-                            What People Say
+                        <h2 className="text-heading-lg mb-4" style={{ color: "var(--fg)" }}>
+                            What People<br />
+                            <span style={{ color: "var(--accent)" }}>Say</span>
                         </h2>
-                        <p className="text-sm md:text-base opacity-50 max-w-2xl">
-                            Don't just take my word for it. Here's what clients and collaborators have to say about working with me.
+                        <p className="text-body max-w-sm" style={{ color: "var(--color-muted-ash)" }}>
+                            Don&apos;t just take my word for it.
                         </p>
                     </div>
                     <button
                         onClick={() => setShowForm(!showForm)}
-                        className="group relative px-6 py-3 bg-white text-black border-2 border-white font-bold uppercase text-sm tracking-wider whitespace-nowrap self-start sm:self-auto rounded-full overflow-hidden transition-all duration-500 active:scale-95"
+                        className="btn-ghost-primary group flex items-center gap-3 px-6 py-3 font-medium text-sm tracking-wide self-start sm:self-auto"
                     >
-                        <div className="absolute inset-0 bg-[black] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
-                        <span className="absolute inset-0 bg-[black] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
-                            <span className="text-black font-bold">{showForm ? "Close Form" : "Leave Testimonial"}</span>
-                        </span>
-                        <span className="relative z-10">{showForm ? "Close Form" : "Leave Testimonial"}</span>
+                        {showForm ? "Close" : "Leave a Review"}
+                        <svg
+                            className="w-4 h-4 transition-transform duration-300 group-hover:rotate-45"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
                     </button>
                 </div>
 
+                {/* Form */}
                 {showForm && (
-                    <div className="mb-12 md:mb-16 p-6 md:p-8 lg:p-10 border-2 border-[black] bg-white">
-                        <h3 className="text-2xl md:text-3xl font-bold uppercase mb-6">Share Your Experience</h3>
+                    <div
+                        className="mb-16 p-8 md:p-10 animate-slideUp"
+                        style={{ border: "1px solid var(--border-hi)" }}
+                    >
+                        <h3 className="text-subheading mb-8" style={{ color: "var(--fg)" }}>Share Your Experience</h3>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="relative border-b border-black/20 group">
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        placeholder="Your Name"
-                                        required
-                                        className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 transition-colors"
-                                        style={{ boxShadow: 'none' }}
-                                    />
-                                    <div className="absolute bottom-0 left-0 w-0 h-px bg-[black] transition-all duration-500 group-focus-within:w-full" />
-                                </div>
-                                <div className="relative border-b border-black/20 group">
-                                    <input
-                                        type="text"
-                                        name="role"
-                                        value={formData.role}
-                                        onChange={handleChange}
-                                        placeholder="Your Role/Company"
-                                        required
-                                        className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 transition-colors"
-                                        style={{ boxShadow: 'none' }}
-                                    />
-                                    <div className="absolute bottom-0 left-0 w-0 h-px bg-[black] transition-all duration-500 group-focus-within:w-full" />
-                                </div>
+                                {["name", "role"].map((field) => (
+                                    <div key={field} className="relative group" style={{ borderBottom: "1px solid var(--border-hi)" }}>
+                                        <input
+                                            type="text"
+                                            name={field}
+                                            value={formData[field as "name" | "role"]}
+                                            onChange={(e) => setFormData((p) => ({ ...p, [field]: e.target.value }))}
+                                            placeholder={field === "name" ? "Your Name" : "Your Role / Company"}
+                                            required
+                                            className="w-full bg-transparent py-3 text-body focus:outline-none placeholder:opacity-30"
+                                            style={{ color: "var(--fg)" }}
+                                        />
+                                        <div
+                                            className="absolute bottom-0 left-0 w-0 h-px group-focus-within:w-full"
+                                            style={{ background: "var(--accent)", transition: "width 0.4s cubic-bezier(0.16,1,0.3,1) !important" }}
+                                        />
+                                    </div>
+                                ))}
                             </div>
-                            <div className="relative border-b border-black/20 group">
+                            <div className="relative group" style={{ borderBottom: "1px solid var(--border-hi)" }}>
                                 <textarea
                                     name="message"
                                     value={formData.message}
-                                    onChange={handleChange}
-                                    placeholder="Your Testimonial"
+                                    onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
+                                    placeholder="Your testimonial"
                                     rows={4}
                                     required
-                                    className="w-full bg-transparent py-3 text-sm md:text-base border-0 focus:outline-none focus:ring-0 focus:border-0 placeholder:text-black/30 resize-none transition-colors"
-                                    style={{ boxShadow: 'none' }}
+                                    className="w-full bg-transparent py-3 text-body focus:outline-none placeholder:opacity-30 resize-none"
+                                    style={{ color: "var(--fg)" }}
                                 />
-                                <div className="absolute bottom-0 left-0 w-0 h-px bg-[black] transition-all duration-500 group-focus-within:w-full" />
+                                <div
+                                    className="absolute bottom-0 left-0 w-0 h-px group-focus-within:w-full"
+                                    style={{ background: "var(--accent)", transition: "width 0.4s cubic-bezier(0.16,1,0.3,1) !important" }}
+                                />
                             </div>
                             <div className="flex items-center gap-4">
-                                <label className="text-sm md:text-base font-medium">Rating:</label>
+                                <span className="text-small" style={{ color: "rgba(240,237,230,0.5)" }}>Rating:</span>
                                 <select
                                     name="rating"
                                     value={formData.rating}
-                                    onChange={handleChange}
-                                    className="bg-transparent border-2 border-black/20 px-4 py-2 focus:border-[black] focus:outline-none focus:ring-0 transition-colors"
+                                    onChange={(e) => setFormData((p) => ({ ...p, rating: Number(e.target.value) }))}
+                                    className="bg-transparent text-small focus:outline-none"
+                                    style={{ border: "1px solid var(--border-hi)", color: "var(--fg)", padding: "8px 12px" }}
                                 >
-                                    <option value={5}>⭐⭐⭐⭐⭐ (5 stars)</option>
-                                    <option value={4}>⭐⭐⭐⭐ (4 stars)</option>
-                                    <option value={3}>⭐⭐⭐ (3 stars)</option>
-                                    <option value={2}>⭐⭐ (2 stars)</option>
-                                    <option value={1}>⭐ (1 star)</option>
+                                    {[5, 4, 3, 2, 1].map((n) => (
+                                        <option key={n} value={n} style={{ background: "var(--bg)" }}>
+                                            {"★".repeat(n)} ({n} star{n > 1 ? "s" : ""})
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <button
                                 type="submit"
                                 disabled={status === "sending"}
-                                className={`px-8 py-3 font-bold uppercase text-sm tracking-wider transition-all duration-300 ${status === "sending" ? "bg-gray-400 cursor-wait" :
-                                    status === "success" ? "bg-green-500" :
-                                        status === "error" ? "bg-red-500" :
-                                            "bg-[black] hover:bg-[#b3e600]"
-                                    } text-black`}
+                                className="btn-ghost-primary px-8 py-4 font-medium text-sm tracking-wide"
+                                style={{
+                                    borderColor: status === "success" ? "#22c55e" : status === "error" ? "#ef4444" : "var(--accent)",
+                                    color: status === "success" ? "#22c55e" : status === "error" ? "#ef4444" : "var(--fg)",
+                                    opacity: status === "sending" ? 0.7 : 1,
+                                    cursor: status === "sending" ? "wait" : "pointer",
+                                }}
                             >
-                                {status === "sending" ? "Submitting..." :
-                                    status === "success" ? "Submitted! ✓" :
-                                        status === "error" ? "Failed. Try Again" :
-                                            "Submit Testimonial"}
+                                {status === "sending" ? "Submitting…" : status === "success" ? "Submitted ✓" : status === "error" ? "Failed — Try Again" : "Submit"}
                             </button>
                         </form>
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
+                {/* Grid */}
+                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     {loading ? (
-                        <div className="col-span-full text-center py-12">
-                            <p className="text-lg opacity-50">Loading testimonials...</p>
+                        <div className="col-span-full py-16 text-center">
+                            <p className="text-body" style={{ color: "var(--color-muted-ash)" }}>Loading…</p>
                         </div>
-                    ) : testimonialsList.length === 0 ? (
-                        <div className="col-span-full text-center py-12">
-                            <p className="text-lg opacity-50">No testimonials yet. Be the first to share your experience!</p>
+                    ) : list.length === 0 ? (
+                        <div className="col-span-full py-16 text-center">
+                            <p className="text-body" style={{ color: "var(--color-muted-ash)" }}>
+                                No testimonials yet. Be the first!
+                            </p>
                         </div>
                     ) : (
-                        testimonialsList.slice(0, 4).map((testimonial, index) => {
-                            const displayText = testimonial.message || testimonial.text || "";
-                            const testimonialId = testimonial._id || testimonial.id || index;
-                            const avatarImage = testimonial.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=CCFF00&color=000`;
-
+                        list.slice(0, 4).map((t, i) => {
+                            const text = t.message || t.text || "";
+                            const key = t._id || t.id || i;
+                            const avatar = t.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=2563eb&color=ffffff`;
                             return (
                                 <div
-                                    key={testimonialId}
-                                    ref={(el) => { if (el) cardsRef.current[index] = el; }}
-                                    className="group relative p-6 md:p-8 lg:p-10 border-2 border-black/10 hover:border-[black] transition-all duration-500 hover:shadow-2xl bg-white overflow-hidden"
+                                    key={key}
+                                    className="group p-6 md:p-8 card-callout"
+                                    onMouseEnter={(e) => {
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hi)";
+                                    }}
                                 >
-                                    <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-[black] border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                    <div className="flex gap-1 mb-4">
-                                        {[...Array(testimonial.rating)].map((_, i) => (
-                                            <svg
-                                                key={i}
-                                                className="w-5 h-5 text-[black]"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
+                                    {/* Stars */}
+                                    <div className="flex gap-1 mb-5">
+                                        {Array.from({ length: t.rating }).map((_, si) => (
+                                            <svg key={si} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" style={{ color: "var(--accent)" }}>
                                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                             </svg>
                                         ))}
                                     </div>
 
-                                    <p className="text-sm md:text-base lg:text-lg leading-relaxed mb-6 opacity-80">
-                                        "{displayText}"
+                                    {/* Quote */}
+                                    <p className="text-body mb-6 leading-relaxed" style={{ color: "var(--color-muted-ash)" }}>
+                                        &ldquo;{text}&rdquo;
                                     </p>
 
-                                    <div className="flex items-center gap-4">
-                                        <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[black]">
-                                            <Image
-                                                src={avatarImage}
-                                                alt={`${testimonial.name} testimonial`}
-                                                fill
-                                                className="object-cover"
-                                                sizes="48px"
-                                            />
+                                    {/* Author */}
+                                    <div className="flex items-center gap-3">
+                                        <div className="relative w-10 h-10 overflow-hidden flex-shrink-0" style={{ border: "1px solid var(--border-hi)" }}>
+                                            <Image src={avatar} alt={t.name} fill className="object-cover" sizes="40px" />
                                         </div>
                                         <div>
-                                            <p className="font-bold text-sm md:text-base">{testimonial.name}</p>
-                                            <p className="text-xs md:text-sm opacity-50">{testimonial.role}</p>
+                                            <p className="text-small font-semibold" style={{ color: "var(--fg)" }}>{t.name}</p>
+                                            <p className="text-mono" style={{ color: "rgba(240,237,230,0.35)" }}>{t.role}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -267,23 +261,21 @@ const Testimonials = () => {
                     )}
                 </div>
 
-                {!loading && testimonialsList.length > 4 && (
-                    <div className="mt-12 md:mt-16 text-center">
+                {/* See all */}
+                {!loading && list.length > 4 && (
+                    <div className="mt-12 text-center">
                         <Link
                             href="/testimonials"
-                            className="group relative inline-block px-8 py-4 bg-white text-black border-2 border-white font-bold uppercase text-sm tracking-wider rounded-full overflow-hidden transition-all duration-500 active:scale-95"
+                            className="btn-ghost-primary group inline-flex items-center gap-3 px-8 py-4 font-medium text-sm tracking-wide"
                         >
-                            <div className="absolute inset-0 bg-[black] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
-                            <span className="absolute inset-0 bg-[black] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
-                                <span className="text-black font-bold">See All Testimonials ({testimonialsList.length})</span>
-                            </span>
-                            <span className="relative z-10">See All Testimonials ({testimonialsList.length})</span>
+                            See All ({list.length})
+                            <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
                         </Link>
                     </div>
                 )}
             </div>
         </section>
     );
-};
-
-export default Testimonials;
+}

@@ -5,71 +5,76 @@ import Preloader from "./components/Preloader";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Cursor from "./components/Cursor";
+import Navbar from "./components/layout/Navbar";
+import TransitionLayout from "./components/layout/TransitionLayout";
 
-// Lazy load non-critical components
+/* Lazy-load non-critical sections */
 const ProjectList = dynamic(() => import("./components/ProjectList"), {
   ssr: false,
-  loading: () => <div className="min-h-screen bg-black" />,
+  loading: () => (
+    <div className="min-h-screen" style={{ background: "var(--void-2,#12121A)" }} />
+  ),
 });
 const SkillsMarquee = dynamic(() => import("./components/SkillsMarquee"), {
   ssr: false,
-  loading: () => <div className="min-h-[50vh] bg-white" />,
+  loading: () => (
+    <div className="min-h-[50vh]" style={{ background: "var(--bg)" }} />
+  ),
+});
+const Testimonials = dynamic(() => import("./components/Testimonials"), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-screen" style={{ background: "var(--void-2,#12121A)" }} />
+  ),
 });
 const Contact = dynamic(() => import("./components/Contact"), {
   ssr: false,
-  loading: () => <div className="min-h-screen bg-black" />,
+  loading: () => (
+    <div className="min-h-screen" style={{ background: "var(--bg)" }} />
+  ),
 });
 const Footer = dynamic(() => import("./components/Footer"));
-const Testimonials = dynamic(() => import("./components/Testimonials"), {
-  ssr: false,
-  loading: () => <div className="min-h-screen bg-white" />,
-});
 const FloatingMenu = dynamic(() => import("./components/FloatingMenu"), { ssr: false });
 const ScrollToTop = dynamic(() => import("./components/ScrollToTop"), { ssr: false });
 
 export default function Home() {
-  const [timelineComplete, setTimelineComplete] = useState(false);
+  const [done, setDone] = useState(false);
   const [showPreloader, setShowPreloader] = useState(true);
 
-  const handlePreloaderComplete = () => {
-    setTimelineComplete(true);
-    // Remove preloader from DOM completely
+  const handleComplete = () => {
+    setDone(true);
     setTimeout(() => setShowPreloader(false), 100);
   };
 
   return (
-    <main className="relative w-full" role="main">
-      {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
-      <Cursor />
-      {timelineComplete && (
-        <>
-          <FloatingMenu />
-          <ScrollToTop />
-        </>
-      )}
+    <TransitionLayout>
+      <main className="relative w-full" role="main">
+        {showPreloader && <Preloader onComplete={handleComplete} />}
+        <Cursor />
 
-      {/* Main Content Wrapper - Z-Index 10 to scroll OVER the footer */}
-      <div className="relative z-10 bg-white shadow-2xl">
-        <Hero />
-        <About />
-        <section id="projects" className="bg-black text-white" aria-label="Projects">
+        {done && (
+          <>
+            <FloatingMenu />
+            <ScrollToTop />
+          </>
+        )}
+
+        {/* Navbar sits above everything */}
+        <Navbar />
+
+        {/* Main content — scrolls over the fixed footer */}
+        <div className="relative z-10" style={{ background: "var(--bg)" }}>
+          <Hero />
+          <About />
           <ProjectList />
-        </section>
-        <section id="skills" aria-label="Skills and Technologies">
           <SkillsMarquee />
-        </section>
-        <Testimonials />
-        <section id="contact" className="bg-black text-white" aria-label="Contact">
+          <Testimonials />
           <Contact />
-        </section>
-      </div>
+        </div>
 
-      {/* Fixed Footer - revealed by the margin-bottom of the last element in Content Wrapper */}
-      {/* Note: In Contact.tsx we added mb-[50vh] to the section itself. 
-          Alternatively, we can add it to the wrapper div or a spacer.
-          The Contact component has 'mb-[50vh]' so it creates the window.
-      */}
-      <Footer />
-    </main>
+        {/* Fixed footer revealed by Contact's mb-[50vh] */}
+        <Footer />
+      </main>
+    </TransitionLayout>
   );
 }

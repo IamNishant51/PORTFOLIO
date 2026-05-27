@@ -1,29 +1,36 @@
 "use client";
-import React, { useState } from "react";
-import MagneticButton from "./MagneticButton";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 
-const Contact = () => {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        message: ""
-    });
+gsap.registerPlugin(ScrollTrigger);
+
+const SOCIALS = [
+    { icon: Github, label: "GitHub", href: "https://github.com/IamNishant51" },
+    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/nishant-unavane-008291275/" },
+    { icon: Mail, label: "Email", href: "mailto:nishant.unavane@outlook.com" },
+    { icon: Download, label: "Resume", href: "https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf", download: true },
+];
+
+export default function Contact() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const headingRef = useRef<HTMLDivElement>(null);
+    const formRef = useRef<HTMLFormElement>(null);
+    const socialsRef = useRef<HTMLDivElement>(null);
+
+    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus("sending");
-
         try {
             const res = await fetch("/api/contact", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-
             if (res.ok) {
                 setStatus("success");
                 setFormData({ name: "", email: "", message: "" });
@@ -32,156 +39,191 @@ const Contact = () => {
                 setStatus("error");
                 setTimeout(() => setStatus("idle"), 3000);
             }
-        } catch (error) {
+        } catch {
             setStatus("error");
             setTimeout(() => setStatus("idle"), 3000);
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    };
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(headingRef.current,
+                { y: 60, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1, ease: "power4.out",
+                    scrollTrigger: { trigger: headingRef.current, start: "top 85%", once: true }
+                }
+            );
+            gsap.fromTo(formRef.current,
+                { y: 40, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 0.9, ease: "power3.out", delay: 0.15,
+                    scrollTrigger: { trigger: formRef.current, start: "top 85%", once: true }
+                }
+            );
+            if (socialsRef.current) {
+                gsap.fromTo(Array.from(socialsRef.current.children),
+                    { y: 30, opacity: 0 },
+                    {
+                        y: 0, opacity: 1, stagger: 0.08, duration: 0.7, ease: "power3.out",
+                        scrollTrigger: { trigger: socialsRef.current, start: "top 88%", once: true }
+                    }
+                );
+            }
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-black text-white relative z-10 mb-[50vh] px-4 sm:px-6 md:px-8 lg:px-16">
-            <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-24">
-                    {/* Left Column - Heading */}
-                    <div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase leading-[1.1] sm:leading-[0.9] mb-4 sm:mb-6">Let's build <span className="text-black">something great</span></h2>
-                        <p className="text-xs sm:text-sm md:text-base opacity-50 max-w-sm">
-                            Have a project in mind? I'd love to hear about it. Drop me a message and let's create something extraordinary together.
-                        </p>
-                    </div>
+        <section
+            ref={sectionRef}
+            id="contact"
+            className="relative py-24 md:py-32 lg:py-40 mb-[50vh] overflow-hidden"
+            style={{ background: "var(--bg)" }}
+        >
+            <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--border-hi)" }} />
 
-                    {/* Right Column - Form */}
-                    <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8 md:space-y-10">
-                        <div className="relative border-b border-white/20 group">
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name || ""}
-                                onChange={handleChange}
-                                placeholder="Your Name"
-                                required
-                                className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 transition-colors"
-                            />
-                            <div className="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-500 group-focus-within:w-full" />
-                        </div>
-                        <div className="relative border-b border-white/20 group">
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email || ""}
-                                onChange={handleChange}
-                                placeholder="Your Email"
-                                required
-                                className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 transition-colors"
-                            />
-                            <div className="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-500 group-focus-within:w-full" />
-                        </div>
-                        <div className="relative border-b border-white/20 group">
-                            <textarea
-                                name="message"
-                                value={formData.message || ""}
-                                onChange={handleChange}
-                                placeholder="Tell me about your project"
-                                rows={3}
-                                required
-                                className="w-full bg-transparent py-3 sm:py-4 text-sm sm:text-base md:text-lg lg:text-xl focus:outline-none placeholder:text-white/30 resize-none transition-colors"
-                            />
-                            <div className="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-500 group-focus-within:w-full" />
-                        </div>
+            {/* Decorative large text */}
+            <div
+                className="absolute bottom-0 left-0 right-0 text-display font-bold uppercase select-none pointer-events-none overflow-hidden leading-none"
+                style={{ color: "rgba(240,237,230,0.02)", lineHeight: 0.85 }}
+                aria-hidden="true"
+            >
+                CONTACT
+            </div>
 
-                        <MagneticButton
-                            type="submit"
-                            disabled={status === "sending"}
-                            className={`
-                                group relative w-full sm:w-auto px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 
-                                border-2 rounded-full uppercase text-xs sm:text-sm md:text-base 
-                                tracking-widest font-bold overflow-hidden
-                                transition-all duration-500 active:scale-95
-                                ${status === "sending" ? "bg-white text-black border-white cursor-wait" : ""}
-                                ${status === "success" ? "bg-black text-black border-black" : ""}
-                                ${status === "error" ? "bg-red-500 text-white border-red-500" : ""}
-                                ${status === "idle" ? "bg-white text-black border-white" : ""}
-                            `}
-                        >
-                            {/* Hover animation background */}
-                            {status === "idle" && (
-                                <>
-                                    <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left -z-0 rounded-full"></div>
-                                    <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 rounded-full">
-                                        <span className="text-black font-bold">Send Email</span>
-                                    </span>
-                                </>
-                            )}
-
-                            {/* Loading animation */}
-                            {status === "sending" && (
-                                <span className="absolute inset-0 flex items-center justify-center">
-                                    <span className="flex gap-1">
-                                        <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
-                                        <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                                        <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
-                                    </span>
-                                </span>
-                            )}
-
-                            {/* Button text */}
-                            <span className={`relative z-10 ${status === "sending" ? "invisible" : ""}`}>
-                                {status === "success" ? "Email Sent ✓" : status === "error" ? "Failed. Try Again" : "Send Email"}
-                            </span>
-                        </MagneticButton>
-                    </form>
+            <div className="section-container relative z-10">
+                {/* Label */}
+                <div className="flex items-center gap-4 mb-12">
+                    <span className="badge-neutral">06</span>
+                    <span className="w-12 h-px" style={{ background: "var(--border-hi)" }} />
+                    <span className="badge-neutral" style={{ color: "var(--fg)" }}>Contact</span>
                 </div>
 
-                {/* Social Links */}
-                <div className="mt-16 sm:mt-20 md:mt-24 pt-12 sm:pt-16 border-t border-white/10">
-                    <p className="text-xs sm:text-sm uppercase tracking-widest text-white/40 mb-6 sm:mb-8 text-center">Connect With Me</p>
-                    <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-                        <a
-                            href="https://github.com/IamNishant51"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
-                        >
-                            <Github className="w-5 h-5 text-white group-hover:text-black transition-colors" />
-                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">GitHub</span>
-                        </a>
-                        <a
-                            href="https://www.linkedin.com/in/nishant-unavane-008291275/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
-                        >
-                            <Linkedin className="w-5 h-5 text-white group-hover:text-black transition-colors" />
-                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">LinkedIn</span>
-                        </a>
-                        <a
-                            href="mailto:nishant.unavane@outlook.com"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
-                        >
-                            <Mail className="w-5 h-5 text-white group-hover:text-black transition-colors" />
-                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">Email</span>
-                        </a>
-                        <a
-                            href="https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-4 bg-white/5 hover:bg-black border border-white/20 hover:border-black rounded-full transition-all duration-300 hover:scale-105"
-                        >
-                            <Download className="w-5 h-5 text-white group-hover:text-black transition-colors" />
-                            <span className="text-sm sm:text-base font-medium text-white group-hover:text-black transition-colors">Resume</span>
-                        </a>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+                    {/* Left */}
+                    <div ref={headingRef}>
+                        <h2 className="text-heading-lg mb-6" style={{ color: "var(--fg)" }}>
+                            Let&apos;s build something<br />
+                            amazing
+                        </h2>
+                        <p className="text-body max-w-sm mb-12" style={{ color: "var(--color-muted-ash)" }}>
+                            Have a project in mind? I&apos;d love to hear about it. Drop me a message
+                            and let&apos;s create something extraordinary together.
+                        </p>
+
+                        {/* Socials */}
+                        <div ref={socialsRef} className="flex flex-wrap gap-3">
+                            {SOCIALS.map(({ icon: Icon, label, href, download }) => (
+                                <a
+                                    key={label}
+                                    href={href}
+                                    target={download ? "_blank" : undefined}
+                                    rel={download ? "noopener noreferrer" : undefined}
+                                    download={download ? "Nishant_Unavane_Resume.pdf" : undefined}
+                                    className="group btn-ghost-primary w-full md:w-auto"
+                                    style={{
+                                        borderColor: "rgba(255, 255, 255, 0.25)",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        const el = e.currentTarget as HTMLElement;
+                                        el.style.borderColor = "rgba(255, 255, 255, 0.5)";
+                                        el.style.background = "rgba(255, 255, 255, 0.05)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        const el = e.currentTarget as HTMLElement;
+                                        el.style.borderColor = "rgba(255, 255, 255, 0.25)";
+                                        el.style.background = "rgba(0, 0, 0, 0)";
+                                    }}
+                                >
+                                    <Icon className="w-4 h-4" />
+                                    {label}
+                                </a>
+                            ))}
+                        </div>
                     </div>
+
+                    {/* Right: Form */}
+                    <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
+                        {[
+                            { name: "name", type: "text", placeholder: "Your Name" },
+                            { name: "email", type: "email", placeholder: "Your Email" },
+                        ].map((field) => (
+                            <div key={field.name} className="relative group" style={{ borderBottom: "1px solid var(--border-hi)" }}>
+                                <input
+                                    type={field.type}
+                                    name={field.name}
+                                    value={formData[field.name as "name" | "email"]}
+                                    onChange={(e) => setFormData((p) => ({ ...p, [field.name]: e.target.value }))}
+                                    placeholder={field.placeholder}
+                                    required
+                                    className="w-full bg-transparent py-4 text-body focus:outline-none placeholder:opacity-30"
+                                    style={{ color: "var(--fg)" }}
+                                />
+                                <div
+                                    className="absolute bottom-0 left-0 w-0 h-px group-focus-within:w-full"
+                                    style={{ background: "var(--accent)", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1) !important" }}
+                                />
+                            </div>
+                        ))}
+
+                        <div className="relative group" style={{ borderBottom: "1px solid var(--border-hi)" }}>
+                            <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
+                                placeholder="Tell me about your project"
+                                rows={4}
+                                required
+                                className="w-full bg-transparent py-4 text-body focus:outline-none placeholder:opacity-30 resize-none"
+                                style={{ color: "var(--fg)" }}
+                            />
+                            <div
+                                className="absolute bottom-0 left-0 w-0 h-px group-focus-within:w-full"
+                                style={{ background: "var(--accent)", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1) !important" }}
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={status === "sending"}
+                            className="btn-ghost-primary w-full sm:w-auto"
+                            style={{
+                                background: status === "success" ? "rgba(34, 197, 94, 0.1)" : status === "error" ? "rgba(239, 68, 68, 0.1)" : "rgba(0, 0, 0, 0)",
+                                borderColor: status === "success" ? "rgba(34, 197, 94, 0.5)" : status === "error" ? "rgba(239, 68, 68, 0.5)" : "rgba(255, 255, 255, 0.25)",
+                                color: status === "success" ? "#86efac" : status === "error" ? "#fca5a5" : "var(--fg)",
+                                opacity: status === "sending" ? 0.7 : 1,
+                                cursor: status === "sending" ? "wait" : "pointer",
+                            }}
+                        >
+                            <span className="relative z-10 flex items-center gap-3">
+                                {status === "sending" ? (
+                                    <span className="flex gap-1">
+                                        {[0, 150, 300].map((d) => (
+                                            <span
+                                                key={d}
+                                                className="w-1.5 h-1.5 rounded-full animate-bounce"
+                                                style={{ background: "#000", animationDelay: `${d}ms` }}
+                                            />
+                                        ))}
+                                    </span>
+                                ) : status === "success" ? (
+                                    "Message Sent ✓"
+                                ) : status === "error" ? (
+                                    "Failed — Try Again"
+                                ) : (
+                                    <>
+                                        Send Message
+                                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                        </svg>
+                                    </>
+                                )}
+                            </span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
     );
-};
-
-export default Contact;
+}

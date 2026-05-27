@@ -1,82 +1,168 @@
 "use client";
-import React from "react";
-import { Code2, Sparkles, Rocket, Heart } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const About = () => {
-    const stats = [
-        { icon: Code2, label: "VS Code Extensions", value: "4+", color: "black" },
-        { icon: Sparkles, label: "Projects Completed", value: "15+", color: "black" },
-        { icon: Rocket, label: "Years Coding", value: "1+", color: "black" },
-        { icon: Heart, label: "Coffee Consumed", value: "∞", color: "black" },
-    ];
+gsap.registerPlugin(ScrollTrigger);
 
-    const journey = [
-        {
-            year: "2024 - Present",
-            title: "Full-Stack Developer",
-            description: "Building modern web applications with React, Next.js, and TypeScript. Creating VS Code extensions that enhance developer productivity.",
-            highlight: true
-        },
-        {
-            year: "2023",
-            title: "Frontend Developer",
-            description: "Mastered modern frontend frameworks and tools. Started contributing to open-source projects and building developer tools.",
-            highlight: false
-        },
-        {
-            year: "2022",
-            title: "Learning Journey",
-            description: "Dove deep into web development. Learned JavaScript, React, and started building projects to solidify my skills.",
-            highlight: false
-        }
-    ];
+const BELIEFS = ["Clean Code", "User Experience", "Continuous Learning", "Open Source", "Innovation"];
+
+const JOURNEY = [
+    {
+        year: "2024 — Present",
+        title: "Full-Stack Developer",
+        desc: "Building modern web applications with React, Next.js, and TypeScript. Creating VS Code extensions that enhance developer productivity.",
+        active: true,
+    },
+    {
+        year: "2023",
+        title: "Frontend Developer",
+        desc: "Mastered modern frontend frameworks and tools. Started contributing to open-source projects and building developer tools.",
+        active: false,
+    },
+    {
+        year: "2022",
+        title: "Learning Journey",
+        desc: "Dove deep into web development. Learned JavaScript, React, and started building projects to solidify my skills.",
+        active: false,
+    },
+];
+
+export default function About() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const headingRef = useRef<HTMLHeadingElement>(null);
+    const bioRef = useRef<HTMLDivElement>(null);
+    const statsRef = useRef<HTMLDivElement>(null);
+    const journeyRef = useRef<HTMLDivElement>(null);
+    const beliefsRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            /* Heading reveal */
+            gsap.fromTo(headingRef.current,
+                { y: 60, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1, ease: "power4.out",
+                    scrollTrigger: { trigger: headingRef.current, start: "top 85%", once: true },
+                }
+            );
+
+            /* Bio */
+            gsap.fromTo(bioRef.current,
+                { y: 40, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 0.9, ease: "power3.out",
+                    scrollTrigger: { trigger: bioRef.current, start: "top 85%", once: true },
+                }
+            );
+
+            /* Stats stagger */
+            if (statsRef.current) {
+                gsap.fromTo(Array.from(statsRef.current.children),
+                    { y: 40, opacity: 0 },
+                    {
+                        y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out",
+                        scrollTrigger: { trigger: statsRef.current, start: "top 85%", once: true },
+                    }
+                );
+            }
+
+            /* Journey items */
+            if (journeyRef.current) {
+                gsap.fromTo(Array.from(journeyRef.current.children),
+                    { x: -40, opacity: 0 },
+                    {
+                        x: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: "power3.out",
+                        scrollTrigger: { trigger: journeyRef.current, start: "top 85%", once: true },
+                    }
+                );
+            }
+
+            /* Beliefs */
+            if (beliefsRef.current) {
+                gsap.fromTo(Array.from(beliefsRef.current.children),
+                    { scale: 0.85, opacity: 0 },
+                    {
+                        scale: 1, opacity: 1, stagger: 0.07, duration: 0.6, ease: "back.out(1.4)",
+                        scrollTrigger: { trigger: beliefsRef.current, start: "top 88%", once: true },
+                    }
+                );
+            }
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
 
     return (
         <section
-            className="relative py-16 md:py-24 lg:py-32 bg-white text-black px-6 md:px-8 lg:px-16 overflow-hidden"
+            ref={sectionRef}
+            id="about"
+            className="relative py-24 md:py-32 lg:py-40 overflow-hidden"
+            style={{ background: "var(--bg)" }}
         >
-            <div className="max-w-7xl mx-auto">
-                {/* Section Header */}
-                <div className="mb-12 md:mb-20">
-                    <span className="text-xs md:text-sm font-mono uppercase tracking-[0.3em] text-black/50 mb-4 block">
-                        Get to know me
-                    </span>
-                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight">
-                        About <span className="text-[black]">Me</span>
-                    </h2>
+
+
+            <div className="section-container">
+                {/* ── Section label ── */}
+                <div className="flex items-center gap-4 mb-12">
+                    <span className="text-caption" style={{ color: "var(--accent)" }}>02</span>
+                    <span className="w-12 h-px" style={{ background: "var(--accent)" }} />
+                    <span className="text-caption" style={{ color: "var(--color-muted-ash)" }}>About</span>
                 </div>
 
-                {/* Main Content Grid */}
-                <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 mb-16 md:mb-24">
+                {/* ── Heading ── */}
+                <h2
+                    ref={headingRef}
+                    className="text-heading-lg mb-16 md:mb-24"
+                    style={{ color: "var(--fg)" }}
+                >
+                    Crafting{" "}
+                    <span style={{ color: "var(--accent)" }}>Digital</span>
+                    <br />
+                    Experiences
+                </h2>
+
+                {/* ── Main grid ── */}
+                <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 mb-20 md:mb-28">
                     {/* Bio */}
-                    <div className="space-y-6">
-                        <p className="text-lg md:text-xl leading-relaxed text-black/70">
-                            Hey! I'm <span className="font-bold text-black">Nishant Unavane</span>,
-                            a passionate developer who loves turning complex problems into elegant solutions.
+                    <div ref={bioRef} className="space-y-6">
+                        <p className="text-body" style={{ color: "var(--fg)" }}>
+                            Hey! I&apos;m{" "}
+                            <span className="font-semibold" style={{ color: "var(--fg)" }}>
+                                Nishant Unavane
+                            </span>
+                            , a passionate developer who loves turning complex problems into
+                            elegant solutions.
                         </p>
-                        <p className="text-base md:text-lg leading-relaxed text-black/60">
-                            My journey into tech started with curiosity and has evolved into a deep passion for creating
-                            tools that make developers' lives easier. I specialize in building{" "}
-                            <span className="font-semibold text-[black]">VS Code extensions</span>,
-                            modern web applications, and everything in between.
+                        <p className="text-body" style={{ color: "var(--color-muted-ash)" }}>
+                            My journey into tech started with curiosity and has evolved into a
+                            deep passion for creating tools that make developers&apos; lives easier.
+                            I specialize in building{" "}
+                            <span className="font-semibold" style={{ color: "var(--accent)" }}>
+                                VS Code extensions
+                            </span>
+                            , modern web applications, and everything in between.
                         </p>
-                        <p className="text-base md:text-lg leading-relaxed text-black/60">
-                            When I'm not coding, you'll find me exploring new technologies, contributing to open-source,
-                            or brewing the perfect cup of coffee ☕
+                        <p className="text-body" style={{ color: "var(--color-muted-ash)" }}>
+                            When I&apos;m not coding, you&apos;ll find me exploring new technologies,
+                            contributing to open-source, or brewing the perfect cup of coffee ☕
                         </p>
 
-                        {/* Personal Interests */}
-                        <div className="pt-6 border-t border-black/10">
-                            <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-black/50">
+                        {/* Beliefs */}
+                        <div className="pt-8" style={{ borderTop: "1px solid var(--border-hi)" }}>
+                            <p className="text-caption mb-4" style={{ color: "var(--color-muted-ash)" }}>
                                 I believe in
-                            </h3>
-                            <div className="flex flex-wrap gap-2">
-                                {["Clean Code", "User Experience", "Continuous Learning", "Open Source", "Innovation"].map((belief) => (
+                            </p>
+                            <div ref={beliefsRef} className="flex flex-wrap gap-2">
+                                {BELIEFS.map((b) => (
                                     <span
-                                        key={belief}
-                                        className="px-4 py-2 bg-black/5 border border-black/10 text-xs md:text-sm font-medium hover:border-[black] hover:bg-[black]/10 transition-all duration-300 cursor-default"
+                                        key={b}
+                                        className="px-4 py-2 text-small font-medium cursor-default badge-neutral"
+                                        style={{
+                                            color: "var(--fg)",
+                                        }}
                                     >
-                                        {belief}
+                                        {b}
                                     </span>
                                 ))}
                             </div>
@@ -84,68 +170,84 @@ const About = () => {
                     </div>
 
                     {/* Stats */}
-                    <div className="space-y-6">
-                        <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-8">
-                            By the Numbers
-                        </h3>
-                        <div className="grid grid-cols-2 gap-4 md:gap-6">
-                            {stats.map((stat, index) => {
-                                const Icon = stat.icon;
-                                return (
+                    <div>
+                        <p className="text-caption mb-8" style={{ color: "var(--color-muted-ash)" }}>
+                            By the numbers
+                        </p>
+                        <div ref={statsRef} className="grid grid-cols-2 gap-4">
+                            {[
+                                { value: "4+", label: "VS Code Extensions" },
+                                { value: "15+", label: "Projects Completed" },
+                                { value: "1+", label: "Years Coding" },
+                                { value: "∞", label: "Coffee Consumed" },
+                            ].map((s) => (
+                                <div
+                                    key={s.label}
+                                    className="group p-6 md:p-8 cursor-default card-callout"
+                                    onMouseEnter={(e) => {
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hi)";
+                                    }}
+                                >
                                     <div
-                                        key={index}
-                                        className="group relative p-6 md:p-8 border-2 border-black/10 hover:border-[black] transition-all duration-500 bg-white hover:shadow-2xl hover:shadow-[black]/20 cursor-default"
+                                        className="text-heading font-bold mb-2"
+                                        style={{ color: "var(--accent)" }}
                                     >
-                                        <Icon
-                                            className="w-8 h-8 md:w-10 md:h-10 mb-4 group-hover:scale-110 transition-transform duration-300"
-                                            style={{ color: stat.color }}
-                                        />
-                                        <div className="text-3xl md:text-4xl font-black mb-2 group-hover:text-[black] transition-colors duration-300">
-                                            {stat.value}
-                                        </div>
-                                        <div className="text-xs md:text-sm uppercase tracking-wider text-black/50 font-medium">
-                                            {stat.label}
-                                        </div>
+                                        {s.value}
                                     </div>
-                                );
-                            })}
+                                    <div className="text-caption" style={{ color: "var(--color-muted-ash)" }}>
+                                        {s.label}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                {/* Journey Timeline */}
-                <div className="relative">
-                    <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-12">
-                        My Journey
-                    </h3>
-                    <div className="space-y-8 md:space-y-12">
-                        {journey.map((item, index) => (
+                {/* ── Journey ── */}
+                <div>
+                    <p className="text-caption mb-10" style={{ color: "var(--color-muted-ash)" }}>
+                        My journey
+                    </p>
+                    <div ref={journeyRef} className="space-y-0">
+                        {JOURNEY.map((item, i) => (
                             <div
-                                key={index}
-                                className={`relative pl-8 md:pl-12 border-l-2 ${item.highlight
-                                    ? "border-[black]"
-                                    : "border-black/10"
-                                    }`}
+                                key={i}
+                                className="group relative grid grid-cols-[auto_1fr] gap-6 md:gap-10 py-8"
+                                style={{ borderBottom: "1px solid var(--border-hi)" }}
                             >
-                                {/* Timeline Dot */}
-                                <div
-                                    className={`absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full ${item.highlight
-                                        ? "bg-[black] ring-4 ring-[black]/20"
-                                        : "bg-black/20"
-                                        }`}
-                                />
+                                {/* Timeline dot + line */}
+                                <div className="flex flex-col items-center pt-1">
+                                    <div
+                                        className="w-3 h-3 flex-shrink-0"
+                                        style={{
+                                            background: item.active ? "var(--accent)" : "var(--border-hi)",
+                                            boxShadow: item.active ? "0 0 12px var(--accent)" : "none",
+                                        }}
+                                    />
+                                    {i < JOURNEY.length - 1 && (
+                                        <div
+                                            className="w-px flex-1 mt-2"
+                                            style={{ background: "var(--border-hi)" }}
+                                        />
+                                    )}
+                                </div>
 
                                 {/* Content */}
-                                <div className="space-y-2">
-                                    <span className="text-xs md:text-sm font-mono text-black/50 uppercase tracking-wider">
+                                <div>
+                                    <span className="text-caption block mb-2" style={{ color: "var(--accent)" }}>
                                         {item.year}
                                     </span>
-                                    <h4 className={`text-xl md:text-2xl font-bold ${item.highlight ? "text-[black]" : ""
-                                        }`}>
+                                    <h3
+                                        className="text-subheading mb-3"
+                                        style={{ color: item.active ? "var(--fg)" : "var(--color-muted-ash)" }}
+                                    >
                                         {item.title}
-                                    </h4>
-                                    <p className="text-sm md:text-base text-black/60 leading-relaxed max-w-2xl">
-                                        {item.description}
+                                    </h3>
+                                    <p className="text-body max-w-xl" style={{ color: "var(--color-muted-ash)" }}>
+                                        {item.desc}
                                     </p>
                                 </div>
                             </div>
@@ -153,12 +255,6 @@ const About = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Background Decoration */}
-            <div className="absolute top-20 right-10 w-64 h-64 bg-[black]/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-20 left-10 w-96 h-96 bg-[black]/3 rounded-full blur-3xl pointer-events-none" />
         </section>
     );
-};
-
-export default About;
+}

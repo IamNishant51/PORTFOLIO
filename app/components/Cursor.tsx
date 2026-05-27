@@ -1,81 +1,82 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-const Cursor = () => {
-    const cursorRef = useRef<HTMLDivElement>(null);
-    const [isTouchDevice, setIsTouchDevice] = useState(false);
+export default function Cursor() {
+    const dotRef = useRef<HTMLDivElement>(null);
+    const ringRef = useRef<HTMLDivElement>(null);
+    const touchRef = useRef(false);
 
     useEffect(() => {
-        // Check if it's a touch device
-        const checkTouchDevice = () => {
-            setIsTouchDevice(
-                'ontouchstart' in window ||
-                navigator.maxTouchPoints > 0 ||
-                window.matchMedia('(pointer: coarse)').matches
-            );
+        touchRef.current =
+            "ontouchstart" in window ||
+            navigator.maxTouchPoints > 0 ||
+            window.matchMedia("(pointer: coarse)").matches;
+
+        if (touchRef.current) return;
+
+        const dot = dotRef.current;
+        const ring = ringRef.current;
+        if (!dot || !ring) return;
+
+        /* Fast dot follows cursor exactly */
+        const onMove = (e: MouseEvent) => {
+            gsap.set(dot, { x: e.clientX, y: e.clientY });
+            gsap.to(ring, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.18,
+                ease: "power2.out",
+            });
         };
 
-        checkTouchDevice();
-
-        // Also check on resize in case device orientation changes
-        window.addEventListener('resize', checkTouchDevice);
-
-        return () => window.removeEventListener('resize', checkTouchDevice);
-    }, []);
-
-    useEffect(() => {
-        // Don't run cursor logic on touch devices
-        if (isTouchDevice) return;
-
-        const cursor = cursorRef.current;
-        if (!cursor) return;
-
-        const moveCursor = (e: MouseEvent) => {
-            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+        /* Hover expand */
+        const onEnter = () => {
+            gsap.to(ring, { scale: 2.5, opacity: 0.6, duration: 0.3, ease: "power2.out" });
+            gsap.to(dot, { scale: 0, opacity: 0, duration: 0.2 });
+        };
+        const onLeave = () => {
+            gsap.to(ring, { scale: 1, opacity: 1, duration: 0.4, ease: "elastic.out(1,0.5)" });
+            gsap.to(dot, { scale: 1, opacity: 1, duration: 0.3 });
         };
 
-        const onHoverEnter = () => {
-            cursor.style.transition = 'transform 0.3s ease';
-            cursor.style.transform = `translate(${cursor.offsetLeft}px, ${cursor.offsetTop}px) translate(-50%, -50%) scale(4)`;
-        };
+        window.addEventListener("mousemove", onMove);
 
-        const onHoverLeave = () => {
-            cursor.style.transition = 'transform 0.3s ease';
-            const currentTransform = cursor.style.transform;
-            const matches = currentTransform.match(/translate\(([^,]+),\s*([^)]+)\)/);
-            if (matches) {
-                cursor.style.transform = `translate(${matches[1]}, ${matches[2]}) translate(-50%, -50%) scale(1)`;
-            }
-        };
-
-        window.addEventListener("mousemove", moveCursor);
-
-        // Add hover listeners to clickable elements
-        const clickables = document.querySelectorAll("a, button, input, textarea, .cursor-hover");
+        const clickables = document.querySelectorAll("a, button, input, textarea, [data-cursor]");
         clickables.forEach((el) => {
-            el.addEventListener("mouseenter", onHoverEnter);
-            el.addEventListener("mouseleave", onHoverLeave);
+            el.addEventListener("mouseenter", onEnter);
+            el.addEventListener("mouseleave", onLeave);
         });
 
         return () => {
-            window.removeEventListener("mousemove", moveCursor);
+            window.removeEventListener("mousemove", onMove);
             clickables.forEach((el) => {
-                el.removeEventListener("mouseenter", onHoverEnter);
-                el.removeEventListener("mouseleave", onHoverLeave);
+                el.removeEventListener("mouseenter", onEnter);
+                el.removeEventListener("mouseleave", onLeave);
             });
         };
-    }, [isTouchDevice]);
+    }, []);
 
-    // Don't render cursor on touch devices
-    if (isTouchDevice) return null;
-
+    /* Hide on touch devices via CSS — no state needed */
     return (
-        <div
-            ref={cursorRef}
-            className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
-        />
+        <>
+            {/* Dot */}
+            <div
+                ref={dotRef}
+                className="fixed top-0 left-0 w-2 h-2 pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+                style={{ background: "var(--accent)", mixBlendMode: "difference" }}
+            />
+            {/* Ring */}
+            <div
+                ref={ringRef}
+                className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[99998] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+                style={{
+                    border: "1px solid var(--accent)",
+                    borderRadius: "50%",
+                    mixBlendMode: "difference",
+                    opacity: 0.7,
+                }}
+            />
+        </>
     );
-};
-
-export default Cursor;
+}

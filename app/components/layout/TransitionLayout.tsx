@@ -11,7 +11,7 @@ interface TransitionContextValue {
 }
 
 const TransitionContext = createContext<TransitionContextValue>({
-  navigate: () => {},
+  navigate: () => { },
   isTransitioning: false,
 });
 
@@ -88,8 +88,8 @@ export default function TransitionLayout({ children }: { children: ReactNode }) 
         {children}
         <div
           ref={overlayRef}
-          className="fixed inset-0 z-[99999] bg-black pointer-events-none"
-          style={{ display: "none", clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)" }}
+          className="fixed inset-0 z-[99999] pointer-events-none"
+          style={{ display: "none", clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)", background: "var(--bg,#0A0A0F)" }}
         />
       </div>
     </TransitionContext.Provider>

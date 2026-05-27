@@ -40,15 +40,16 @@ const TechStack = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative py-24 md:py-32 lg:py-40 bg-white text-black px-6 md:px-8 lg:px-16"
+            className="relative py-24 md:py-32 lg:py-40"
+            style={{ background: "var(--bg)" }}
         >
-            <div className="max-w-5xl mx-auto">
+            <div className="section-container">
                 {/* Header */}
                 <div className="mb-16 md:mb-24">
-                    <p className="text-sm md:text-base text-black/40 mb-4 font-medium tracking-wide">
+                    <p className="text-caption mb-4" style={{ color: "var(--color-muted-ash)" }}>
                         TECHNOLOGIES
                     </p>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h2 className="text-heading-lg" style={{ color: "var(--fg)" }}>
                         Tools I work with
                     </h2>
                 </div>
@@ -58,7 +59,7 @@ const TechStack = () => {
                     {Object.entries(technologies).map(([category, items], idx) => (
                         <div key={idx} className="tech-category">
                             {/* Category Title */}
-                            <h3 className="text-lg md:text-xl font-semibold mb-6 text-black/60">
+                            <h3 className="text-subheading mb-6" style={{ color: "var(--color-muted-ash)" }}>
                                 {category}
                             </h3>
 
@@ -67,16 +68,18 @@ const TechStack = () => {
                                 {items.map((tech, techIdx) => (
                                     <div
                                         key={techIdx}
-                                        className="tech-item group"
+                                        className="tech-item group badge-neutral"
+                                        style={{
+                                            border: "1px solid var(--border-hi)",
+                                            padding: "16px 24px",
+                                            textAlign: "center",
+                                            color: "var(--fg)",
+                                            cursor: "default",
+                                        }}
                                     >
-                                        <div className="relative px-6 py-4 border border-black/10 hover:border-black/30 transition-all duration-300 bg-white hover:shadow-lg">
-                                            <p className="text-sm md:text-base font-medium text-center">
-                                                {tech}
-                                            </p>
-
-                                            {/* Subtle hover indicator */}
-                                            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                                        </div>
+                                        <p className="text-body">
+                                            {tech}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
@@ -85,15 +88,16 @@ const TechStack = () => {
                 </div>
 
                 {/* Footer Note */}
-                <div className="mt-16 md:mt-24 pt-8 border-t border-black/10">
-                    <p className="text-sm md:text-base text-black/50 max-w-2xl">
-                        I'm constantly learning and exploring new technologies.
+                <div className="mt-16 md:mt-24 pt-8" style={{ borderTop: "1px solid var(--border-hi)" }}>
+                    <p className="text-body" style={{ color: "var(--color-muted-ash)", maxWidth: "32rem" }}>
+                        I&apos;m constantly learning and exploring new technologies.
                         Check out my{" "}
                         <a
                             href="https://github.com/IamNishant51"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="underline hover:text-black transition-colors"
+                            className="underline hover:text-accent transition-colors"
+                            style={{ color: "var(--accent)" }}
                         >
                             GitHub
                         </a>
