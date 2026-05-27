@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CoffeeCup from "./ui/svg/CoffeeCup";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -184,10 +185,11 @@ export default function About() {
                                     }}
                                 >
                                     <div
-                                        className="text-heading font-bold mb-1.5"
+                                        className="text-heading font-bold mb-1.5 flex items-end justify-between"
                                         style={{ color: "var(--accent)" }}
                                     >
-                                        {s.value}
+                                        <span>{s.value}</span>
+                                        {s.label === "Coffee Consumed" && <CoffeeCup size={32} />}
                                     </div>
                                     <div className="text-mono" style={{ color: "var(--color-muted-ash)" }}>
                                         {s.label}

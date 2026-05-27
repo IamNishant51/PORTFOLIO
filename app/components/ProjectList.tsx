@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import GuitarString from "./ui/GuitarString";
+import GitBranch from "./ui/svg/GitBranch";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -169,7 +171,7 @@ export default function ProjectList() {
             className="relative overflow-hidden"
             style={{ background: "var(--bg)", borderTop: "1px solid var(--border-hi)" }}
         >
-            <div className="section-container section-py">
+            <div className="section-container section-py relative z-10">
                 {/* ── Section label ── */}
                 <div className="section-label">
                     <span className="section-label-num">03</span>
@@ -179,9 +181,12 @@ export default function ProjectList() {
 
                 <div ref={headingRef} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14 md:mb-20">
                     <div>
-                        <h2 className="text-heading-lg" style={{ color: "var(--fg)" }}>
-                            Selected<br />
-                            <span style={{ color: "var(--accent)" }}>Projects</span>
+                        <h2 className="text-heading-lg flex items-center gap-4" style={{ color: "var(--fg)" }}>
+                            <span>
+                                Selected<br />
+                                <span style={{ color: "var(--accent)" }}>Projects</span>
+                            </span>
+                            <GitBranch size={56} />
                         </h2>
                     </div>
                     <div className="flex flex-col gap-4 sm:items-end">
@@ -207,7 +212,6 @@ export default function ProjectList() {
                             key={project.id}
                             className="group relative cursor-pointer"
                             data-cursor="view"
-                            style={{ borderBottom: "1px solid var(--border-hi)" }}
                             onMouseEnter={() => setHovered(project.id)}
                             onMouseLeave={() => setHovered(null)}
                             onClick={() => setSelected(project)}
@@ -267,6 +271,7 @@ export default function ProjectList() {
                                     </div>
                                 </div>
                             </div>
+                            <GuitarString index={project.index} onClick={() => setSelected(project)} />
                         </li>
                     ))}
                 </ul>

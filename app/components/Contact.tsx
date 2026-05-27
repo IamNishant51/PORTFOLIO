@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
+import SignalBeacon from "./ui/svg/SignalBeacon";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,7 +11,7 @@ const SOCIALS = [
     { icon: Github, label: "GitHub", href: "https://github.com/IamNishant51" },
     { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/nishant-unavane-008291275/" },
     { icon: Mail, label: "Email", href: "mailto:nishant.unavane@outlook.com" },
-    { icon: Download, label: "Résumé", href: "https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf", download: true },
+    { icon: Download, label: "Résumé", href: "https://ik.imagekit.io/9pfz6g8ri/Nishant_Unavane_FullStack_resume.pdf", download: true },
 ];
 
 export default function Contact() {
@@ -110,9 +111,12 @@ export default function Contact() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
                     {/* Left */}
                     <div ref={headingRef}>
-                        <h2 className="text-heading-lg mb-5" style={{ color: "var(--fg)" }}>
-                            Let&apos;s build something<br />
-                            <span style={{ color: "var(--accent)" }}>amazing</span>
+                        <h2 className="text-heading-lg mb-5 flex items-center gap-4" style={{ color: "var(--fg)" }}>
+                            <span>
+                                Let&apos;s build something<br />
+                                <span style={{ color: "var(--accent)" }}>amazing</span>
+                            </span>
+                            <SignalBeacon size={56} />
                         </h2>
                         <p className="text-body max-w-sm mb-10" style={{ color: "var(--color-muted-ash)" }}>
                             Have a project in mind? I&apos;d love to hear about it. Drop me a message
@@ -130,7 +134,7 @@ export default function Contact() {
                                     href={href}
                                     target={download ? "_blank" : undefined}
                                     rel={download ? "noopener noreferrer" : undefined}
-                                    download={download ? "Nishant_Unavane_Resume.pdf" : undefined}
+                                    download={download ? "Nishant_Unavane_FullStack_resume.pdf" : undefined}
                                     className="btn-ghost-primary justify-center sm:justify-start"
                                     style={{ gap: "10px" }}
                                 >

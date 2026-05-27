@@ -11,7 +11,7 @@ export default function AboutPage() {
     <TransitionLayout>
       <main className="min-h-screen relative w-full pb-12" style={{ background: "var(--bg)", color: "var(--fg)" }}>
         <Navbar />
-        <div className="pt-24 md:pt-32 pb-6">
+        <div className="relative z-10 pt-28 md:pt-36 pb-6">
           <div className="section-container">
             <Link
               href="/"

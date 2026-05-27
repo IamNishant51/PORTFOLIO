@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
+import FeedbackBubble from "./ui/svg/FeedbackBubble";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -104,9 +105,12 @@ export default function Testimonials() {
                 {/* Heading */}
                 <div ref={headingRef} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-16">
                     <div>
-                        <h2 className="text-heading-lg mb-4" style={{ color: "var(--fg)" }}>
-                            What People<br />
-                            <span style={{ color: "var(--accent)" }}>Say</span>
+                        <h2 className="text-heading-lg mb-4 flex items-center gap-4" style={{ color: "var(--fg)" }}>
+                            <span>
+                                What People<br />
+                                <span style={{ color: "var(--accent)" }}>Say</span>
+                            </span>
+                            <FeedbackBubble size={56} />
                         </h2>
                         <p className="text-body max-w-sm" style={{ color: "var(--color-muted-ash)" }}>
                             Don&apos;t just take my word for it.

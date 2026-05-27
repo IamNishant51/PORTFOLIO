@@ -101,7 +101,7 @@ const TechStack = () => {
                         >
                             GitHub
                         </a>
-                        {" "}to see what I'm currently working on.
+                        {" "}to see what I&apos;m currently working on.
                     </p>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import TechChip from "./ui/svg/TechChip";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,9 +97,12 @@ export default function SkillsMarquee() {
                 </div>
 
                 <div ref={headingRef}>
-                    <h2 className="text-heading-lg mb-4" style={{ color: "var(--fg)" }}>
-                        Tech{" "}
-                        <span style={{ color: "var(--accent)" }}>Stack</span>
+                    <h2 className="text-heading-lg mb-4 flex items-center gap-4" style={{ color: "var(--fg)" }}>
+                        <span>
+                            Tech{" "}
+                            <span style={{ color: "var(--accent)" }}>Stack</span>
+                        </span>
+                        <TechChip size={56} />
                     </h2>
                     <p className="text-body max-w-md mb-12" style={{ color: "var(--color-muted-ash)" }}>
                         Tools and technologies I use to bring ideas to life.

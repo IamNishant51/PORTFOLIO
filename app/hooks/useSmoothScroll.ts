@@ -1,10 +1,8 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
 export default function useSmoothScroll() {
-    const [lenis, setLenis] = useState<Lenis | null>(null);
 
     useEffect(() => {
         // Check if it's a mobile/touch device
@@ -37,8 +35,6 @@ export default function useSmoothScroll() {
             touchMultiplier: 2,
         });
 
-        setLenis(lenisInstance);
-
         // Sync Lenis with GSAP's ScrollTrigger
         // This assumes specific requestAnimationFrame handling:
         function update(time: number) {
@@ -54,6 +50,4 @@ export default function useSmoothScroll() {
             lenisInstance.destroy();
         };
     }, []);
-
-    return lenis;
 }

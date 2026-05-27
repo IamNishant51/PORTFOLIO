@@ -59,7 +59,7 @@ const QuickLinks = () => {
         {
             icon: Download,
             label: "Resume",
-            href: "https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf",
+            href: "https://ik.imagekit.io/9pfz6g8ri/Nishant_Unavane_FullStack_resume.pdf",
             color: "black",
             download: true
         },

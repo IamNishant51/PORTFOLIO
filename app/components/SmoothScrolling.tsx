@@ -10,7 +10,7 @@ const PaperTexture = dynamic(() => import("./PaperTexture"), { ssr: false });
 gsap.registerPlugin(ScrollTrigger);
 
 function SmoothScrolling({ children }: { children: React.ReactNode }) {
-    const lenis = useSmoothScroll();
+    useSmoothScroll();
 
     return (
         <div className="lenis-scroller-wrapper">

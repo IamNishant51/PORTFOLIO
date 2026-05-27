@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Filter, X } from "lucide-react";
+import FeedbackBubble from "../components/ui/svg/FeedbackBubble";
 
 interface Testimonial {
     _id?: string;
@@ -18,7 +19,6 @@ interface Testimonial {
 
 export default function TestimonialsPage() {
     const [list, setList] = useState<Testimonial[]>([]);
-    const [filtered, setFiltered] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
     const [dateFilter, setDateFilter] = useState<"all" | "today" | "week" | "month" | "custom">("all");
     const [startDate, setStartDate] = useState("");
@@ -28,13 +28,13 @@ export default function TestimonialsPage() {
     useEffect(() => {
         fetch("/api/testimonial")
             .then((r) => r.ok ? r.json() : [])
-            .then((data) => { setList(data); setFiltered(data); })
+            .then((data) => { setList(data); })
             .catch(() => { })
             .finally(() => setLoading(false));
     }, []);
 
-    useEffect(() => {
-        if (dateFilter === "all") { setFiltered(list); return; }
+    const filtered = React.useMemo(() => {
+        if (dateFilter === "all") return list;
         const now = new Date();
         let result = [...list];
         if (dateFilter === "today") {
@@ -50,7 +50,7 @@ export default function TestimonialsPage() {
             const e = new Date(endDate); e.setHours(23, 59, 59, 999);
             result = list.filter((t) => t.createdAt && new Date(t.createdAt) >= s && new Date(t.createdAt) <= e);
         }
-        setFiltered(result);
+        return result;
     }, [dateFilter, startDate, endDate, list]);
 
     const fmt = (d?: string) =>
@@ -68,7 +68,7 @@ export default function TestimonialsPage() {
         <main className="min-h-screen" style={{ background: "var(--bg)", color: "var(--fg)" }}>
             {/* Header */}
             <section
-                className="pt-24 md:pt-32 pb-16 md:pb-20"
+                className="relative z-10 pt-28 md:pt-36 pb-16 md:pb-20"
                 style={{ borderBottom: "1px solid var(--border)" }}
             >
                 <div className="section-container">
@@ -88,8 +88,11 @@ export default function TestimonialsPage() {
 
                     <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
                         <div>
-                            <h1 className="text-h1 mb-4" style={{ color: "var(--fg)" }}>
-                                All <span style={{ color: "var(--accent)" }}>Reviews</span>
+                            <h1 className="text-h1 mb-4 flex items-center gap-4" style={{ color: "var(--fg)" }}>
+                                <span>
+                                    All <span style={{ color: "var(--accent)" }}>Reviews</span>
+                                </span>
+                                <FeedbackBubble size={56} />
                             </h1>
                             <p className="text-body" style={{ color: "rgba(240,237,230,0.4)" }}>
                                 {filtered.length} {filtered.length === 1 ? "testimonial" : "testimonials"}
@@ -244,7 +247,7 @@ export default function TestimonialsPage() {
                                         </div>
 
                                         <p className="text-body mb-6 leading-relaxed" style={{ color: "rgba(240,237,230,0.65)" }}>
-                                            "{text}"
+                                            &ldquo;{text}&rdquo;
                                         </p>
 
                                         <div className="flex items-center justify-between gap-4 flex-wrap">

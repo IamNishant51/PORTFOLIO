@@ -87,9 +87,9 @@ void main() {
   float speck = step(0.996, hash12(uv * u_res + u_seed * 999.0));
 
   vec3 col = vec3(0.0);
-  col += grain * 0.075;
-  col += fibers * 0.06;
-  col += speck * 0.12;
+  col += grain * 0.11;
+  col += fibers * 0.10;
+  col += speck * 0.20;
 
   // Cursor bloom (very soft lighting on hover)
   col += cursorInfluence * 0.015;
@@ -276,7 +276,7 @@ export default function PaperTexture() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-[99]"
-      style={{ willChange: "transform", mixBlendMode: "screen", opacity: 0.14 }}
+      style={{ willChange: "transform", mixBlendMode: "screen", opacity: 0.22 }}
       aria-hidden="true"
     />
   );

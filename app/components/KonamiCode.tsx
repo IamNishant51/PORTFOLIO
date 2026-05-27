@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+// Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A
+const KONAMI_CODE = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+
 const KonamiCode = () => {
     const [showEasterEgg, setShowEasterEgg] = useState(false);
-    const [sequence, setSequence] = useState<string[]>([]);
-
-    // Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    const [, setSequence] = useState<string[]>([]);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -14,7 +14,7 @@ const KonamiCode = () => {
                 const newSeq = [...prev, e.key.toLowerCase()].slice(-10);
 
                 // Check if the sequence matches the Konami code
-                if (newSeq.join(',') === konamiCode.join(',')) {
+                if (newSeq.join(',') === KONAMI_CODE.join(',')) {
                     setShowEasterEgg(true);
                     setTimeout(() => setShowEasterEgg(false), 5000);
                     return [];
@@ -38,7 +38,7 @@ const KonamiCode = () => {
                     You Found It!
                 </h2>
                 <p className="text-xl text-white/80">
-                    You're a true developer! ⌨️
+                    You&apos;re a true developer! ⌨️
                 </p>
                 <div className="text-sm text-white/50 font-mono">
                     Achievement Unlocked: Konami Code Master

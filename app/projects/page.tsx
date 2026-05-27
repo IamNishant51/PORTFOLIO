@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Filter } from "lucide-react";
 import ProjectCard from "@/app/components/projects/ProjectCard";
 import type { Project } from "@/lib/github";
+import GitBranch from "../components/ui/svg/GitBranch";
 
 const fallbackProjects: Project[] = [
   { id: 1, name: "Ollama-Agent-vs-code-extension", description: "A powerful VS Code extension integrating Ollama AI models.", url: "https://github.com/IamNishant51/Ollama-Agent-vs-code-extension", stars: 12, forks: 3, language: "TypeScript", topics: ["vs-code", "ai", "ollama"], updatedAt: "", createdAt: "" },
@@ -47,7 +48,7 @@ export default function ProjectsPage() {
     <main className="min-h-screen" style={{ background: "var(--bg)", color: "var(--fg)" }}>
       {/* Header */}
       <section
-        className="pt-24 md:pt-32 pb-16 md:pb-20"
+        className="relative z-10 pt-28 md:pt-36 pb-16 md:pb-20"
         style={{ borderBottom: "1px solid var(--border)" }}
       >
         <div className="section-container">
@@ -65,8 +66,11 @@ export default function ProjectsPage() {
             <span className="w-8 h-px" style={{ background: "var(--accent)" }} />
           </div>
 
-          <h1 className="text-h1 mb-4" style={{ color: "var(--fg)" }}>
-            All <span style={{ color: "var(--accent)" }}>Projects</span>
+          <h1 className="text-h1 mb-4 flex items-center gap-4" style={{ color: "var(--fg)" }}>
+            <span>
+              All <span style={{ color: "var(--accent)" }}>Projects</span>
+            </span>
+            <GitBranch size={56} />
           </h1>
           <p className="text-body" style={{ color: "rgba(240,237,230,0.4)" }}>
             {filtered.length} {filtered.length === 1 ? "project" : "projects"}

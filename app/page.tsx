@@ -31,13 +31,17 @@ const Footer = dynamic(() => import("./components/Footer"));
 const FloatingMenu = dynamic(() => import("./components/FloatingMenu"), { ssr: false });
 const ScrollToTop = dynamic(() => import("./components/ScrollToTop"), { ssr: false });
 
+// Module-level persistent flag (persists across client-side router navigation, resets on refresh)
+let preloaderHasRun = false;
+
 export default function Home() {
-  const [done, setDone] = useState(false);
-  const [showPreloader, setShowPreloader] = useState(true);
+  const [done, setDone] = useState(preloaderHasRun);
+  const [showPreloader, setShowPreloader] = useState(!preloaderHasRun);
 
   const handleComplete = () => {
     setDone(true);
     setTimeout(() => setShowPreloader(false), 100);
+    preloaderHasRun = true;
   };
 
   useEffect(() => {

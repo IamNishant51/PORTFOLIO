@@ -31,6 +31,16 @@ async function getPinnedRepos() {
     }
 }
 
+interface GitHubRepo {
+    id: number;
+    name: string;
+    description: string | null;
+    stargazers_count?: number;
+    forks_count?: number;
+    language?: string | null;
+    html_url: string;
+}
+
 export default async function GitHubSection() {
     const repos = await getPinnedRepos();
 
@@ -51,7 +61,7 @@ export default async function GitHubSection() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-                    {repos.map((repo: any, i: number) => (
+                    {(repos as GitHubRepo[]).map((repo, i: number) => (
                         <a
                             key={repo.id}
                             href={repo.html_url}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import HeroGeometry from "./ui/svg/HeroGeometry";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -159,6 +160,9 @@ const Hero = () => {
             {/* Subtle top border */}
             <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--border-hi)" }} />
 
+            {/* Geometric SVG Background */}
+            <HeroGeometry />
+
             {/* Ambient glow */}
             <div
                 ref={glowRef}
@@ -217,8 +221,8 @@ const Hero = () => {
                                 Get in touch
                             </button>
                             <a
-                                href="https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf"
-                                download="Nishant_Unavane_Resume.pdf"
+                                href="https://ik.imagekit.io/9pfz6g8ri/Nishant_Unavane_FullStack_resume.pdf"
+                                download="Nishant_Unavane_FullStack_resume.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn-ghost-primary"
