@@ -1,15 +1,23 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useSmoothScroll from "../hooks/useSmoothScroll";
+import dynamic from "next/dynamic";
+
+const PaperTexture = dynamic(() => import("./PaperTexture"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
 function SmoothScrolling({ children }: { children: React.ReactNode }) {
     const lenis = useSmoothScroll();
 
-    return <div className="lenis-scroller-wrapper">{children}</div>;
+    return (
+        <div className="lenis-scroller-wrapper">
+            <PaperTexture />
+            {children}
+        </div>
+    );
 }
 
 export default SmoothScrolling;

@@ -86,17 +86,13 @@ void main() {
   // Micro specks
   float speck = step(0.996, hash12(uv * u_res + u_seed * 999.0));
 
-  vec3 col = vec3(1.0);
-  col -= grain * 0.032;
-  col -= fibers * 0.020;
-  col -= speck * 0.030;
+  vec3 col = vec3(0.0);
+  col += grain * 0.075;
+  col += fibers * 0.06;
+  col += speck * 0.12;
 
-  // Vignette (kept subtle)
-  float vig = smoothstep(0.95, 0.35, length(v_uv - 0.5));
-  col -= (1.0 - vig) * 0.018;
-
-  // Cursor bloom (very soft darkening so it reads on white)
-  col -= cursorInfluence * 0.010;
+  // Cursor bloom (very soft lighting on hover)
+  col += cursorInfluence * 0.015;
 
   outColor = vec4(col, 1.0);
 }
@@ -279,8 +275,8 @@ export default function PaperTexture() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      style={{ willChange: "transform" }}
+      className="fixed inset-0 pointer-events-none z-[99]"
+      style={{ willChange: "transform", mixBlendMode: "screen", opacity: 0.14 }}
       aria-hidden="true"
     />
   );

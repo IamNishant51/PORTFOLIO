@@ -206,6 +206,7 @@ export default function ProjectList() {
                         <li
                             key={project.id}
                             className="group relative cursor-pointer"
+                            data-cursor="view"
                             style={{ borderBottom: "1px solid var(--border-hi)" }}
                             onMouseEnter={() => setHovered(project.id)}
                             onMouseLeave={() => setHovered(null)}

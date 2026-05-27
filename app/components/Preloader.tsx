@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
-    const [pct, setPct] = useState(0);
+
     const containerRef = useRef<HTMLDivElement>(null);
     const topPanelRef = useRef<HTMLDivElement>(null);
     const bottomPanelRef = useRef<HTMLDivElement>(null);
@@ -12,40 +12,6 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const counterRef = useRef<HTMLSpanElement>(null);
     const nameRef = useRef<HTMLHeadingElement>(null);
     const tagRef = useRef<HTMLParagraphElement>(null);
-
-    /* ── Counter Logic ── */
-    useEffect(() => {
-        const obj = { val: 0 };
-        const tl = gsap.timeline();
-
-        // Animate counter from 0 to 100
-        tl.to(obj, {
-            val: 100,
-            duration: 2.4,
-            ease: "power2.inOut",
-            onUpdate: () => {
-                const currentVal = Math.floor(obj.val);
-                setPct(currentVal);
-                if (counterRef.current) {
-                    counterRef.current.innerText = currentVal.toString().padStart(2, "0");
-                }
-            },
-            onComplete: () => {
-                playRevealSequence();
-            }
-        });
-
-        // Fade in glow and counter initially
-        gsap.fromTo(counterWrapperRef.current, 
-            { opacity: 0, y: 15 },
-            { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }
-        );
-
-        gsap.fromTo(glowRef.current,
-            { opacity: 0, scale: 0.8 },
-            { opacity: 1, scale: 1.2, duration: 2.4, ease: "power2.inOut" }
-        );
-    }, [playRevealSequence]);
 
     /* ── Reveal Sequence ── */
     const playRevealSequence = useCallback(() => {
@@ -109,6 +75,39 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             ease: "power4.inOut"
         }, "-=1.3");
     }, [onComplete]);
+
+    /* ── Counter Logic ── */
+    useEffect(() => {
+        const obj = { val: 0 };
+        const tl = gsap.timeline();
+
+        // Animate counter from 0 to 100
+        tl.to(obj, {
+            val: 100,
+            duration: 2.4,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                const currentVal = Math.floor(obj.val);
+                if (counterRef.current) {
+                    counterRef.current.innerText = currentVal.toString().padStart(2, "0");
+                }
+            },
+            onComplete: () => {
+                playRevealSequence();
+            }
+        });
+
+        // Fade in glow and counter initially
+        gsap.fromTo(counterWrapperRef.current, 
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }
+        );
+
+        gsap.fromTo(glowRef.current,
+            { opacity: 0, scale: 0.8 },
+            { opacity: 1, scale: 1.2, duration: 2.4, ease: "power2.inOut" }
+        );
+    }, [playRevealSequence]);
 
     return (
         <div

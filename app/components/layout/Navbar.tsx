@@ -173,13 +173,13 @@ export default function Navbar() {
 
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
-            <a
-              href="mailto:nishant.unavane@outlook.com"
-              className="hidden md:flex items-center gap-2 btn-ghost-primary text-body-sm font-mono"
+            <button
+              onClick={() => handleNav("/contact")}
+              className="hidden md:flex items-center gap-2 btn-ghost-primary text-body-sm font-mono cursor-pointer"
               style={{ padding: "8px 16px" }}
             >
               Get in touch
-            </a>
+            </button>
 
             <button
               onClick={() => setMobileOpen((v) => !v)}
@@ -257,12 +257,12 @@ export default function Navbar() {
             })}
           </div>
 
-          <a
-            href="mailto:nishant.unavane@outlook.com"
-            className="mt-8 btn-ghost-primary text-center text-mono justify-center"
+          <button
+            onClick={() => handleNav("/contact")}
+            className="mt-8 btn-ghost-primary text-center text-mono justify-center cursor-pointer"
           >
             Get in touch
-          </a>
+          </button>
         </div>
       </div>
     </>

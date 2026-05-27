@@ -164,7 +164,7 @@ const Hero = () => {
                 ref={glowRef}
                 className="absolute inset-0 pointer-events-none opacity-0"
                 style={{
-                    background: "radial-gradient(ellipse 70% 55% at 50% 0%, rgba(37,99,235,0.08) 0%, transparent 65%)",
+                    background: "radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 65%)",
                 }}
                 aria-hidden="true"
             />
@@ -257,7 +257,7 @@ const Hero = () => {
                                 <div
                                     className="absolute inset-0 opacity-0 group-hover:opacity-100"
                                     style={{
-                                        background: "linear-gradient(135deg, rgba(37,99,235,0.12) 0%, transparent 60%)",
+                                        background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%)",
                                         transition: "opacity 0.5s ease !important",
                                     }}
                                 />
