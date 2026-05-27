@@ -289,7 +289,7 @@ const Hero = () => {
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center center",
                     backgroundSize: "cover", // Cover ensures it stretches nicely across the hero
-                    opacity: 0.04, // Very dull and subtle like the other backgrounds
+                    opacity: 0.12, // Very dull and subtle like the other backgrounds
                 }}
                 aria-hidden="true"
             />

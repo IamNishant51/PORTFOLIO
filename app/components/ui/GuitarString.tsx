@@ -33,7 +33,7 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
     const tweenRef = useRef<gsap.core.Tween | null>(null);
     
     const lastXRef = useRef<number>(0);
-    const lastYRef = useRef<number>(20);
+    const lastYRef = useRef<number>(30);
     const isHoveredRef = useRef<boolean>(false);
 
     // Map the string index to a specific frequency in Japanese Pentatonic scale
@@ -65,20 +65,26 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
             // Filter to simulate the acoustic body of a Koto/Shamisen
             const filter = ctx.createBiquadFilter();
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(8000, t); // Bright pluck initially
-            filter.frequency.exponentialRampToValueAtTime(400, t + 0.15); // Quickly lose high frequencies
-            filter.frequency.linearRampToValueAtTime(100, t + 1.5); // Decay to a dull ring
+            filter.frequency.setValueAtTime(10000, t); // Brighter pluck for mobile
+            filter.frequency.exponentialRampToValueAtTime(800, t + 0.15); // More high-mids for small speakers
+            filter.frequency.linearRampToValueAtTime(100, t + 1.5);
+
+            // Oscillator 3: Harmonic overtone (Octave up). Small mobile speakers physically cannot reproduce 
+            // the fundamental frequencies (164Hz-300Hz) well. Adding an octave up ensures it cuts through.
+            const overtone = ctx.createOscillator();
+            overtone.type = 'sine';
+            overtone.frequency.setValueAtTime(freq * 2, t);
 
             // Gain node for the master amplitude envelope
             const gainNode = ctx.createGain();
             gainNode.gain.setValueAtTime(0, t);
-            gainNode.gain.linearRampToValueAtTime(0.8, t + 0.015); // Fast, loud, sharp attack
-            gainNode.gain.exponentialRampToValueAtTime(0.15, t + 0.2); // Fast decay to a louder sustained level
-            gainNode.gain.exponentialRampToValueAtTime(0.001, t + 1.5); // Slow release
+            gainNode.gain.linearRampToValueAtTime(1.8, t + 0.015); // Overdrive slightly for perceived loudness
+            gainNode.gain.exponentialRampToValueAtTime(0.3, t + 0.2); // Stronger sustained level
+            gainNode.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
 
             // Gain envelope specifically for the sawtooth (only loud at the very beginning)
             const sawGain = ctx.createGain();
-            sawGain.gain.setValueAtTime(0.35, t); // Sharper and louder twang
+            sawGain.gain.setValueAtTime(0.45, t); // Sharper and louder twang
             sawGain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
 
             // Route audio
@@ -86,20 +92,24 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
             sawGain.connect(filter);
             
             osc.connect(filter);
+            overtone.connect(filter);
             filter.connect(gainNode);
             gainNode.connect(ctx.destination);
 
             osc.start(t);
             saw.start(t);
+            overtone.start(t);
             
             osc.stop(t + 1.5);
             saw.stop(t + 1.5);
+            overtone.stop(t + 1.5);
 
             // Cleanup to avoid memory leaks
             setTimeout(() => {
                 try {
                     osc.disconnect();
                     saw.disconnect();
+                    overtone.disconnect();
                     filter.disconnect();
                     gainNode.disconnect();
                     sawGain.disconnect();
@@ -123,9 +133,9 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        const clampedY = Math.max(2, Math.min(38, y));
+        const clampedY = Math.max(5, Math.min(55, y));
         
-        pathRef.current.setAttribute("d", `M 0 20 Q ${x} ${clampedY} ${rect.width} 20`);
+        pathRef.current.setAttribute("d", `M 0 30 Q ${x} ${clampedY} ${rect.width} 30`);
         
         lastXRef.current = x;
         lastYRef.current = clampedY;
@@ -147,13 +157,13 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
         
         tweenRef.current = gsap.to(animObj, {
             x: width / 2,
-            y: 20,
+            y: 30,
             duration: 2.2,
             ease: "elastic.out(2.5, 0.12)",
             onUpdate: () => {
                 if (isHoveredRef.current) return;
                 if (pathRef.current) {
-                    pathRef.current.setAttribute("d", `M 0 20 Q ${animObj.x} ${animObj.y} ${width} 20`);
+                    pathRef.current.setAttribute("d", `M 0 30 Q ${animObj.x} ${animObj.y} ${width} 30`);
                 }
             }
         });
@@ -163,7 +173,7 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
         const handleResize = () => {
             if (svgRef.current && pathRef.current && !isHoveredRef.current) {
                 const rect = svgRef.current.getBoundingClientRect();
-                pathRef.current.setAttribute("d", `M 0 20 Q ${rect.width / 2} 20 ${rect.width} 20`);
+                pathRef.current.setAttribute("d", `M 0 30 Q ${rect.width / 2} 30 ${rect.width} 30`);
             }
         };
 
@@ -183,14 +193,14 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
     return (
         <svg
             ref={svgRef}
-            className="absolute bottom-[-20px] left-0 w-full h-[40px] pointer-events-none z-20 overflow-visible"
+            className="absolute bottom-[-30px] left-0 w-full h-[60px] pointer-events-none z-20 overflow-visible"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
             {/* The visible interactive string line */}
             <path
                 ref={pathRef}
-                d="M 0 20 Q 0 20 0 20"
+                d="M 0 30 Q 0 30 0 30"
                 stroke="var(--border-hi)"
                 strokeWidth="1.5"
                 fill="none"
@@ -199,9 +209,10 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
             {/* Transparent hover catcher overlay */}
             <rect
                 width="100%"
-                height="40"
+                height="60"
                 fill="transparent"
                 className="pointer-events-auto cursor-pointer"
+                style={{ touchAction: "none" }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 onTouchMove={(e) => {
@@ -214,8 +225,8 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
                     const x = touch.clientX - rect.left;
                     const y = touch.clientY - rect.top;
                     
-                    const clampedY = Math.max(2, Math.min(38, y));
-                    pathRef.current.setAttribute("d", `M 0 20 Q ${x} ${clampedY} ${rect.width} 20`);
+                    const clampedY = Math.max(5, Math.min(55, y));
+                    pathRef.current.setAttribute("d", `M 0 30 Q ${x} ${clampedY} ${rect.width} 30`);
                     
                     lastXRef.current = x;
                     lastYRef.current = clampedY;
