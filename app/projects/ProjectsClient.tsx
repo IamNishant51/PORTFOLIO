@@ -50,14 +50,14 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
             </span>
             <GitBranch size={56} />
           </h1>
-          <p className="text-body" style={{ color: "rgba(240,237,230,0.4)" }}>
+          <p className="text-body" style={{ color: "var(--color-muted-ash)" }}>
             {filtered.length} {filtered.length === 1 ? "project" : "projects"}
             {activeLanguage && ` in ${activeLanguage}`}
           </p>
 
           {/* Filters */}
           <div className="flex flex-wrap items-center gap-3 mt-10">
-            <Filter className="w-4 h-4" style={{ color: "rgba(240,237,230,0.3)" }} />
+            <Filter className="w-4 h-4" style={{ color: "var(--color-muted-ash)" }} />
             {[null, ...languages].map((lang) => (
               <button
                 key={lang ?? "all"}
@@ -65,7 +65,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                 className="px-4 py-2 text-mono"
                 style={{
                   background: activeLanguage === lang ? "var(--accent)" : "transparent",
-                  color: activeLanguage === lang ? "#000" : "rgba(240,237,230,0.5)",
+                  color: activeLanguage === lang ? "#000" : "var(--color-muted-ash)",
                   border: "1px solid",
                   borderColor: activeLanguage === lang ? "var(--accent)" : "var(--border-mid)",
                 }}
@@ -74,13 +74,13 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
               </button>
             ))}
             <div className="ml-auto flex items-center gap-2">
-              <span className="text-mono" style={{ color: "rgba(240,237,230,0.3)" }}>Sort:</span>
+              <span className="text-mono" style={{ color: "var(--color-muted-ash)" }}>Sort:</span>
               {(["stars", "updated", "name"] as const).map((s) => (
                 <button
                   key={s}
                   onClick={() => setSortBy(s)}
                   className="text-mono px-2 py-1"
-                  style={{ color: sortBy === s ? "var(--accent)" : "rgba(240,237,230,0.35)" }}
+                  style={{ color: sortBy === s ? "var(--accent)" : "var(--color-muted-ash)" }}
                 >
                   {s}
                 </button>
@@ -95,7 +95,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
         <div className="section-container">
           {filtered.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-body mb-6" style={{ color: "rgba(240,237,230,0.4)" }}>
+              <p className="text-body mb-6" style={{ color: "var(--color-muted-ash)" }}>
                 No projects found for this filter.
               </p>
               <button

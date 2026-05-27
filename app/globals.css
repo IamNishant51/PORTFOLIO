@@ -375,17 +375,19 @@
   .btn-ghost-primary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: rgba(0, 0, 0, 0);
     color: var(--fg);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 9999px;
     padding: 10px 20px;
+    min-height: 44px;
     font-family: var(--font-universalsans);
     font-size: var(--text-body-sm);
     font-weight: 400;
     cursor: pointer;
-    white-space: nowrap;
+    white-space: normal; /* Allow wrapping if needed */
     transition: border-color 0.3s ease, background 0.3s ease !important;
   }
 
@@ -397,16 +399,19 @@
   .btn-filled-secondary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: var(--fg);
     color: #0a0a0a;
     border: none;
     border-radius: 9999px;
     padding: 6px 16px;
+    min-height: 44px;
     font-family: var(--font-universalsans);
     font-size: var(--text-body-sm);
     font-weight: 400;
     cursor: pointer;
+    white-space: normal;
     transition: background 0.3s ease !important;
   }
 

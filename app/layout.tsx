@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "./components/SmoothScrolling";
@@ -21,6 +21,12 @@ const spaceMono = Space_Mono({
   weight: ["400"],
   fallback: ["monospace"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0c0c0b",
+};
 
 export const metadata: Metadata = {
   title: "Nishant Unavane — Full-Stack Developer",

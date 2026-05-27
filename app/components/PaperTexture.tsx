@@ -140,6 +140,9 @@ export default function PaperTexture() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const isMobile = window.innerWidth < 768 || navigator.maxTouchPoints > 0;
+    if (isMobile) return;
+
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;

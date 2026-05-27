@@ -94,9 +94,8 @@ export default function TestimonialsPage() {
                                 </span>
                                 <FeedbackBubble size={56} />
                             </h1>
-                            <p className="text-body" style={{ color: "rgba(240,237,230,0.4)" }}>
-                                {filtered.length} {filtered.length === 1 ? "testimonial" : "testimonials"}
-                                {dateFilter !== "all" && " in selected range"}
+                            <p className="text-body" style={{ color: "var(--color-muted-ash)" }}>
+                                Discover what clients, colleagues, and collaborators have to say about my work.
                             </p>
                         </div>
 
@@ -140,7 +139,7 @@ export default function TestimonialsPage() {
                                         className="px-4 py-2 text-mono"
                                         style={{
                                             background: dateFilter === key ? "var(--accent)" : "transparent",
-                                            color: dateFilter === key ? "#000" : "rgba(240,237,230,0.5)",
+                                            color: dateFilter === key ? "#000" : "var(--color-muted-ash)",
                                             border: "1px solid",
                                             borderColor: dateFilter === key ? "var(--accent)" : "var(--border-mid)",
                                         }}
@@ -157,7 +156,7 @@ export default function TestimonialsPage() {
                                         { label: "End Date", val: endDate, set: setEndDate },
                                     ].map(({ label, val, set }) => (
                                         <div key={label}>
-                                            <label className="text-mono block mb-2" style={{ color: "rgba(240,237,230,0.4)" }}>{label}</label>
+                                            <label className="text-mono block mb-2" style={{ color: "var(--color-muted-ash)" }}>{label}</label>
                                             <input
                                                 type="date"
                                                 value={val}
@@ -196,12 +195,12 @@ export default function TestimonialsPage() {
                                 className="inline-block w-12 h-12 border-2 border-t-transparent animate-spin mb-4"
                                 style={{ borderColor: "var(--accent)", borderTopColor: "transparent", borderRadius: "50%" }}
                             />
-                            <p className="text-body" style={{ color: "rgba(240,237,230,0.3)" }}>Loading…</p>
+                            <p className="text-body" style={{ color: "var(--color-muted-ash)" }}>Loading…</p>
                         </div>
                     ) : filtered.length === 0 ? (
                         <div className="text-center py-20">
-                            <p className="text-body mb-6" style={{ color: "rgba(240,237,230,0.4)" }}>
-                                {dateFilter === "all" ? "No testimonials yet." : "No testimonials in this range."}
+                            <p className="text-body mb-6" style={{ color: "var(--color-muted-ash)" }}>
+                                No testimonials found. Be the first to leave one!
                             </p>
                             {dateFilter !== "all" && (
                                 <button
@@ -246,7 +245,7 @@ export default function TestimonialsPage() {
                                             ))}
                                         </div>
 
-                                        <p className="text-body mb-6 leading-relaxed" style={{ color: "rgba(240,237,230,0.65)" }}>
+                                        <p className="text-body mb-6 leading-relaxed" style={{ color: "var(--color-muted-ash)" }}>
                                             &ldquo;{text}&rdquo;
                                         </p>
 
@@ -257,10 +256,10 @@ export default function TestimonialsPage() {
                                                 </div>
                                                 <div>
                                                     <p className="text-small font-semibold" style={{ color: "var(--fg)" }}>{t.name}</p>
-                                                    <p className="text-mono" style={{ color: "rgba(240,237,230,0.35)" }}>{t.role}</p>
+                                                    <p className="text-mono" style={{ color: "var(--color-muted-ash)" }}>{t.role}</p>
                                                 </div>
                                             </div>
-                                            <span className="text-mono" style={{ color: "rgba(240,237,230,0.25)" }}>{fmt(t.createdAt)}</span>
+                                            <span className="text-mono" style={{ color: "var(--color-muted-ash)" }}>{fmt(t.createdAt)}</span>
                                         </div>
                                     </div>
                                 );

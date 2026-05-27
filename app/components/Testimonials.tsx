@@ -144,6 +144,7 @@ export default function Testimonials() {
                                         <input
                                             type="text"
                                             name={field}
+                                            aria-label={field === "name" ? "Your Name" : "Your Role or Company"}
                                             value={formData[field as "name" | "role"]}
                                             onChange={(e) => setFormData((p) => ({ ...p, [field]: e.target.value }))}
                                             placeholder={field === "name" ? "Your Name" : "Your Role / Company"}
@@ -161,6 +162,7 @@ export default function Testimonials() {
                             <div className="relative group" style={{ borderBottom: "1px solid var(--border-hi)" }}>
                                 <textarea
                                     name="message"
+                                    aria-label="Your Testimonial Message"
                                     value={formData.message}
                                     onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
                                     placeholder="Your testimonial"
@@ -175,9 +177,10 @@ export default function Testimonials() {
                                 />
                             </div>
                             <div className="flex items-center gap-4">
-                                <span className="text-small" style={{ color: "rgba(240,237,230,0.5)" }}>Rating:</span>
+                                <span className="text-small" style={{ color: "var(--color-muted-ash)" }}>Rating:</span>
                                 <select
                                     name="rating"
+                                    aria-label="Select Rating"
                                     value={formData.rating}
                                     onChange={(e) => setFormData((p) => ({ ...p, rating: Number(e.target.value) }))}
                                     className="bg-transparent text-small focus:outline-none"
@@ -256,7 +259,7 @@ export default function Testimonials() {
                                         </div>
                                         <div>
                                             <p className="text-small font-semibold" style={{ color: "var(--fg)" }}>{t.name}</p>
-                                            <p className="text-mono" style={{ color: "rgba(240,237,230,0.35)" }}>{t.role}</p>
+                                            <p className="text-mono" style={{ color: "var(--color-muted-ash)" }}>{t.role}</p>
                                         </div>
                                     </div>
                                 </div>

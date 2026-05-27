@@ -311,7 +311,7 @@ const Hero = () => {
                     {/* ── Left: Headline ── */}
                     <div>
                         {/* Badge */}
-                        <div ref={labelRef} className="flex items-center gap-3 mb-10 opacity-0">
+                        <div ref={labelRef} className="flex flex-wrap items-center gap-3 mb-10 opacity-0">
                             <span className="text-mono" style={{ color: "var(--accent)" }}>01</span>
                             <span className="w-8 h-px flex-shrink-0" style={{ background: "var(--accent)" }} />
                             <span className="text-mono" style={{ color: "var(--color-muted-ash)" }}>
@@ -364,8 +364,8 @@ const Hero = () => {
                     </div>
 
                     {/* ── Right: Portrait with lens reveal ── */}
-                    <div className="order-first lg:order-last flex justify-center lg:justify-end">
-                        <div ref={imageRef} className="relative opacity-0">
+                    <div className="flex justify-center lg:justify-end mt-10 lg:mt-0">
+                        <div ref={imageRef} className="relative opacity-0 max-w-full">
 
                             {/* Corner accent lines */}
                             <div
@@ -386,7 +386,7 @@ const Hero = () => {
                             <div
                                 ref={frameRef}
                                 data-cursor="portrait"
-                                className="relative overflow-hidden gpu-accelerated"
+                                className="relative overflow-hidden gpu-accelerated max-w-[100vw]"
                                 style={{
                                     width: "clamp(200px, 40vw, 320px)",
                                     height: "clamp(240px, 48vw, 400px)",
@@ -425,6 +425,7 @@ const Hero = () => {
                                         fill
                                         className="object-cover object-top"
                                         sizes="(max-width: 480px) 200px, (max-width: 768px) 40vw, 320px"
+                                        priority
                                         draggable={false}
                                     />
                                 </div>
@@ -458,13 +459,13 @@ const Hero = () => {
 
                             {/* Caption strip below portrait */}
                             <div
-                                className="flex items-center justify-between px-0 mt-3"
+                                className="flex flex-wrap items-center justify-between gap-2 px-0 mt-3"
                                 style={{ color: "var(--color-muted-ash)" }}
                             >
-                                <span className="text-mono" style={{ fontSize: "10px", letterSpacing: "0.12em" }}>
+                                <span className="text-mono flex-shrink-0" style={{ fontSize: "10px", letterSpacing: "0.12em" }}>
                                     NISHANT UNAVANE
                                 </span>
-                                <span className="text-mono" style={{ fontSize: "10px", letterSpacing: "0.08em" }}>
+                                <span className="text-mono flex-shrink-0" style={{ fontSize: "10px", letterSpacing: "0.08em" }}>
                                     ©&thinsp;2024
                                 </span>
                             </div>

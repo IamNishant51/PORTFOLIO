@@ -55,7 +55,7 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
           {project.language || "Code"}
         </div>
         <ArrowUpRight
-          className="w-4 h-4 opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          className="w-4 h-4 flex-shrink-0 opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           style={{ color: "var(--fg)" }}
         />
       </div>
@@ -68,7 +68,7 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
         >
           {project.name.replace(/-/g, " ")}
         </h3>
-        <p className="text-small line-clamp-2" style={{ color: "rgba(240,237,230,0.45)" }}>
+        <p className="text-small line-clamp-2" style={{ color: "var(--color-muted-ash)" }}>
           {project.description || "No description provided."}
         </p>
 
@@ -80,7 +80,7 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
                 className="px-2 py-0.5 text-mono"
                 style={{
                   border: "1px solid var(--border-mid)",
-                  color: "rgba(240,237,230,0.4)",
+                  color: "var(--color-muted-ash)",
                 }}
               >
                 {topic}
@@ -92,14 +92,14 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
 
       {/* Stats */}
       <div
-        className="flex gap-4 mt-4 pt-4 text-mono opacity-40 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ borderTop: "1px solid var(--border)", color: "rgba(240,237,230,0.5)" }}
+        className="flex flex-wrap gap-4 mt-4 pt-4 text-mono opacity-40 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ borderTop: "1px solid var(--border)", color: "var(--color-muted-ash)" }}
       >
         <span className="flex items-center gap-1.5">
-          <Star size={12} /> {project.stars}
+          <Star className="flex-shrink-0" size={12} /> {project.stars}
         </span>
         <span className="flex items-center gap-1.5">
-          <GitFork size={12} /> {project.forks}
+          <GitFork className="flex-shrink-0" size={12} /> {project.forks}
         </span>
       </div>
 
