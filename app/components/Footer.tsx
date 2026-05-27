@@ -15,7 +15,7 @@ export default function Footer() {
             gsap.fromTo(
                 footerRef.current,
                 { opacity: 0 },
-                { opacity: 1, duration: 1, ease: "power2.out", delay: 0.2 }
+                { opacity: 1, duration: 1.2, ease: "power2.out", delay: 0.1 }
             );
         }, footerRef);
 
@@ -25,67 +25,85 @@ export default function Footer() {
     return (
         <footer
             ref={footerRef}
-            className="relative w-full py-16 md:py-24"
+            className="fixed bottom-0 left-0 right-0 w-full"
             style={{
                 background: "var(--bg)",
                 borderTop: "1px solid var(--border-hi)",
+                zIndex: 1,
             }}
         >
+            {/* Top gradient fade */}
+            <div
+                className="absolute top-0 left-0 right-0 pointer-events-none"
+                style={{
+                    height: "60px",
+                    top: "-60px",
+                    background: "linear-gradient(to bottom, transparent, var(--bg))",
+                }}
+                aria-hidden="true"
+            />
+
             {/* Large background text */}
             <div
                 className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none"
                 aria-hidden="true"
             >
                 <span
-                    className="text-display font-bold uppercase whitespace-nowrap"
-                    style={{ color: "rgba(240,237,230,0.025)", fontSize: "clamp(4rem, 15vw, 20rem)" }}
+                    className="font-bold uppercase whitespace-nowrap"
+                    style={{ color: "rgba(255,255,255,0.018)", fontSize: "clamp(3rem, 12vw, 16rem)" }}
                 >
-                    Let's Connect
+                    Let&apos;s Connect
                 </span>
             </div>
 
-            <div className="section-container relative z-10">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div
+                className="section-container relative z-10"
+                style={{ paddingTop: "clamp(2rem, 4vw, 4rem)", paddingBottom: "max(clamp(2rem, 4vw, 4rem), env(safe-area-inset-bottom))" }}
+            >
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                     {/* Brand */}
                     <div>
-                        <p className="text-heading font-bold mb-2" style={{ color: "var(--fg)" }}>
+                        <p className="text-heading font-bold mb-1" style={{ color: "var(--fg)", fontSize: "clamp(1.25rem, 3vw, 2rem)" }}>
                             nishant
                         </p>
-                        <p className="badge-neutral" style={{ color: "var(--color-muted-ash)" }}>
+                        <p className="text-mono" style={{ color: "var(--color-muted-ash)" }}>
                             Full-Stack Developer
                         </p>
                     </div>
 
                     {/* Links */}
-                    <div className="flex items-center gap-6">
-                        {[
-                            { label: "GitHub", href: "https://github.com/IamNishant51" },
-                            { label: "LinkedIn", href: "https://www.linkedin.com/in/nishant-unavane-008291275/" },
-                            { label: "Email", href: "mailto:nishant.unavane@outlook.com" },
-                        ].map(({ label, href }) => (
-                            <a
-                                key={label}
-                                href={href}
-                                target={href.startsWith("http") ? "_blank" : undefined}
-                                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                                className="text-body-sm hover-line"
-                                style={{ color: "var(--color-muted-ash)" }}
-                            >
-                                {label}
-                            </a>
-                        ))}
-                    </div>
+                    <nav aria-label="Footer navigation">
+                        <div className="flex items-center gap-6 flex-wrap justify-center">
+                            {[
+                                { label: "GitHub", href: "https://github.com/IamNishant51" },
+                                { label: "LinkedIn", href: "https://www.linkedin.com/in/nishant-unavane-008291275/" },
+                                { label: "Email", href: "mailto:nishant.unavane@outlook.com" },
+                            ].map(({ label, href }) => (
+                                <a
+                                    key={label}
+                                    href={href}
+                                    target={href.startsWith("http") ? "_blank" : undefined}
+                                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                    className="text-body-sm hover-line"
+                                    style={{ color: "var(--color-muted-ash)" }}
+                                >
+                                    {label}
+                                </a>
+                            ))}
+                        </div>
+                    </nav>
 
                     {/* Copyright */}
-                    <p className="text-caption text-center md:text-right" style={{ color: "var(--color-muted-ash)" }}>
+                    <p className="text-mono text-center md:text-right" style={{ color: "var(--color-muted-ash)" }}>
                         © <span ref={yearRef}>2026</span> Nishant. All rights reserved.
                     </p>
                 </div>
 
                 {/* Bottom accent line */}
                 <div
-                    className="mt-12 h-px"
+                    className="mt-8 h-px"
                     style={{ background: "linear-gradient(to right, transparent, var(--accent), transparent)" }}
+                    aria-hidden="true"
                 />
             </div>
         </footer>

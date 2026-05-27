@@ -129,11 +129,10 @@ void main(){
   /* Chromatic aberration on the field */
   vec3 chroma = chromaShift(uv + w * .04, .012, t);
 
-  /* ── Color mapping ── */
   /* Base: deep void */
-  vec3 colVoid   = vec3(.039, .039, .059);   /* #0A0A0F */
-  /* Mid: electric blue */
-  vec3 colBlue   = vec3(.145, .388, .933);   /* #2563eb */
+  vec3 colVoid   = vec3(.047, .047, .043);   /* #0C0C0B */
+  /* Mid: premium gray */
+  vec3 colBlue   = vec3(.278, .278, .278);   /* #474747 */
   /* Peak: frost white */
   vec3 colFrost  = vec3(.941, .929, .902);   /* #F0EDE6 */
   /* Cream highlight */

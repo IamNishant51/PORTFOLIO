@@ -32,6 +32,7 @@ const Hero = () => {
     const subtextRef = useRef<HTMLParagraphElement>(null);
     const ctaRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const glowRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -44,61 +45,69 @@ const Hero = () => {
 
             const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
+            /* Ambient glow */
+            tl.fromTo(glowRef.current,
+                { opacity: 0 },
+                { opacity: 1, duration: 1.5 },
+                0
+            );
+
             /* Image reveal */
             tl.fromTo(imageRef.current,
-                { scale: 0.9, opacity: 0, y: 20 },
-                { scale: 1, opacity: 1, y: 0, duration: 1 }
+                { scale: 0.92, opacity: 0, y: 24 },
+                { scale: 1, opacity: 1, y: 0, duration: 1.1 },
+                0.1
             );
 
             /* Label */
             tl.fromTo(labelRef.current,
-                { opacity: 0, y: 12 },
-                { opacity: 1, y: 0, duration: 0.6 },
-                "-=0.6"
+                { opacity: 0, y: 14 },
+                { opacity: 1, y: 0, duration: 0.7 },
+                "-=0.7"
             );
 
             /* Headline chars */
             tl.fromTo(chars1,
                 { y: "110%", opacity: 0 },
-                { y: "0%", opacity: 1, stagger: 0.03, duration: 0.8 },
-                "-=0.3"
+                { y: "0%", opacity: 1, stagger: 0.025, duration: 0.9 },
+                "-=0.4"
             );
             tl.fromTo(chars2,
                 { y: "110%", opacity: 0 },
-                { y: "0%", opacity: 1, stagger: 0.03, duration: 0.8 },
-                "-=0.6"
+                { y: "0%", opacity: 1, stagger: 0.025, duration: 0.9 },
+                "-=0.7"
             );
 
             /* Subtext */
             tl.fromTo(subtextRef.current,
-                { opacity: 0, y: 16 },
-                { opacity: 1, y: 0, duration: 0.7 },
-                "-=0.4"
+                { opacity: 0, y: 18 },
+                { opacity: 1, y: 0, duration: 0.8 },
+                "-=0.5"
             );
 
             /* CTA */
             tl.fromTo(ctaRef.current,
-                { opacity: 0, y: 16 },
-                { opacity: 1, y: 0, duration: 0.6 },
+                { opacity: 0, y: 18 },
+                { opacity: 1, y: 0, duration: 0.7 },
                 "-=0.4"
             );
 
             /* Scroll indicator */
             tl.fromTo(scrollRef.current,
                 { opacity: 0 },
-                { opacity: 1, duration: 0.5 },
-                "-=0.2"
+                { opacity: 1, duration: 0.6 },
+                "-=0.3"
             );
 
             /* ── Scroll velocity skew on chars ── */
             const allChars = [...chars1, ...chars2];
             const proxy = { skew: 0 };
             const skewSetter = gsap.quickSetter(allChars, "skewY", "deg");
-            const clamp = gsap.utils.clamp(-10, 10);
+            const clamp = gsap.utils.clamp(-8, 8);
 
             ScrollTrigger.create({
                 onUpdate(self) {
-                    const skew = clamp(self.getVelocity() / -400);
+                    const skew = clamp(self.getVelocity() / -450);
                     if (Math.abs(skew) > Math.abs(proxy.skew)) {
                         proxy.skew = skew;
                         gsap.to(proxy, {
@@ -114,7 +123,7 @@ const Hero = () => {
 
             /* ── Parallax on image ── */
             gsap.to(imageRef.current, {
-                y: 60,
+                y: 50,
                 ease: "none",
                 scrollTrigger: {
                     trigger: sectionRef.current,
@@ -150,51 +159,62 @@ const Hero = () => {
             {/* Subtle top border */}
             <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--border-hi)" }} />
 
+            {/* Ambient glow */}
+            <div
+                ref={glowRef}
+                className="absolute inset-0 pointer-events-none opacity-0"
+                style={{
+                    background: "radial-gradient(ellipse 70% 55% at 50% 0%, rgba(37,99,235,0.08) 0%, transparent 65%)",
+                }}
+                aria-hidden="true"
+            />
+
             {/* Main content */}
-            <div className="section-container relative z-10 w-full pt-24 pb-20 md:pt-32 md:pb-28">
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 lg:gap-24 items-center">
+            <div className="section-container relative z-10 w-full pt-28 pb-24 md:pt-36 md:pb-32">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-12 lg:gap-20 xl:gap-28 items-center">
 
                     {/* ── Left: Headline ── */}
                     <div>
                         {/* Badge */}
-                        <div ref={labelRef} className="flex items-center gap-2 mb-12 opacity-0">
-                            <span className="badge-neutral">01</span>
-                            <span className="badge-neutral" style={{ color: "var(--fg)" }}>
+                        <div ref={labelRef} className="flex items-center gap-3 mb-10 opacity-0">
+                            <span className="text-mono" style={{ color: "var(--accent)" }}>01</span>
+                            <span className="w-8 h-px flex-shrink-0" style={{ background: "var(--accent)" }} />
+                            <span className="text-mono" style={{ color: "var(--color-muted-ash)" }}>
                                 Full-Stack Developer
                             </span>
                         </div>
 
                         {/* Headline */}
                         <h1 className="text-display overflow-hidden mb-8" style={{ color: "var(--fg)" }}>
-                            <span ref={line1Ref} className="block overflow-hidden">AI for all humanity</span>
+                            <span ref={line1Ref} className="block overflow-hidden">Full-Stack</span>
                             <span
                                 ref={line2Ref}
                                 className="block overflow-hidden"
-                                style={{ color: "var(--fg)" }}
+                                style={{ color: "var(--accent)" }}
                             >
-                                Start building today
+                                Developer
                             </span>
                         </h1>
 
                         {/* Subtext */}
                         <p
                             ref={subtextRef}
-                            className="text-body max-w-lg mb-12 opacity-0"
+                            className="text-body max-w-[42ch] mb-12 opacity-0"
                             style={{ color: "var(--color-muted-ash)" }}
                         >
-                            Explore new frontiers. Building high-performance web apps, VS Code extensions, and
-                            immersive digital experiences with modern technologies and clean code principles.
+                            Building high-performance web apps, VS Code extensions, and immersive digital experiences with
+                            React, Next.js, TypeScript, and modern tooling.
                         </p>
 
                         {/* CTA */}
-                        <div ref={ctaRef} className="flex flex-wrap items-center gap-4 opacity-0">
+                        <div ref={ctaRef} className="flex flex-wrap items-center gap-3 opacity-0">
                             <button
                                 onClick={() => {
                                     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
                                 }}
                                 className="btn-ghost-primary"
                             >
-                                Get started
+                                Get in touch
                             </button>
                             <a
                                 href="https://ik.imagekit.io/9pfz6g8ri/avatars/Nishant_Unavane_Resume.pdf"
@@ -203,31 +223,56 @@ const Hero = () => {
                                 rel="noopener noreferrer"
                                 className="btn-ghost-primary"
                             >
-                                My resume
+                                View résumé
                             </a>
                         </div>
                     </div>
 
                     {/* ── Right: Profile image ── */}
-                    <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+                    <div className="order-first lg:order-last flex justify-center lg:justify-end">
                         <div ref={imageRef} className="relative opacity-0">
                             {/* Image frame */}
                             <a
                                 href="https://github.com/IamNishant51"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group relative block w-60 h-60 md:w-72 md:h-72"
-                                style={{ border: "1px solid var(--border-hi)" }}
+                                className="group relative block"
+                                style={{
+                                    width: "clamp(180px, 40vw, 300px)",
+                                    height: "clamp(180px, 40vw, 300px)",
+                                    border: "1px solid var(--border-hi)",
+                                }}
+                                aria-label="View GitHub profile"
                             >
                                 <Image
                                     src="https://ik.imagekit.io/9pfz6g8ri/avatars/nishant.jpg"
                                     alt="Nishant Unavane — Full-Stack Developer"
                                     fill
-                                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                    className="object-cover grayscale group-hover:grayscale-0"
+                                    style={{ transition: "filter 0.7s ease !important" }}
                                     priority
-                                    sizes="(max-width: 768px) 240px, 288px"
+                                    sizes="(max-width: 480px) 180px, (max-width: 768px) 40vw, 300px"
+                                />
+                                {/* Hover overlay */}
+                                <div
+                                    className="absolute inset-0 opacity-0 group-hover:opacity-100"
+                                    style={{
+                                        background: "linear-gradient(135deg, rgba(37,99,235,0.12) 0%, transparent 60%)",
+                                        transition: "opacity 0.5s ease !important",
+                                    }}
                                 />
                             </a>
+                            {/* Corner accent lines */}
+                            <div
+                                className="absolute -top-2 -right-2 w-5 h-5 pointer-events-none"
+                                style={{ borderTop: "1px solid var(--accent)", borderRight: "1px solid var(--accent)" }}
+                                aria-hidden="true"
+                            />
+                            <div
+                                className="absolute -bottom-2 -left-2 w-5 h-5 pointer-events-none"
+                                style={{ borderBottom: "1px solid var(--accent)", borderLeft: "1px solid var(--accent)" }}
+                                aria-hidden="true"
+                            />
                         </div>
                     </div>
                 </div>
@@ -239,14 +284,20 @@ const Hero = () => {
                 onClick={() => window.scrollBy({ top: window.innerHeight, behavior: "smooth" })}
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer group opacity-0"
                 style={{ color: "var(--color-muted-ash)" }}
+                role="button"
+                aria-label="Scroll to next section"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && window.scrollBy({ top: window.innerHeight, behavior: "smooth" })}
             >
-                <span className="text-caption group-hover:text-[var(--fg)] transition-colors duration-300">
-                    Scroll to explore
+                <span className="text-mono group-hover:text-[var(--fg)]" style={{ transition: "color 0.3s ease !important" }}>
+                    Scroll
                 </span>
-                <div
-                    className="w-px h-8 animate-pulse"
-                    style={{ background: "currentColor" }}
-                />
+                <div className="relative h-8 w-px overflow-hidden" style={{ background: "var(--border-hi)" }}>
+                    <div
+                        className="absolute top-0 left-0 w-full h-full animate-scroll-cue"
+                        style={{ background: "var(--accent)" }}
+                    />
+                </div>
             </div>
         </section>
     );

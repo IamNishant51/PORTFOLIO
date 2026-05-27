@@ -38,53 +38,45 @@ export default function About() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            /* Heading reveal */
-            gsap.fromTo(headingRef.current,
-                { y: 60, opacity: 0 },
-                {
-                    y: 0, opacity: 1, duration: 1, ease: "power4.out",
-                    scrollTrigger: { trigger: headingRef.current, start: "top 85%", once: true },
-                }
-            );
+            const trigger = (el: Element | null, opts = {}) =>
+                gsap.fromTo(el,
+                    { y: 50, opacity: 0 },
+                    {
+                        y: 0, opacity: 1, duration: 0.9, ease: "power3.out",
+                        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+                        ...opts,
+                    }
+                );
 
-            /* Bio */
-            gsap.fromTo(bioRef.current,
-                { y: 40, opacity: 0 },
-                {
-                    y: 0, opacity: 1, duration: 0.9, ease: "power3.out",
-                    scrollTrigger: { trigger: bioRef.current, start: "top 85%", once: true },
-                }
-            );
+            trigger(headingRef.current, { duration: 1, ease: "power4.out" });
+            trigger(bioRef.current, { duration: 0.9, delay: 0.05 });
 
-            /* Stats stagger */
             if (statsRef.current) {
                 gsap.fromTo(Array.from(statsRef.current.children),
                     { y: 40, opacity: 0 },
                     {
                         y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out",
-                        scrollTrigger: { trigger: statsRef.current, start: "top 85%", once: true },
+                        scrollTrigger: { trigger: statsRef.current, start: "top 88%", once: true },
                     }
                 );
             }
 
-            /* Journey items */
             if (journeyRef.current) {
                 gsap.fromTo(Array.from(journeyRef.current.children),
-                    { x: -40, opacity: 0 },
+                    { x: -32, opacity: 0 },
                     {
-                        x: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: "power3.out",
-                        scrollTrigger: { trigger: journeyRef.current, start: "top 85%", once: true },
+                        x: 0, opacity: 1, stagger: 0.12, duration: 0.8, ease: "power3.out",
+                        scrollTrigger: { trigger: journeyRef.current, start: "top 88%", once: true },
                     }
                 );
             }
 
-            /* Beliefs */
             if (beliefsRef.current) {
                 gsap.fromTo(Array.from(beliefsRef.current.children),
-                    { scale: 0.85, opacity: 0 },
+                    { scale: 0.88, opacity: 0 },
                     {
-                        scale: 1, opacity: 1, stagger: 0.07, duration: 0.6, ease: "back.out(1.4)",
-                        scrollTrigger: { trigger: beliefsRef.current, start: "top 88%", once: true },
+                        scale: 1, opacity: 1, stagger: 0.06, duration: 0.55, ease: "back.out(1.4)",
+                        scrollTrigger: { trigger: beliefsRef.current, start: "top 90%", once: true },
                     }
                 );
             }
@@ -97,17 +89,15 @@ export default function About() {
         <section
             ref={sectionRef}
             id="about"
-            className="relative py-24 md:py-32 lg:py-40 overflow-hidden"
-            style={{ background: "var(--bg)" }}
+            className="relative overflow-hidden"
+            style={{ background: "var(--bg)", borderTop: "1px solid var(--border-hi)" }}
         >
-
-
-            <div className="section-container">
+            <div className="section-container section-py">
                 {/* ── Section label ── */}
-                <div className="flex items-center gap-4 mb-12">
-                    <span className="text-caption" style={{ color: "var(--accent)" }}>02</span>
-                    <span className="w-12 h-px" style={{ background: "var(--accent)" }} />
-                    <span className="text-caption" style={{ color: "var(--color-muted-ash)" }}>About</span>
+                <div className="section-label">
+                    <span className="section-label-num">02</span>
+                    <span className="section-label-line" />
+                    <span className="section-label-text">About</span>
                 </div>
 
                 {/* ── Heading ── */}
@@ -123,12 +113,12 @@ export default function About() {
                 </h2>
 
                 {/* ── Main grid ── */}
-                <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 mb-20 md:mb-28">
+                <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 md:mb-24">
                     {/* Bio */}
-                    <div ref={bioRef} className="space-y-6">
+                    <div ref={bioRef} className="space-y-5">
                         <p className="text-body" style={{ color: "var(--fg)" }}>
                             Hey! I&apos;m{" "}
-                            <span className="font-semibold" style={{ color: "var(--fg)" }}>
+                            <span style={{ color: "var(--fg)" }}>
                                 Nishant Unavane
                             </span>
                             , a passionate developer who loves turning complex problems into
@@ -138,7 +128,7 @@ export default function About() {
                             My journey into tech started with curiosity and has evolved into a
                             deep passion for creating tools that make developers&apos; lives easier.
                             I specialize in building{" "}
-                            <span className="font-semibold" style={{ color: "var(--accent)" }}>
+                            <span style={{ color: "var(--accent)" }}>
                                 VS Code extensions
                             </span>
                             , modern web applications, and everything in between.
@@ -149,17 +139,18 @@ export default function About() {
                         </p>
 
                         {/* Beliefs */}
-                        <div className="pt-8" style={{ borderTop: "1px solid var(--border-hi)" }}>
-                            <p className="text-caption mb-4" style={{ color: "var(--color-muted-ash)" }}>
+                        <div className="pt-6" style={{ borderTop: "1px solid var(--border-hi)" }}>
+                            <p className="text-mono mb-4" style={{ color: "var(--color-muted-ash)" }}>
                                 I believe in
                             </p>
                             <div ref={beliefsRef} className="flex flex-wrap gap-2">
                                 {BELIEFS.map((b) => (
                                     <span
                                         key={b}
-                                        className="px-4 py-2 text-small font-medium cursor-default badge-neutral"
+                                        className="px-3 py-1.5 text-mono cursor-default"
                                         style={{
                                             color: "var(--fg)",
+                                            border: "1px solid var(--border-hi)",
                                         }}
                                     >
                                         {b}
@@ -171,19 +162,20 @@ export default function About() {
 
                     {/* Stats */}
                     <div>
-                        <p className="text-caption mb-8" style={{ color: "var(--color-muted-ash)" }}>
+                        <p className="text-mono mb-6" style={{ color: "var(--color-muted-ash)" }}>
                             By the numbers
                         </p>
-                        <div ref={statsRef} className="grid grid-cols-2 gap-4">
+                        <div ref={statsRef} className="grid grid-cols-2 gap-3">
                             {[
                                 { value: "4+", label: "VS Code Extensions" },
                                 { value: "15+", label: "Projects Completed" },
-                                { value: "1+", label: "Years Coding" },
+                                { value: "2+", label: "Years Coding" },
                                 { value: "∞", label: "Coffee Consumed" },
                             ].map((s) => (
                                 <div
                                     key={s.label}
-                                    className="group p-6 md:p-8 cursor-default card-callout"
+                                    className="group p-5 md:p-7 card-callout cursor-default"
+                                    style={{ transition: "border-color 0.3s ease !important" }}
                                     onMouseEnter={(e) => {
                                         (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
                                     }}
@@ -192,12 +184,12 @@ export default function About() {
                                     }}
                                 >
                                     <div
-                                        className="text-heading font-bold mb-2"
+                                        className="text-heading font-bold mb-1.5"
                                         style={{ color: "var(--accent)" }}
                                     >
                                         {s.value}
                                     </div>
-                                    <div className="text-caption" style={{ color: "var(--color-muted-ash)" }}>
+                                    <div className="text-mono" style={{ color: "var(--color-muted-ash)" }}>
                                         {s.label}
                                     </div>
                                 </div>
@@ -208,23 +200,26 @@ export default function About() {
 
                 {/* ── Journey ── */}
                 <div>
-                    <p className="text-caption mb-10" style={{ color: "var(--color-muted-ash)" }}>
+                    <p className="text-mono mb-8" style={{ color: "var(--color-muted-ash)" }}>
                         My journey
                     </p>
                     <div ref={journeyRef} className="space-y-0">
                         {JOURNEY.map((item, i) => (
                             <div
                                 key={i}
-                                className="group relative grid grid-cols-[auto_1fr] gap-6 md:gap-10 py-8"
-                                style={{ borderBottom: "1px solid var(--border-hi)" }}
+                                className="group relative grid gap-5 md:gap-10 py-6 md:py-8"
+                                style={{
+                                    gridTemplateColumns: "auto 1fr",
+                                    borderBottom: "1px solid var(--border-hi)",
+                                }}
                             >
                                 {/* Timeline dot + line */}
                                 <div className="flex flex-col items-center pt-1">
                                     <div
-                                        className="w-3 h-3 flex-shrink-0"
+                                        className="w-2.5 h-2.5 flex-shrink-0"
                                         style={{
                                             background: item.active ? "var(--accent)" : "var(--border-hi)",
-                                            boxShadow: item.active ? "0 0 12px var(--accent)" : "none",
+                                            boxShadow: item.active ? "0 0 10px var(--accent)" : "none",
                                         }}
                                     />
                                     {i < JOURNEY.length - 1 && (
@@ -237,11 +232,11 @@ export default function About() {
 
                                 {/* Content */}
                                 <div>
-                                    <span className="text-caption block mb-2" style={{ color: "var(--accent)" }}>
+                                    <span className="text-mono block mb-2" style={{ color: "var(--accent)" }}>
                                         {item.year}
                                     </span>
                                     <h3
-                                        className="text-subheading mb-3"
+                                        className="text-subheading mb-2"
                                         style={{ color: item.active ? "var(--fg)" : "var(--color-muted-ash)" }}
                                     >
                                         {item.title}

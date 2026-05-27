@@ -1,12 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { Home, Briefcase, Target, MessageSquare, Mail } from "lucide-react";
+import { Home, Briefcase, Target, Mail } from "lucide-react";
 
 const ITEMS = [
     { Icon: Home, label: "Home", action: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
     { Icon: Briefcase, label: "Projects", action: () => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }) },
     { Icon: Target, label: "Skills", action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }) },
-    { Icon: MessageSquare, label: "Testimonials", action: () => document.getElementById("testimonials")?.scrollIntoView({ behavior: "smooth" }) },
     { Icon: Mail, label: "Contact", action: () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }) },
 ];
 
@@ -21,17 +20,20 @@ export default function FloatingMenu() {
                     <button
                         key={label}
                         onClick={() => { action(); setOpen(false); }}
-                        className="absolute bottom-0 right-0 w-11 h-11 flex items-center justify-center group"
+                        className="absolute bottom-0 right-0 flex items-center justify-center group"
                         style={{
+                            width: "44px",
+                            height: "44px",
                             border: "1px solid var(--border-hi)",
-                            background: "var(--void-2,#12121A)",
+                            background: "var(--surface-2)",
                             color: "var(--fg)",
-                            transform: open ? `translateY(-${(i + 1) * 52}px)` : "translateY(0)",
+                            cursor: "pointer",
+                            transform: open ? `translateY(-${(i + 1) * 54}px)` : "translateY(0)",
                             opacity: open ? 1 : 0,
                             pointerEvents: open ? "auto" : "none",
-                            transitionProperty: "transform, opacity, background-color, border-color !important",
+                            transitionProperty: "transform, opacity, background-color, border-color, color !important",
                             transitionDuration: "300ms !important",
-                            transitionDelay: open ? `${i * 40}ms` : "0ms",
+                            transitionDelay: open ? `${i * 35}ms` : "0ms",
                         }}
                         aria-label={label}
                         title={label}
@@ -44,15 +46,15 @@ export default function FloatingMenu() {
                             (e.currentTarget as HTMLElement).style.color = "var(--fg)";
                         }}
                     >
-                        <Icon className="w-4 h-4" />
+                        <Icon className="w-4 h-4" aria-hidden="true" />
                         {/* Tooltip */}
                         <span
                             className="absolute right-14 px-3 py-1 text-mono whitespace-nowrap pointer-events-none opacity-0 group-hover:opacity-100"
                             style={{
-                                background: "var(--void-2,#12121A)",
+                                background: "var(--surface-2)",
                                 border: "1px solid var(--border-hi)",
                                 color: "var(--fg)",
-                                transition: "opacity 0.2s ease !important",
+                                transition: "opacity 0.18s ease !important",
                             }}
                         >
                             {label}
@@ -64,15 +66,20 @@ export default function FloatingMenu() {
             {/* Toggle */}
             <button
                 onClick={() => setOpen((v) => !v)}
-                className="relative w-12 h-12 flex items-center justify-center"
+                className="relative flex items-center justify-center"
                 style={{
-                    background: open ? "var(--accent)" : "var(--void-2,#12121A)",
+                    width: "48px",
+                    height: "48px",
+                    background: open ? "var(--accent)" : "var(--surface-2)",
                     border: "1px solid",
                     borderColor: open ? "var(--accent)" : "var(--border-hi)",
-                    color: open ? "#000" : "var(--fg)",
+                    color: open ? "#fff" : "var(--fg)",
+                    cursor: "pointer",
                     transition: "background 0.3s ease, border-color 0.3s ease, color 0.3s ease !important",
                 }}
                 aria-label="Toggle navigation menu"
+                aria-expanded={open}
+                aria-haspopup="true"
             >
                 <span
                     className="absolute w-5 h-px"

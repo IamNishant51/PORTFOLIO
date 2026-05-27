@@ -1,169 +1,196 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const [pct, setPct] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
-    const nameRef = useRef<HTMLDivElement>(null);
-    const barRef = useRef<HTMLDivElement>(null);
-    const barFillRef = useRef<HTMLDivElement>(null);
-    const numRef = useRef<HTMLDivElement>(null);
-    const tagRef = useRef<HTMLDivElement>(null);
-    const lineRef = useRef<HTMLDivElement>(null);
+    const topPanelRef = useRef<HTMLDivElement>(null);
+    const bottomPanelRef = useRef<HTMLDivElement>(null);
+    const glowRef = useRef<HTMLDivElement>(null);
+    const counterWrapperRef = useRef<HTMLDivElement>(null);
+    const counterRef = useRef<HTMLSpanElement>(null);
+    const nameRef = useRef<HTMLHeadingElement>(null);
+    const tagRef = useRef<HTMLParagraphElement>(null);
 
-    /* ── Entry animations ── */
+    /* ── Counter Logic ── */
     useEffect(() => {
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        const obj = { val: 0 };
+        const tl = gsap.timeline();
 
-        tl.fromTo(nameRef.current,
-            { y: 60, opacity: 0, letterSpacing: "0.4em" },
-            { y: 0, opacity: 1, letterSpacing: "0.05em", duration: 1.1, delay: 0.2 }
-        )
-            .fromTo(tagRef.current,
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.7 },
-                "-=0.5"
-            )
-            .fromTo(barRef.current,
-                { scaleX: 0, opacity: 0 },
-                { scaleX: 1, opacity: 1, duration: 0.6, transformOrigin: "left" },
-                "-=0.4"
-            )
-            .fromTo(numRef.current,
-                { opacity: 0 },
-                { opacity: 1, duration: 0.4 },
-                "-=0.3"
-            )
-            .fromTo(lineRef.current,
-                { scaleX: 0 },
-                { scaleX: 1, duration: 0.8, transformOrigin: "left" },
-                "-=0.2"
-            );
-    }, []);
+        // Animate counter from 0 to 100
+        tl.to(obj, {
+            val: 100,
+            duration: 2.4,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                const currentVal = Math.floor(obj.val);
+                setPct(currentVal);
+                if (counterRef.current) {
+                    counterRef.current.innerText = currentVal.toString().padStart(2, "0");
+                }
+            },
+            onComplete: () => {
+                playRevealSequence();
+            }
+        });
 
-    /* ── Counter ── */
-    useEffect(() => {
-        let phase = 0;
-        const phases = [
-            { end: 30, speed: 110 },
-            { end: 60, speed: 90 },
-            { end: 90, speed: 70 },
-            { end: 100, speed: 50 },
-        ];
+        // Fade in glow and counter initially
+        gsap.fromTo(counterWrapperRef.current, 
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }
+        );
 
-        const id = setInterval(() => {
-            setPct((prev) => {
-                if (prev >= 100) { clearInterval(id); return 100; }
-                const p = phases[phase];
-                if (prev >= p.end && phase < phases.length - 1) phase++;
-                return Math.min(prev + Math.floor(Math.random() * 7) + 2, phases[phase].end);
-            });
-        }, phases[phase].speed);
+        gsap.fromTo(glowRef.current,
+            { opacity: 0, scale: 0.8 },
+            { opacity: 1, scale: 1.2, duration: 2.4, ease: "power2.inOut" }
+        );
+    }, [playRevealSequence]);
 
-        return () => clearInterval(id);
-    }, []);
+    /* ── Reveal Sequence ── */
+    const playRevealSequence = useCallback(() => {
+        const tl = gsap.timeline({
+            onComplete: () => {
+                onComplete();
+            }
+        });
 
-    /* ── Exit when 100% ── */
-    useEffect(() => {
-        if (pct < 100) return;
-
-        const tl = gsap.timeline({ onComplete });
-
-        tl.to([tagRef.current, barRef.current, numRef.current], {
-            opacity: 0, y: -20, stagger: 0.05, duration: 0.4, ease: "power2.in",
+        tl.to(counterWrapperRef.current, {
+            opacity: 0,
+            y: -25,
+            duration: 0.6,
+            ease: "power3.in"
         })
-            .to(nameRef.current, {
-                opacity: 0, y: -40, letterSpacing: "0.4em", duration: 0.6, ease: "power2.in",
-            }, "-=0.3")
-            .to(lineRef.current, {
-                scaleX: 0, transformOrigin: "right", duration: 0.4, ease: "power2.in",
-            }, "-=0.4")
-            .to(containerRef.current, {
-                y: "-100%",
-                duration: 1.1,
-                ease: "power4.inOut",
-            }, "-=0.1");
-    }, [pct, onComplete]);
+        .to(nameRef.current, {
+            opacity: 1,
+            filter: "blur(0px)",
+            scale: 1,
+            letterSpacing: "0.22em",
+            duration: 1.8,
+            ease: "power3.out"
+        }, "-=0.2")
+        .to(tagRef.current, {
+            opacity: 0.7,
+            filter: "blur(0px)",
+            letterSpacing: "0.45em",
+            duration: 1.4,
+            ease: "power3.out"
+        }, "-=1.3")
+        .to(nameRef.current, {
+            opacity: 0,
+            filter: "blur(12px)",
+            letterSpacing: "0.38em",
+            scale: 0.96,
+            duration: 1.0,
+            ease: "power3.in",
+            delay: 1.2
+        })
+        .to(tagRef.current, {
+            opacity: 0,
+            filter: "blur(8px)",
+            letterSpacing: "0.55em",
+            duration: 0.8,
+            ease: "power3.in"
+        }, "-=0.9")
+        .to(glowRef.current, {
+            opacity: 0,
+            scale: 1.4,
+            duration: 0.9,
+            ease: "power3.in"
+        }, "-=0.9")
+        .to(topPanelRef.current, {
+            y: "-100%",
+            duration: 1.3,
+            ease: "power4.inOut"
+        })
+        .to(bottomPanelRef.current, {
+            y: "100%",
+            duration: 1.3,
+            ease: "power4.inOut"
+        }, "-=1.3");
+    }, [onComplete]);
 
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 z-[99999] flex flex-col items-center justify-center overflow-hidden"
-            style={{ background: "var(--bg)" }}
+            className="fixed inset-0 z-[99999] flex items-center justify-center overflow-hidden"
+            style={{ background: "transparent" }}
         >
-            {/* Corner labels */}
-            <div className="absolute top-6 left-6 md:top-10 md:left-10">
-                <span className="text-mono" style={{ color: "rgba(240,237,230,0.3)" }}>Portfolio</span>
+            {/* Top sliding panel */}
+            <div
+                ref={topPanelRef}
+                className="absolute inset-x-0 top-0 h-1/2 bg-[#0c0c0b] border-b border-white/5"
+                style={{ transform: "translateY(0%)" }}
+            />
+            {/* Bottom sliding panel */}
+            <div
+                ref={bottomPanelRef}
+                className="absolute inset-x-0 bottom-0 h-1/2 bg-[#0c0c0b] border-t border-white/5"
+                style={{ transform: "translateY(0%)" }}
+            />
+
+            {/* Spotlight glow behind text */}
+            <div
+                ref={glowRef}
+                className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-0"
+                style={{
+                    background: "radial-gradient(circle, rgba(255,255,255,0.065) 0%, rgba(255,255,255,0) 70%)",
+                }}
+            />
+
+            {/* Corner metadata overlays */}
+            <div className="absolute top-6 left-6 md:top-10 md:left-10 z-20">
+                <span className="text-mono" style={{ color: "rgba(255,255,255,0.18)" }}>PORTFOLIO</span>
             </div>
-            <div className="absolute top-6 right-6 md:top-10 md:right-10">
-                <span className="text-mono" style={{ color: "rgba(240,237,230,0.3)" }}>2026</span>
+            <div className="absolute top-6 right-6 md:top-10 md:right-10 z-20">
+                <span className="text-mono" style={{ color: "rgba(255,255,255,0.18)" }}>NISHANT</span>
             </div>
 
-            {/* Corner accents */}
-            <div className="absolute top-6 left-6 w-8 h-8 pointer-events-none" style={{ borderTop: "1px solid var(--accent)", borderLeft: "1px solid var(--accent)" }} />
-            <div className="absolute bottom-6 right-6 w-8 h-8 pointer-events-none" style={{ borderBottom: "1px solid var(--accent)", borderRight: "1px solid var(--accent)" }} />
+            {/* Content overlay */}
+            <div className="relative z-10 flex flex-col items-center justify-center text-center px-6">
+                {/* Counter */}
+                <div ref={counterWrapperRef} className="mb-4 opacity-0">
+                    <span
+                        ref={counterRef}
+                        className="font-mono font-light tracking-widest tabular-nums"
+                        style={{ color: "rgba(255,255,255,0.85)", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+                    >
+                        00
+                    </span>
+                    <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "clamp(1rem, 2vw, 1.5rem)", marginLeft: "0.25rem" }}>%</span>
+                </div>
 
-            {/* Main content */}
-            <div className="relative z-10 flex flex-col items-center gap-8 px-6 w-full max-w-lg">
-                {/* Name */}
-                <div ref={nameRef} className="text-center opacity-0">
+                {/* Movie Title Style Name */}
+                <div className="overflow-visible py-4">
                     <h1
-                        className="text-h1 font-bold uppercase"
-                        style={{ color: "var(--fg)" }}
+                        ref={nameRef}
+                        className="font-light uppercase tracking-[0.55em] leading-none opacity-0"
+                        style={{
+                            color: "var(--fg)",
+                            fontSize: "clamp(1.75rem, 5vw, 3.5rem)",
+                            filter: "blur(12px)",
+                            transform: "scale(1.08)",
+                        }}
                     >
                         Nishant Unavane
                     </h1>
                 </div>
 
                 {/* Tagline */}
-                <div ref={tagRef} className="opacity-0">
-                    <p className="text-mono text-center" style={{ color: "var(--accent)" }}>
+                <div className="overflow-visible mt-2">
+                    <p
+                        ref={tagRef}
+                        className="text-mono uppercase tracking-[0.65em] opacity-0"
+                        style={{
+                            color: "rgba(255,255,255,0.6)",
+                            fontSize: "clamp(0.65rem, 1.2vw, 0.8rem)",
+                            filter: "blur(6px)",
+                        }}
+                    >
                         Full-Stack Developer
                     </p>
                 </div>
-
-                {/* Progress */}
-                <div className="w-full mt-4">
-                    <div
-                        ref={barRef}
-                        className="w-full h-px mb-4 origin-left opacity-0"
-                        style={{ background: "var(--border-mid)" }}
-                    >
-                        <div
-                            ref={barFillRef}
-                            className="h-full origin-left"
-                            style={{
-                                background: "linear-gradient(to right, var(--accent), var(--electric-blue))",
-                                width: `${pct}%`,
-                                transition: "width 0.3s ease !important",
-                            }}
-                        />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <span className="text-mono" style={{ color: "rgba(240,237,230,0.3)" }}>
-                            {pct < 30 ? "Initializing…" : pct < 60 ? "Loading assets…" : pct < 90 ? "Preparing…" : pct < 100 ? "Almost there…" : "Complete"}
-                        </span>
-                        <div ref={numRef} className="opacity-0">
-                            <span
-                                className="font-bold tabular-nums"
-                                style={{ color: "var(--accent)", fontSize: "clamp(2rem, 5vw, 4rem)", lineHeight: 1 }}
-                            >
-                                {pct}
-                                <span style={{ fontSize: "0.6em" }}>%</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
-
-            {/* Horizontal accent line */}
-            <div
-                ref={lineRef}
-                className="absolute bottom-0 left-0 right-0 h-px origin-left"
-                style={{ background: "linear-gradient(to right, var(--accent), var(--electric-blue), transparent)" }}
-            />
         </div>
     );
 }

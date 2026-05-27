@@ -9,7 +9,7 @@
   --color-frost-white: #ffffff;
   --color-muted-ash: #7d8187;
   --color-whisper-gray: #474747;
-  --color-electric-blue: #2563eb;
+  --color-electric-blue: #e5e5e5;
 
   /* ── Typography ── */
   --font-universalsans:
@@ -67,13 +67,15 @@
    CSS Custom Properties (Runtime)
 ───────────────────────────────────────────── */
 :root {
+  /* ── Core palette ── */
   --color-deep-midnight: #0c0c0b;
   --color-faded-steel: #1f2228;
   --color-frost-white: #ffffff;
   --color-muted-ash: #7d8187;
   --color-whisper-gray: #474747;
-  --color-electric-blue: #2563eb;
+  --color-electric-blue: #e5e5e5;
 
+  /* ── Font stacks ── */
   --font-universalsans:
     "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, sans-serif;
@@ -81,12 +83,33 @@
     "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     monospace;
 
+  /* ── Semantic aliases ── */
   --bg: #0c0c0b;
   --fg: #ffffff;
-  --accent: #2563eb;
-  --border: rgba(255, 255, 255, 0.1);
+  --accent: #eaeaea;
+  --border: rgba(255, 255, 255, 0.08);
   --border-mid: rgba(255, 255, 255, 0.15);
   --border-hi: #1f2228;
+
+  /* ── Surface levels (eliminates --void-2 fallbacks) ── */
+  --surface-0: #0c0c0b;
+  --surface-1: #1f2228;
+  --surface-2: #12121a;
+  --void-2: #12121a;
+
+  /* ── Named radii ── */
+  --radius-inputs: 24px;
+  --radius-buttons: 9999px;
+  --radius-calloutcards: 0px;
+
+  /* ── Named shadow ── */
+  --shadow-subtle: rgb(113, 113, 122) 0px 0px 0px 2px;
+
+  /* ── Fluid type sizes ── */
+  --fluid-display: clamp(2.5rem, 8vw + 0.5rem, 5rem);
+  --fluid-heading-lg: clamp(1.75rem, 4vw + 0.5rem, 3rem);
+  --fluid-heading: clamp(1.25rem, 3vw + 0.25rem, 2.25rem);
+  --fluid-subheading: clamp(1rem, 1.5vw + 0.25rem, 1.25rem);
 }
 
 /* ─────────────────────────────────────────────
@@ -107,6 +130,11 @@
     overflow-x: hidden;
     overflow-y: auto;
     background-color: var(--bg);
+    /* iOS momentum scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent font size adjustment on orientation change */
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -120,9 +148,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
+    /* iOS safe area */
+    padding-bottom: env(safe-area-inset-bottom);
   }
-
-  /* ── No overlays for xAI clean aesthetic ── */
 
   /* ── Headings ── */
   h1,
@@ -139,13 +167,13 @@
 
   /* ── Text selection ── */
   ::selection {
-    background-color: var(--accent);
-    color: #fff;
+    background-color: var(--fg);
+    color: var(--bg);
   }
 
   ::-moz-selection {
-    background-color: var(--accent);
-    color: #fff;
+    background-color: var(--fg);
+    color: var(--bg);
   }
 
   /* ── Focus ring ── */
@@ -154,9 +182,9 @@
     outline-offset: 2px;
   }
 
-  /* ── Scrollbar ── */
+  /* ── Scrollbar (desktop) ── */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
@@ -165,7 +193,7 @@
 
   ::-webkit-scrollbar-thumb {
     background: var(--border-hi);
-    border-radius: 4px;
+    border-radius: 0;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -173,12 +201,14 @@
   }
 
   /* ── Global transition restriction ── */
+  /* Only allow GPU-friendly properties globally */
   *,
   *::before,
   *::after {
     transition-property: transform, opacity, filter, box-shadow !important;
   }
 
+  /* Interactive elements get color transitions too */
   button,
   a,
   input,
@@ -216,13 +246,20 @@
     outline: none !important;
     box-shadow: none !important;
   }
+
+  /* ── Image optimization ── */
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 /* ─────────────────────────────────────────────
    Layout Utilities
 ───────────────────────────────────────────── */
 @layer utilities {
-  /* Container */
+  /* ── Container ── */
   .section-container {
     width: 100%;
     max-width: 1400px;
@@ -232,32 +269,38 @@
     padding-right: clamp(1.25rem, 5vw, 5rem);
   }
 
-  /* ── Fluid Typography ── */
+  /* ── Section vertical rhythm ── */
+  .section-py {
+    padding-top: clamp(4rem, 8vw, 10rem);
+    padding-bottom: clamp(4rem, 8vw, 10rem);
+  }
+
+  /* ── Fluid Typography — xAI scale with responsiveness ── */
   .text-display {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-display);
+    font-size: var(--fluid-display);
+    line-height: 1;
+    letter-spacing: -0.025em;
     font-weight: 400;
   }
 
   .text-heading-lg {
-    font-size: var(--text-heading-lg);
-    line-height: var(--leading-heading-lg);
-    letter-spacing: var(--tracking-heading-lg);
+    font-size: var(--fluid-heading-lg);
+    line-height: 1.11;
+    letter-spacing: -0.025em;
     font-weight: 400;
   }
 
   .text-heading {
-    font-size: var(--text-heading);
-    line-height: var(--leading-heading);
-    letter-spacing: var(--tracking-heading);
+    font-size: var(--fluid-heading);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
     font-weight: 400;
   }
 
   .text-subheading {
-    font-size: var(--text-subheading);
-    line-height: var(--leading-subheading);
-    letter-spacing: var(--tracking-subheading);
+    font-size: var(--fluid-subheading);
+    line-height: 1.4;
+    letter-spacing: -0.025em;
     font-weight: 400;
   }
 
@@ -291,23 +334,23 @@
     font-weight: 400;
   }
 
-  /* ── Legacy responsive classes (deprecated but kept for compatibility) ── */
+  /* ── Legacy responsive classes (kept for compatibility) ── */
   .text-h1 {
-    font-size: clamp(2.5rem, 6vw, 8rem);
+    font-size: clamp(2rem, 6vw + 0.5rem, 8rem);
     line-height: 0.9;
     letter-spacing: -0.03em;
     font-weight: 400;
   }
 
   .text-h2 {
-    font-size: clamp(1.75rem, 4vw, 5rem);
+    font-size: clamp(1.5rem, 4vw + 0.25rem, 5rem);
     line-height: 0.95;
     letter-spacing: -0.025em;
     font-weight: 400;
   }
 
   .text-h3 {
-    font-size: clamp(1.25rem, 2.5vw, 3rem);
+    font-size: clamp(1.125rem, 2.5vw + 0.25rem, 3rem);
     line-height: 1;
     letter-spacing: -0.02em;
     font-weight: 400;
@@ -330,36 +373,45 @@
 
   /* ── Button Styles ── */
   .btn-ghost-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: rgba(0, 0, 0, 0);
     color: var(--fg);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 9999px;
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-family: var(--font-universalsans);
     font-size: var(--text-body-sm);
     font-weight: 400;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.3s ease, background 0.3s ease !important;
   }
 
   .btn-ghost-primary:hover {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.04);
   }
 
   .btn-filled-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: var(--fg);
     color: #0a0a0a;
     border: none;
     border-radius: 9999px;
-    padding: 4px 12px;
+    padding: 6px 16px;
     font-family: var(--font-universalsans);
     font-size: var(--text-body-sm);
     font-weight: 400;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: background 0.3s ease !important;
   }
 
   .btn-filled-secondary:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.88);
   }
 
   /* ── Badge Styles ── */
@@ -371,6 +423,7 @@
     font-family: var(--font-geistmono);
     font-size: var(--text-caption);
     letter-spacing: var(--tracking-caption);
+    line-height: var(--leading-caption);
   }
 
   /* ── Input Styles ── */
@@ -379,9 +432,10 @@
     color: var(--fg);
     border: 1px solid var(--border-hi);
     border-radius: 24px;
-    padding: 20px 16px 20px 16px;
+    padding: 20px 16px;
     font-family: var(--font-universalsans);
     font-size: var(--text-body);
+    width: 100%;
   }
 
   .input-interactive::placeholder {
@@ -448,7 +502,6 @@
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
-    will-change: transform;
   }
 
   /* ── Char split animation helper ── */
@@ -470,7 +523,7 @@
     left: 0;
     width: 0;
     height: 1px;
-    background: var(--accent);
+    background: currentColor;
     transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
@@ -478,67 +531,110 @@
     width: 100%;
   }
 
-  /* ── Glow effects (xAI style - subtle electric blue only) ── */
+  /* ── Glow effects (xAI style — subtle electric blue only) ── */
   .glow-electric {
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 40px rgba(212, 168, 83, 0.12), 0 0 80px rgba(212, 168, 83, 0.04);
   }
 
   .glow-subtle {
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.05);
+    box-shadow: 0 0 20px rgba(212, 168, 83, 0.06);
+  }
+
+  /* ── Ambient hero glow (radial behind content) ── */
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 60% 50% at 50% 0%,
+      rgba(212, 168, 83, 0.06) 0%,
+      transparent 70%
+    );
+  }
+
+  /* ── Section label pattern ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-label-num {
+    font-family: var(--font-geistmono);
+    font-size: var(--text-caption);
+    letter-spacing: var(--tracking-caption);
+    color: var(--accent);
+  }
+
+  .section-label-line {
+    width: 3rem;
+    height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-label-text {
+    font-family: var(--font-geistmono);
+    font-size: var(--text-caption);
+    letter-spacing: var(--tracking-caption);
+    color: var(--color-muted-ash);
+  }
+
+  /* ── Marquee animation ── */
+  @keyframes marqueeLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes marqueeRight {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  .animate-marquee-left {
+    animation: marqueeLeft 30s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-marquee-right {
+    animation: marqueeRight 40s linear infinite;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee-left,
+    .animate-marquee-right {
+      animation: none;
+    }
   }
 
   /* ── Keyframes ── */
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   @keyframes slideUp {
-    from {
-      transform: translateY(30px);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes marqueeLeft {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(-50%);
-    }
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
 
   @keyframes pulse-electric {
-    0%,
-    100% {
-      opacity: 1;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
 
-    50% {
-      opacity: 0.5;
-    }
+  @keyframes scroll-cue {
+    0% { transform: translateY(0); opacity: 1; }
+    60% { transform: translateY(12px); opacity: 0; }
+    61% { transform: translateY(-12px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
   }
 
   @keyframes spin-slow {
-    from {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   .animate-fadeIn {
@@ -553,8 +649,21 @@
     animation: pulse-electric 2s ease-in-out infinite;
   }
 
+  .animate-scroll-cue {
+    animation: scroll-cue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
   .animate-spin-slow {
     animation: spin-slow 12s linear infinite;
+  }
+
+  /* ── Safe area helpers ── */
+  .pb-safe {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .pb-safe-lg {
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
   }
 }
 
@@ -568,6 +677,23 @@
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     height: auto !important;
+  }
+
+  /* Hide scrollbar on mobile */
+  ::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .text-body {
+    font-size: 15px;
   }
 }
 

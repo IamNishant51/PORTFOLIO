@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Preloader from "./components/Preloader";
 import Hero from "./components/Hero";
@@ -12,19 +12,13 @@ import TransitionLayout from "./components/layout/TransitionLayout";
 const ProjectList = dynamic(() => import("./components/ProjectList"), {
   ssr: false,
   loading: () => (
-    <div className="min-h-screen" style={{ background: "var(--void-2,#12121A)" }} />
+    <div className="min-h-screen" style={{ background: "var(--bg)" }} />
   ),
 });
 const SkillsMarquee = dynamic(() => import("./components/SkillsMarquee"), {
   ssr: false,
   loading: () => (
     <div className="min-h-[50vh]" style={{ background: "var(--bg)" }} />
-  ),
-});
-const Testimonials = dynamic(() => import("./components/Testimonials"), {
-  ssr: false,
-  loading: () => (
-    <div className="min-h-screen" style={{ background: "var(--void-2,#12121A)" }} />
   ),
 });
 const Contact = dynamic(() => import("./components/Contact"), {
@@ -45,6 +39,17 @@ export default function Home() {
     setDone(true);
     setTimeout(() => setShowPreloader(false), 100);
   };
+
+  useEffect(() => {
+    if (done && typeof window !== "undefined" && window.location.hash === "#contact") {
+      setTimeout(() => {
+        const contactSection = document.getElementById("contact");
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 500);
+    }
+  }, [done]);
 
   return (
     <TransitionLayout>
@@ -68,11 +73,10 @@ export default function Home() {
           <About />
           <ProjectList />
           <SkillsMarquee />
-          <Testimonials />
           <Contact />
         </div>
 
-        {/* Fixed footer revealed by Contact's mb-[50vh] */}
+        {/* Fixed footer revealed by Contact's bottom margin */}
         <Footer />
       </main>
     </TransitionLayout>

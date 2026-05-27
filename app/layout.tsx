@@ -128,7 +128,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0A0A0F" />
+        <meta name="theme-color" content="#0c0c0b" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
