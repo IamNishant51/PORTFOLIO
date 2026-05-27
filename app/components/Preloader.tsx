@@ -12,6 +12,9 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const counterRef = useRef<HTMLSpanElement>(null);
     const nameRef = useRef<HTMLHeadingElement>(null);
     const tagRef = useRef<HTMLParagraphElement>(null);
+    const watermarkRef = useRef<HTMLDivElement>(null);
+    const hankoRef = useRef<HTMLDivElement>(null);
+    const jpTagRef = useRef<HTMLParagraphElement>(null);
 
     /* Only true after client hydration — prevents SSR/client HTML mismatch */
     const [mounted, setMounted] = useState(false);
@@ -31,6 +34,12 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             duration: 0.6,
             ease: "power3.in"
         })
+        .to(watermarkRef.current, {
+            opacity: 0.04,
+            y: 0,
+            duration: 2.0,
+            ease: "power2.out"
+        }, "-=0.2")
         .to(nameRef.current, {
             opacity: 1,
             filter: "blur(0px)",
@@ -38,7 +47,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             letterSpacing: "0.22em",
             duration: 1.8,
             ease: "power3.out"
-        }, "-=0.2")
+        }, "-=1.8")
+        .to(hankoRef.current, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            ease: "back.out(2)"
+        }, "-=0.8")
         .to(tagRef.current, {
             opacity: 0.7,
             filter: "blur(0px)",
@@ -46,7 +61,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             duration: 1.4,
             ease: "power3.out"
         }, "-=1.3")
-        .to(nameRef.current, {
+        .to(jpTagRef.current, {
+            opacity: 0.4,
+            filter: "blur(0px)",
+            duration: 1.4,
+            ease: "power3.out"
+        }, "-=1.2")
+        .to([nameRef.current, hankoRef.current], {
             opacity: 0,
             filter: "blur(12px)",
             letterSpacing: "0.38em",
@@ -55,13 +76,19 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             ease: "power3.in",
             delay: 1.2
         })
-        .to(tagRef.current, {
+        .to([tagRef.current, jpTagRef.current], {
             opacity: 0,
             filter: "blur(8px)",
             letterSpacing: "0.55em",
             duration: 0.8,
             ease: "power3.in"
         }, "-=0.9")
+        .to(watermarkRef.current, {
+            opacity: 0,
+            scale: 1.05,
+            duration: 1.2,
+            ease: "power3.in"
+        }, "-=1.0")
         .to(glowRef.current, {
             opacity: 0,
             scale: 1.4,
@@ -135,11 +162,31 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             {/* Spotlight glow behind text */}
             <div
                 ref={glowRef}
-                className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-0"
+                className="absolute w-[500px] h-[500px] md:w-[600px] md:h-[600px] rounded-full pointer-events-none opacity-0"
                 style={{
-                    background: "radial-gradient(circle, rgba(255,255,255,0.065) 0%, rgba(255,255,255,0) 70%)",
+                    background: "radial-gradient(circle, rgba(225, 29, 72, 0.085) 0%, rgba(225, 29, 72, 0) 65%)",
+                    mixBlendMode: "screen",
                 }}
             />
+
+            {/* Vertical Katakana Watermark */}
+            <div
+                ref={watermarkRef}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden"
+                style={{ opacity: 0, transform: "translateY(40px)" }}
+            >
+                <span
+                    className="font-bold text-center leading-[0.8] select-none"
+                    style={{
+                        writingMode: "vertical-rl",
+                        textOrientation: "upright",
+                        color: "white",
+                        fontSize: "clamp(6rem, 20vw, 16rem)",
+                    }}
+                >
+                    ニシャント
+                </span>
+            </div>
 
             {/* Corner metadata overlays */}
             <div className="absolute top-6 left-6 md:top-10 md:left-10 z-20">
@@ -164,7 +211,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 </div>
 
                 {/* Movie Title Style Name */}
-                <div className="overflow-visible py-4">
+                <div className="relative overflow-visible py-4 flex items-center justify-center">
                     <h1
                         ref={nameRef}
                         className="font-light uppercase tracking-[0.55em] leading-none opacity-0"
@@ -177,10 +224,26 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                     >
                         Nishant Unavane
                     </h1>
+                    
+                    {/* Hanko Seal */}
+                    <div
+                        ref={hankoRef}
+                        className="absolute -right-6 md:-right-12 top-0 md:top-2 flex items-center justify-center opacity-0 scale-50"
+                        style={{
+                            width: "clamp(20px, 3vw, 28px)",
+                            height: "clamp(20px, 3vw, 28px)",
+                            border: "1.5px solid #e11d48",
+                            color: "#e11d48",
+                            backgroundColor: "rgba(225, 29, 72, 0.05)",
+                            borderRadius: "2px"
+                        }}
+                    >
+                        <span style={{ fontSize: "clamp(10px, 1.5vw, 14px)", fontWeight: "bold" }}>創</span>
+                    </div>
                 </div>
 
                 {/* Tagline */}
-                <div className="overflow-visible mt-2">
+                <div className="overflow-visible mt-2 flex flex-col items-center gap-3">
                     <p
                         ref={tagRef}
                         className="text-mono uppercase tracking-[0.65em] opacity-0"
@@ -191,6 +254,17 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                         }}
                     >
                         Full-Stack Developer
+                    </p>
+                    <p
+                        ref={jpTagRef}
+                        className="text-mono tracking-[0.4em] opacity-0"
+                        style={{
+                            color: "rgba(225, 29, 72, 0.7)",
+                            fontSize: "clamp(0.5rem, 1vw, 0.65rem)",
+                            filter: "blur(6px)",
+                        }}
+                    >
+                        フルスタック開発者
                     </p>
                 </div>
             </div>
