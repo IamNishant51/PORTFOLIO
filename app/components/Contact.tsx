@@ -298,7 +298,7 @@ export default function Contact() {
                                 <>
                                     Send Message
                                     <svg
-                                        className="w-4 h-4"
+                                        className="w-6 h-6"
                                         fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         aria-hidden="true"
                                         style={{ transition: "transform 0.3s ease !important" }}

@@ -90,6 +90,15 @@ export default function Navbar() {
 
   const handleNav = (href: string) => {
     setMobileOpen(false);
+    
+    // If clicking home while already on home, scroll to top
+    if (href === "/") {
+      if (pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+    }
+
     if (href === "/contact") {
       if (pathname === "/") {
         const contactSection = document.getElementById("contact");

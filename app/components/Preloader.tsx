@@ -66,24 +66,34 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             filter: "blur(0px)",
             duration: 1.4,
             ease: "power3.out"
-        }, "-=1.2")
-        .to([nameRef.current, hankoRef.current], {
-            opacity: 0,
-            filter: "blur(12px)",
-            letterSpacing: "0.38em",
-            scale: 0.96,
-            duration: 1.0,
-            ease: "power3.in",
-            delay: 1.2
-        })
-        .to([tagRef.current, jpTagRef.current], {
-            opacity: 0,
-            filter: "blur(8px)",
-            letterSpacing: "0.55em",
-            duration: 0.8,
-            ease: "power3.in"
-        }, "-=0.9")
-        .to(watermarkRef.current, {
+        }, "-=1.2");
+
+        const mainTargets = [nameRef.current, hankoRef.current].filter(Boolean);
+        const tagTargets = [tagRef.current, jpTagRef.current].filter(Boolean);
+
+        if (mainTargets.length > 0) {
+            tl.to(mainTargets, {
+                opacity: 0,
+                filter: "blur(12px)",
+                letterSpacing: "0.38em",
+                scale: 0.96,
+                duration: 1.0,
+                ease: "power3.in",
+                delay: 1.2
+            });
+        }
+        
+        if (tagTargets.length > 0) {
+            tl.to(tagTargets, {
+                opacity: 0,
+                filter: "blur(8px)",
+                letterSpacing: "0.55em",
+                duration: 0.8,
+                ease: "power3.in"
+            }, "-=0.9");
+        }
+        
+        tl.to(watermarkRef.current, {
             opacity: 0,
             scale: 1.05,
             duration: 1.2,

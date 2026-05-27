@@ -18,7 +18,7 @@ export default function SkillsPage() {
               className="inline-flex items-center gap-2 text-mono hover:text-white transition-colors duration-200"
               style={{ color: "rgba(255,255,255,0.4)" }}
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-6 h-6" />
               Back to Home
             </Link>
           </div>

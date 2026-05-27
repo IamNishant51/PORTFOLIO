@@ -342,7 +342,7 @@ const Hero = () => {
                         </p>
 
                         {/* CTA */}
-                        <div ref={ctaRef} className="flex flex-wrap items-center gap-3 opacity-0">
+                        <div ref={ctaRef} className="flex flex-wrap items-center gap-5 opacity-0">
                             <button
                                 onClick={() => {
                                     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
@@ -356,7 +356,8 @@ const Hero = () => {
                                 download="Nishant_Unavane_FullStack_resume.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="btn-ghost-primary"
+                                className="text-mono hover:text-[var(--fg)] transition-colors duration-300 underline underline-offset-4 decoration-[var(--border-hi)] hover:decoration-[var(--fg)]"
+                                style={{ color: "var(--color-muted-ash)" }}
                             >
                                 View résumé
                             </a>
@@ -442,6 +443,8 @@ const Hero = () => {
                                         border: "1.5px solid rgba(255,255,255,0.28)",
                                         boxShadow: "0 0 24px 4px rgba(255,255,255,0.08), inset 0 0 12px 2px rgba(255,255,255,0.04)",
                                         borderRadius: "50%",
+                                        opacity: 0,
+                                        transform: "scale(0.5)",
                                     }}
                                     aria-hidden="true"
                                 />

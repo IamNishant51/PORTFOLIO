@@ -35,7 +35,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
             className="inline-flex items-center gap-2 mb-10 text-mono"
             style={{ color: "rgba(240,237,230,0.4)" }}
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-6 h-6" />
             Back to Home
           </Link>
 
