@@ -24,6 +24,8 @@ function splitChars(el: HTMLElement) {
     });
 }
 
+const LENS_RADIUS = 110; // px – radius of the reveal circle
+
 const Hero = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const line1Ref = useRef<HTMLSpanElement>(null);
@@ -34,6 +36,12 @@ const Hero = () => {
     const ctaRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
     const glowRef = useRef<HTMLDivElement>(null);
+
+    /* Hover-reveal refs */
+    const frameRef = useRef<HTMLDivElement>(null); // outer click-able frame
+    const lensRef = useRef<HTMLDivElement>(null);  // clip-masked bamboo layer
+    const lensGlowRef = useRef<HTMLDivElement>(null); // glow ring around lens
+    const isHovering = useRef(false);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -148,7 +156,119 @@ const Hero = () => {
             });
         }, sectionRef);
 
-        return () => ctx.revert();
+        /* ── Lens / hover-reveal logic ── */
+        const frame = frameRef.current;
+        const lens = lensRef.current;
+        const lensGlow = lensGlowRef.current;
+        if (!frame || !lens || !lensGlow) return () => ctx.revert();
+
+        // Mutable state driven by GSAP — x/y are the smooth-lagged lens centre, r is animated radius
+        const lensState = { x: 0, y: 0, r: 0 };
+        // Target raw cursor position (no lag)
+        const target = { x: 0, y: 0 };
+
+        /** Write mask-image directly from lensState */
+        const applyMask = () => {
+            if (!lens) return;
+            const { x, y, r } = lensState;
+            // Soft feathered edge: fully opaque core → transparent at 100%
+            const mask = [
+                `radial-gradient(circle ${r}px at ${x}px ${y}px,`,
+                `  rgba(0,0,0,1)   0%,`,
+                `  rgba(0,0,0,0.95) 42%,`,
+                `  rgba(0,0,0,0.6)  60%,`,
+                `  rgba(0,0,0,0.15) 80%,`,
+                `  rgba(0,0,0,0)   100%`,
+                `)`,
+            ].join(" ");
+            lens.style.maskImage = mask;
+            (lens.style as CSSStyleDeclaration & { webkitMaskImage: string }).webkitMaskImage = mask;
+        };
+
+        // Seed applyMask with collapsed state so nothing shows at start
+        applyMask();
+
+        const moveLens = (e: MouseEvent) => {
+            if (!isHovering.current) return;
+            const rect = frame.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Raw target — no clamping, mask handles overflow gracefully
+            target.x = x;
+            target.y = y;
+
+            // Smoothly follow with GSAP; onUpdate writes mask every frame
+            gsap.to(lensState, {
+                x: target.x,
+                y: target.y,
+                duration: 0.22,
+                ease: "power2.out",
+                overwrite: "auto",
+                onUpdate: applyMask,
+            });
+
+            // Glow ring follows with same lag
+            gsap.to(lensGlow, {
+                x: target.x - LENS_RADIUS,
+                y: target.y - LENS_RADIUS,
+                duration: 0.22,
+                ease: "power2.out",
+                overwrite: "auto",
+            });
+        };
+
+        const onEnter = (e: MouseEvent) => {
+            isHovering.current = true;
+            // Seed initial position so the lens doesn't jump from 0,0
+            const rect = frame.getBoundingClientRect();
+            lensState.x = e.clientX - rect.left;
+            lensState.y = e.clientY - rect.top;
+
+            // Grow radius from 0 → LENS_RADIUS with spring
+            gsap.to(lensState, {
+                r: LENS_RADIUS,
+                duration: 0.55,
+                ease: "back.out(1.6)",
+                overwrite: "auto",
+                onUpdate: applyMask,
+            });
+            gsap.to(lensGlow, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.5,
+                ease: "back.out(1.4)",
+            });
+        };
+
+        const onLeave = () => {
+            isHovering.current = false;
+            // Collapse radius back to 0
+            gsap.to(lensState, {
+                r: 0,
+                duration: 0.45,
+                ease: "power3.inOut",
+                overwrite: "auto",
+                onUpdate: applyMask,
+            });
+            gsap.to(lensGlow, {
+                opacity: 0,
+                scale: 0.5,
+                duration: 0.4,
+                ease: "power2.inOut",
+            });
+        };
+
+        frame.addEventListener("mouseenter", onEnter);
+        frame.addEventListener("mouseleave", onLeave);
+        frame.addEventListener("mousemove", moveLens);
+
+        return () => {
+            ctx.revert();
+            frame.removeEventListener("mouseenter", onEnter);
+            frame.removeEventListener("mouseleave", onLeave);
+            frame.removeEventListener("mousemove", moveLens);
+        };
     }, []);
 
     return (
@@ -232,51 +352,111 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    {/* ── Right: Profile image ── */}
+                    {/* ── Right: Portrait with lens reveal ── */}
                     <div className="order-first lg:order-last flex justify-center lg:justify-end">
                         <div ref={imageRef} className="relative opacity-0">
-                            {/* Image frame */}
-                            <a
-                                href="https://github.com/IamNishant51"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group relative block"
-                                style={{
-                                    width: "clamp(180px, 40vw, 300px)",
-                                    height: "clamp(180px, 40vw, 300px)",
-                                    border: "1px solid var(--border-hi)",
-                                }}
-                                aria-label="View GitHub profile"
-                            >
-                                <Image
-                                    src="https://ik.imagekit.io/9pfz6g8ri/avatars/nishant.jpg"
-                                    alt="Nishant Unavane — Full-Stack Developer"
-                                    fill
-                                    className="object-cover grayscale group-hover:grayscale-0"
-                                    style={{ transition: "filter 0.7s ease !important" }}
-                                    priority
-                                    sizes="(max-width: 480px) 180px, (max-width: 768px) 40vw, 300px"
-                                />
-                                {/* Hover overlay */}
-                                <div
-                                    className="absolute inset-0 opacity-0 group-hover:opacity-100"
-                                    style={{
-                                        background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%)",
-                                        transition: "opacity 0.5s ease !important",
-                                    }}
-                                />
-                            </a>
+
                             {/* Corner accent lines */}
                             <div
-                                className="absolute -top-2 -right-2 w-5 h-5 pointer-events-none"
+                                className="absolute -top-2 -right-2 w-5 h-5 pointer-events-none z-10"
                                 style={{ borderTop: "1px solid var(--accent)", borderRight: "1px solid var(--accent)" }}
                                 aria-hidden="true"
                             />
                             <div
-                                className="absolute -bottom-2 -left-2 w-5 h-5 pointer-events-none"
+                                className="absolute -bottom-2 -left-2 w-5 h-5 pointer-events-none z-10"
                                 style={{ borderBottom: "1px solid var(--accent)", borderLeft: "1px solid var(--accent)" }}
                                 aria-hidden="true"
                             />
+
+                            {/*
+                             * Portrait frame — this is the interactive zone.
+                             * data-cursor="portrait" tells Cursor.tsx to grow the ring.
+                             */}
+                            <div
+                                ref={frameRef}
+                                data-cursor="portrait"
+                                className="relative overflow-hidden gpu-accelerated"
+                                style={{
+                                    width: "clamp(200px, 40vw, 320px)",
+                                    height: "clamp(240px, 48vw, 400px)",
+                                    border: "1px solid var(--border-hi)",
+                                    cursor: "none",
+                                }}
+                                aria-label="Portrait of Nishant Unavane"
+                            >
+                                {/* ── Layer 0: Base — NIGHT photo (grayscale) ── */}
+                                <Image
+                                    src="/ASSETS/NISHANT-NIGHT.jpeg"
+                                    alt="Nishant Unavane — Full-Stack Developer"
+                                    fill
+                                    className="object-cover object-top"
+                                    style={{ filter: "grayscale(100%) brightness(0.9)" }}
+                                    priority
+                                    sizes="(max-width: 480px) 200px, (max-width: 768px) 40vw, 320px"
+                                    draggable={false}
+                                />
+
+                                {/* ── Layer 1: Bamboo reveal — mask-image radial-gradient (soft faded edges) ── */}
+                                <div
+                                    ref={lensRef}
+                                    className="absolute inset-0 gpu-accelerated"
+                                    style={{
+                                        // mask-image is written dynamically by applyMask() via GSAP
+                                        // Initial state: fully transparent (radius = 0)
+                                        maskImage: "radial-gradient(circle 0px at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 100%)",
+                                        WebkitMaskImage: "radial-gradient(circle 0px at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 100%)",
+                                    }}
+                                    aria-hidden="true"
+                                >
+                                    <Image
+                                        src="/ASSETS/NISHANT-BAMBOO.jpeg"
+                                        alt=""
+                                        fill
+                                        className="object-cover object-top"
+                                        sizes="(max-width: 480px) 200px, (max-width: 768px) 40vw, 320px"
+                                        draggable={false}
+                                    />
+                                </div>
+
+                                {/* ── Layer 2: Lens glow ring (decorative) — positioned via GSAP x/y ── */}
+                                <div
+                                    ref={lensGlowRef}
+                                    className="absolute pointer-events-none gpu-accelerated"
+                                    style={{
+                                        width: LENS_RADIUS * 2,
+                                        height: LENS_RADIUS * 2,
+                                        top: 0,
+                                        left: 0,
+                                        border: "1.5px solid rgba(255,255,255,0.28)",
+                                        boxShadow: "0 0 24px 4px rgba(255,255,255,0.08), inset 0 0 12px 2px rgba(255,255,255,0.04)",
+                                        borderRadius: "50%",
+                                    }}
+                                    aria-hidden="true"
+                                />
+
+                                {/* Scanline / grain overlay for texture */}
+                                <div
+                                    className="absolute inset-0 pointer-events-none"
+                                    style={{
+                                        background: "repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 3px)",
+                                        mixBlendMode: "multiply",
+                                    }}
+                                    aria-hidden="true"
+                                />
+                            </div>
+
+                            {/* Caption strip below portrait */}
+                            <div
+                                className="flex items-center justify-between px-0 mt-3"
+                                style={{ color: "var(--color-muted-ash)" }}
+                            >
+                                <span className="text-mono" style={{ fontSize: "10px", letterSpacing: "0.12em" }}>
+                                    NISHANT UNAVANE
+                                </span>
+                                <span className="text-mono" style={{ fontSize: "10px", letterSpacing: "0.08em" }}>
+                                    ©&thinsp;2024
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

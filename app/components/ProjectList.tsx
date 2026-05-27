@@ -171,6 +171,23 @@ export default function ProjectList() {
             className="relative overflow-hidden"
             style={{ background: "var(--bg)", borderTop: "1px solid var(--border-hi)" }}
         >
+            {/* ── Bamboo background ─────────────────────────────────────────────
+                Renders FIRST in DOM so it paints behind all sibling content.
+                No explicit zIndex needed — later siblings are naturally on top.
+                inset-0 fills the whole section; backgroundPosition bottom keeps
+                the roots anchored to the floor so stalks grow upward.
+            ─────────────────────────────────────────────────────────────────── */}
+            <div
+                className="absolute inset-0 pointer-events-none select-none"
+                style={{
+                    backgroundImage: "url('/ASSETS/JAPNESE-BAMBOO-IMAGE.svg')",
+                    backgroundRepeat: "repeat-x",
+                    backgroundPosition: "bottom center",
+                    backgroundSize: "auto 90%",
+                    opacity: 0.065,
+                }}
+                aria-hidden="true"
+            />
             <div className="section-container section-py relative z-10">
                 {/* ── Section label ── */}
                 <div className="section-label">

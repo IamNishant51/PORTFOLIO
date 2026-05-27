@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import gsap from "gsap";
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
@@ -12,6 +12,10 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const counterRef = useRef<HTMLSpanElement>(null);
     const nameRef = useRef<HTMLHeadingElement>(null);
     const tagRef = useRef<HTMLParagraphElement>(null);
+
+    /* Only true after client hydration — prevents SSR/client HTML mismatch */
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => { setMounted(true); }, []);
 
     /* ── Reveal Sequence ── */
     const playRevealSequence = useCallback(() => {
@@ -190,6 +194,63 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                     </p>
                 </div>
             </div>
+
+            {/*
+             * Mobile-only suggestion banner.
+             * Rendered client-side only (after mount) to avoid SSR/hydration mismatch.
+             * The server cannot know the viewport, so we never include this in SSR HTML.
+             */}
+            {mounted && (
+                <div className="md:hidden animate-fade-in-up absolute bottom-10 left-0 right-0 z-20 flex flex-col items-center gap-3 px-8">
+                {/* Rotate / desktop icon */}
+                <svg
+                    width="28" height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.45)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    {/* Monitor icon */}
+                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+                <p
+                    className="text-mono text-center"
+                    style={{
+                        color: "rgba(255,255,255,0.35)",
+                        fontSize: "11px",
+                        letterSpacing: "0.1em",
+                        lineHeight: 1.6,
+                        maxWidth: "240px",
+                    }}
+                >
+                    BEST EXPERIENCED ON A<br />
+                    <span style={{ color: "rgba(255,255,255,0.55)" }}>DESKTOP OR LAPTOP</span>
+                </p>
+                {/* Subtle separator */}
+                <div
+                    style={{
+                        width: "32px",
+                        height: "1px",
+                        background: "rgba(255,255,255,0.12)",
+                    }}
+                />
+                <p
+                    className="text-mono text-center"
+                    style={{
+                        color: "rgba(255,255,255,0.2)",
+                        fontSize: "10px",
+                        letterSpacing: "0.08em",
+                    }}
+                >
+                    For the full immersive experience
+                </p>
+                </div>
+            )}
         </div>
     );
 }

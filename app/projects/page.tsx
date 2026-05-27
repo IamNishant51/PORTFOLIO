@@ -5,6 +5,8 @@ import { ArrowLeft, Filter } from "lucide-react";
 import ProjectCard from "@/app/components/projects/ProjectCard";
 import type { Project } from "@/lib/github";
 import GitBranch from "../components/ui/svg/GitBranch";
+import Navbar from "../components/layout/Navbar";
+import Cursor from "../components/Cursor";
 
 const fallbackProjects: Project[] = [
   { id: 1, name: "Ollama-Agent-vs-code-extension", description: "A powerful VS Code extension integrating Ollama AI models.", url: "https://github.com/IamNishant51/Ollama-Agent-vs-code-extension", stars: 12, forks: 3, language: "TypeScript", topics: ["vs-code", "ai", "ollama"], updatedAt: "", createdAt: "" },
@@ -45,7 +47,21 @@ export default function ProjectsPage() {
   }, [activeLanguage, sortBy, projects]);
 
   return (
-    <main className="min-h-screen" style={{ background: "var(--bg)", color: "var(--fg)" }}>
+    <main className="min-h-screen relative overflow-hidden" style={{ background: "var(--bg)", color: "var(--fg)" }}>
+      {/* ── Bamboo background — paints first, behind all content ── */}
+      <div
+        className="absolute inset-0 pointer-events-none select-none"
+        style={{
+          backgroundImage: "url('/ASSETS/JAPNESE-BAMBOO-IMAGE.svg')",
+          backgroundRepeat: "repeat-x",
+          backgroundPosition: "bottom center",
+          backgroundSize: "auto 90%",
+          opacity: 0.065,
+        }}
+        aria-hidden="true"
+      />
+      <Cursor />
+      <Navbar />
       {/* Header */}
       <section
         className="relative z-10 pt-28 md:pt-36 pb-16 md:pb-20"

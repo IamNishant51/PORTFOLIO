@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "./components/SmoothScrolling";
+import TransitionLayout from "./components/layout/TransitionLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -138,7 +139,9 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <SmoothScrolling>{children}</SmoothScrolling>
+        <SmoothScrolling>
+          <TransitionLayout>{children}</TransitionLayout>
+        </SmoothScrolling>
       </body>
     </html>
   );

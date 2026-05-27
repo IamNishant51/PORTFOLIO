@@ -68,6 +68,35 @@ export default function Cursor() {
                             delay: 0.05,
                         });
                     }
+                } else if (cursorType === "portrait") {
+                    // Portrait hover: Giant glowing ring, dot hidden, REVEAL label
+                    gsap.to(ring, {
+                        width: "120px",
+                        height: "120px",
+                        backgroundColor: "rgba(255, 255, 255, 0.06)",
+                        borderColor: "rgba(255, 255, 255, 0.55)",
+                        boxShadow: "0 0 32px 6px rgba(255,255,255,0.12)",
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: "back.out(1.5)",
+                    });
+                    gsap.to(dot, {
+                        scale: 0,
+                        opacity: 0,
+                        duration: 0.2,
+                        ease: "power2.out",
+                    });
+                    if (label) {
+                        if (label.textContent !== "REVEAL") label.textContent = "REVEAL";
+                        gsap.to(label, {
+                            opacity: 1,
+                            scale: 1,
+                            color: "rgba(255,255,255,0.9)",
+                            duration: 0.3,
+                            ease: "power2.out",
+                            delay: 0.08,
+                        });
+                    }
                 } else {
                     // Standard clickable: Ring grows and fills with translucent white, dot scales up
                     gsap.to(ring, {
@@ -75,6 +104,7 @@ export default function Cursor() {
                         height: "52px",
                         backgroundColor: "rgba(255, 255, 255, 0.14)",
                         borderColor: "rgba(255, 255, 255, 0.8)",
+                        boxShadow: "none",
                         opacity: 1,
                         duration: 0.35,
                         ease: "power2.out",
@@ -97,8 +127,9 @@ export default function Cursor() {
                     height: "36px",
                     backgroundColor: "rgba(255, 255, 255, 0)",
                     borderColor: "var(--accent)",
+                    boxShadow: "none",
                     opacity: 0.7,
-                    duration: 0.35,
+                    duration: 0.45,
                     ease: "power2.out",
                 });
                 gsap.to(dot, {
@@ -108,11 +139,13 @@ export default function Cursor() {
                     ease: "power2.out",
                 });
                 if (label) {
+                    // Restore label text for next "view" cursor usage
                     gsap.to(label, {
                         opacity: 0,
                         scale: 0.8,
                         duration: 0.2,
                         ease: "power2.in",
+                        onComplete: () => { if (label) label.textContent = "VIEW"; },
                     });
                 }
             }

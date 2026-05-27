@@ -7,13 +7,7 @@ import TechChip from "./ui/svg/TechChip";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SKILLS = [
-    { name: "Figma", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/figma.png" },
-    { name: "GSAP", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/gsap.png" },
-    { name: "Next.js", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/next_js.png" },
-    { name: "React", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/react.png" },
-    { name: "Tailwind", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/tailwind.png" },
-    { name: "TypeScript", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/typescript.png" },
+const BASE_SKILLS = [
     { name: "Figma", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/figma.png" },
     { name: "GSAP", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/gsap.png" },
     { name: "Next.js", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/next_js.png" },
@@ -21,6 +15,9 @@ const SKILLS = [
     { name: "Tailwind", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/tailwind.png" },
     { name: "TypeScript", logo: "https://ik.imagekit.io/9pfz6g8ri/avatars/typescript.png" },
 ];
+
+// Triple so the seamless half-width loop always has items filling >1 viewport
+const SKILLS = [...BASE_SKILLS, ...BASE_SKILLS, ...BASE_SKILLS, ...BASE_SKILLS];
 
 const TECH_LABELS_A = [
     "React", "Next.js", "TypeScript", "Node.js", "MongoDB",
@@ -102,7 +99,7 @@ export default function SkillsMarquee() {
                             Tech{" "}
                             <span style={{ color: "var(--accent)" }}>Stack</span>
                         </span>
-                        <TechChip size={56} />
+                        <TechChip size={36} />
                     </h2>
                     <p className="text-body max-w-md mb-12" style={{ color: "var(--color-muted-ash)" }}>
                         Tools and technologies I use to bring ideas to life.

@@ -6,7 +6,6 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Cursor from "./components/Cursor";
 import Navbar from "./components/layout/Navbar";
-import TransitionLayout from "./components/layout/TransitionLayout";
 
 /* Lazy-load non-critical sections */
 const ProjectList = dynamic(() => import("./components/ProjectList"), {
@@ -28,7 +27,6 @@ const Contact = dynamic(() => import("./components/Contact"), {
   ),
 });
 const Footer = dynamic(() => import("./components/Footer"));
-const FloatingMenu = dynamic(() => import("./components/FloatingMenu"), { ssr: false });
 const ScrollToTop = dynamic(() => import("./components/ScrollToTop"), { ssr: false });
 
 // Module-level persistent flag (persists across client-side router navigation, resets on refresh)
@@ -56,33 +54,30 @@ export default function Home() {
   }, [done]);
 
   return (
-    <TransitionLayout>
-      <main className="relative w-full" role="main">
-        {showPreloader && <Preloader onComplete={handleComplete} />}
-        <Cursor />
+    <main className="relative w-full" role="main">
+      {showPreloader && <Preloader onComplete={handleComplete} />}
+      <Cursor />
 
-        {done && (
-          <>
-            <FloatingMenu />
-            <ScrollToTop />
-          </>
-        )}
+      {done && (
+        <>
+          <ScrollToTop />
+        </>
+      )}
 
-        {/* Navbar sits above everything */}
-        <Navbar />
+      {/* Navbar sits above everything */}
+      <Navbar />
 
-        {/* Main content — scrolls over the fixed footer */}
-        <div className="relative z-10" style={{ background: "var(--bg)" }}>
-          <Hero />
-          <About />
-          <ProjectList />
-          <SkillsMarquee />
-          <Contact />
-        </div>
+      {/* Main content — scrolls over the fixed footer */}
+      <div className="relative z-10" style={{ background: "var(--bg)" }}>
+        <Hero />
+        <About />
+        <ProjectList />
+        <SkillsMarquee />
+        <Contact />
+      </div>
 
-        {/* Fixed footer revealed by Contact's bottom margin */}
-        <Footer />
-      </main>
-    </TransitionLayout>
+      {/* Fixed footer revealed by Contact's bottom margin */}
+      <Footer />
+    </main>
   );
 }
