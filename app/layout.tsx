@@ -129,6 +129,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="preload" href="/ASSETS/HERO-BG.svg" as="image" />
         <meta name="theme-color" content="#0c0c0b" />
         <script
           type="application/ld+json"

@@ -1,50 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nishant Unavane — Full-Stack Developer Portfolio
 
-## Getting Started
+<div align="center">
+  <img src="./DEMO.png" alt="Portfolio Demo" width="100%" />
+</div>
 
-## Environment Variables
+Welcome to the repository for my personal portfolio! This project showcases my work as a Full-Stack Developer, including my web applications, VS Code extensions, and open-source contributions. 
 
-Create a `.env.local` file in the project root with:
+Built with a focus on modern aesthetics, blazing-fast performance, and rich interactive animations.
 
-```bash
-MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<db>?retryWrites=true&w=majority
-```
+## 🚀 Live Demo
+Visit the live site: [https://nishant-unavane.vercel.app](https://nishant-unavane.vercel.app)
 
-Notes:
+## ✨ Key Features
+- **Immersive GSAP Animations**: Smooth scrolling (Lenis), page transitions, stagger reveals, and interactive cursor effects.
+- **Dynamic Projects Page**: Live fetches open-source repositories from the GitHub API, fully sortable and filterable.
+- **Responsive Design**: Flawlessly optimized across mobile, tablet, and ultra-wide desktop screens using fluid typography (`clamp`) and Tailwind CSS grids.
+- **SEO & Performance Optimized**: Server-Side Rendering (SSR) for the projects list, route-level metadata injection, and preloaded LCP assets for top Lighthouse scores.
+- **Custom Audio Engine**: Try pulling the interactive Japanese Koto guitar strings on the homepage (built with the Web Audio API)!
 
-- In development, if `MONGODB_URI` is not set, the app falls back to `mongodb://localhost:27017/`.
-- In production (including Vercel), `MONGODB_URI` is required.
-- For Vercel, add `MONGODB_URI` in Project Settings -> Environment Variables for Production (and Preview if needed), then redeploy.
+## 🛠 Tech Stack
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animation**: [GSAP](https://gsap.com/) & [Framer Motion](https://www.framer.com/motion/)
+- **Smooth Scroll**: [Lenis](https://lenis.darkroom.engineering/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-First, run the development server:
+## 💻 Running Locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+To run this project on your local machine, follow these steps:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/IamNishant51/PORTFOLIO.git
+   cd PORTFOLIO
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   # or yarn install / pnpm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Set up Environment Variables**:
+   Create a `.env.local` file in the root directory and add any required keys (if integrating the contact form backend or GitHub API tokens).
+   ```bash
+   # Optional: For avoiding GitHub API rate limits on the Projects page
+   GITHUB_TOKEN=your_personal_access_token_here
+   ```
 
-## Learn More
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application running.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 License
+Designed and developed by [Nishant Unavane](https://github.com/IamNishant51).
