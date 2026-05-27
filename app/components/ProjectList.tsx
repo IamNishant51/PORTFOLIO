@@ -222,10 +222,6 @@ export default function ProjectList() {
                         >
                             <div
                                 className="py-5 md:py-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
-                                style={{
-                                    paddingLeft: hovered === project.id ? "1.25rem" : "0",
-                                    transition: "padding-left 0.4s cubic-bezier(0.16,1,0.3,1) !important",
-                                }}
                             >
                                 {/* Left */}
                                 <div className="flex items-baseline gap-4 md:gap-7">

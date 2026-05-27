@@ -16,6 +16,17 @@ const FREQUENCIES = [
     329.63  // E4 (Bright high note)
 ];
 
+let sharedAudioCtx: AudioContext | null = null;
+
+function getAudioContext(): AudioContext | null {
+    if (typeof window === "undefined") return null;
+    if (sharedAudioCtx) return sharedAudioCtx;
+    const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioContextClass) return null;
+    sharedAudioCtx = new AudioContextClass();
+    return sharedAudioCtx;
+}
+
 export default function GuitarString({ index = 0, onClick }: GuitarStringProps) {
     const svgRef = useRef<SVGSVGElement>(null);
     const pathRef = useRef<SVGPathElement>(null);
@@ -31,10 +42,14 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
 
     const playPluckSound = (freq: number) => {
         try {
-            const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-            if (!AudioContextClass) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
 
-            const ctx = new AudioContextClass();
+            // Resume if suspended (browser security autoplacing policies)
+            if (ctx.state === "suspended") {
+                ctx.resume();
+            }
+
             const sampleRate = ctx.sampleRate;
             const delayLength = Math.round(sampleRate / freq);
             
