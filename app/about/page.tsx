@@ -10,6 +10,17 @@ export default function AboutPage() {
   return (
     <TransitionLayout>
       <main className="min-h-screen relative w-full pb-12" style={{ background: "var(--bg)", color: "var(--fg)" }}>
+        <div
+          className="absolute inset-0 pointer-events-none select-none"
+          style={{
+            backgroundImage: "url('/ASSETS/WATER-WAVE.svg')",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center bottom",
+            backgroundSize: "100% auto",
+            opacity: 0.03, // Lowered so text is clearly visible
+          }}
+          aria-hidden="true"
+        />
         <Navbar />
         <div className="relative z-10 pt-28 md:pt-36 pb-6">
           <div className="section-container">
@@ -23,7 +34,7 @@ export default function AboutPage() {
             </Link>
           </div>
         </div>
-        <About />
+        <About journeyBg />
       </main>
     </TransitionLayout>
   );

@@ -196,7 +196,7 @@ export default function Navbar() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-panel"
             >
-              {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -257,12 +257,6 @@ export default function Navbar() {
             })}
           </div>
 
-          <button
-            onClick={() => handleNav("/contact")}
-            className="mt-8 btn-ghost-primary text-center text-mono justify-center cursor-pointer"
-          >
-            Get in touch
-          </button>
         </div>
       </div>
     </>

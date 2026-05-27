@@ -281,7 +281,18 @@ const Hero = () => {
             <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "var(--border-hi)" }} />
 
             {/* Geometric SVG Background */}
-            <HeroGeometry />
+            {/* <HeroGeometry /> */}
+            <div
+                className="absolute inset-0 pointer-events-none select-none"
+                style={{
+                    backgroundImage: "url('/ASSETS/HERO-BG.svg')",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                    backgroundSize: "cover", // Cover ensures it stretches nicely across the hero
+                    opacity: 0.04, // Very dull and subtle like the other backgrounds
+                }}
+                aria-hidden="true"
+            />
 
             {/* Ambient glow */}
             <div

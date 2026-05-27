@@ -8,12 +8,12 @@ interface GuitarStringProps {
 }
 
 const FREQUENCIES = [
-    164.81, // E3 (Warm low note)
-    196.00, // G3
+    164.81, // E3 - Hirajōshi / In scale
+    174.61, // F3
     220.00, // A3
     246.94, // B3
-    293.66, // D4
-    329.63  // E4 (Bright high note)
+    261.63, // C4
+    329.63  // E4
 ];
 
 let sharedAudioCtx: AudioContext | null = null;
@@ -36,53 +36,77 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
     const lastYRef = useRef<number>(20);
     const isHoveredRef = useRef<boolean>(false);
 
-    // Map the string index to a specific frequency in E Minor Pentatonic scale
+    // Map the string index to a specific frequency in Japanese Pentatonic scale
     const idx = typeof index === "string" ? parseInt(index, 10) - 1 : index;
     const frequency = FREQUENCIES[idx % FREQUENCIES.length] || FREQUENCIES[0];
 
-    const playPluckSound = (freq: number) => {
+    const playPluckSound = async (freq: number) => {
         try {
             const ctx = getAudioContext();
             if (!ctx) return;
 
-            // Resume if suspended (browser security autoplacing policies)
+            // Use await to ensure the context is fully resumed before taking currentTime
             if (ctx.state === "suspended") {
-                ctx.resume();
+                await ctx.resume();
             }
 
-            const sampleRate = ctx.sampleRate;
-            const delayLength = Math.round(sampleRate / freq);
+            const t = ctx.currentTime;
             
-            // Create a buffer for 1.5 seconds of sound
-            const buffer = ctx.createBuffer(1, sampleRate * 1.5, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Fill delay line with noise (initial pluck excitation)
-            for (let i = 0; i < delayLength; i++) {
-                data[i] = Math.random() * 2 - 1;
-            }
-            
-            // Karplus-Strong synthesis algorithm to simulate string vibration decay
-            const decay = 0.991; 
-            for (let i = delayLength; i < data.length; i++) {
-                const prevIndex = i - delayLength - 1;
-                const prevVal = prevIndex >= 0 ? data[prevIndex] : 0;
-                const average = (data[i - delayLength] + prevVal) / 2;
-                data[i] = average * decay;
-            }
-            
-            const source = ctx.createBufferSource();
-            source.buffer = buffer;
-            
+            // Oscillator 1: Triangle for the warm fundamental (string body)
+            const osc = ctx.createOscillator();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, t);
+
+            // Oscillator 2: Sawtooth for the sharp pluck and buzz (Shamisen sawari effect)
+            const saw = ctx.createOscillator();
+            saw.type = 'sawtooth';
+            saw.frequency.setValueAtTime(freq, t);
+
+            // Filter to simulate the acoustic body of a Koto/Shamisen
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(8000, t); // Bright pluck initially
+            filter.frequency.exponentialRampToValueAtTime(400, t + 0.15); // Quickly lose high frequencies
+            filter.frequency.linearRampToValueAtTime(100, t + 1.5); // Decay to a dull ring
+
+            // Gain node for the master amplitude envelope
             const gainNode = ctx.createGain();
-            // A comfortable, non-intrusive pluck volume
-            gainNode.gain.setValueAtTime(0.18, ctx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
+            gainNode.gain.setValueAtTime(0, t);
+            gainNode.gain.linearRampToValueAtTime(0.8, t + 0.015); // Fast, loud, sharp attack
+            gainNode.gain.exponentialRampToValueAtTime(0.15, t + 0.2); // Fast decay to a louder sustained level
+            gainNode.gain.exponentialRampToValueAtTime(0.001, t + 1.5); // Slow release
+
+            // Gain envelope specifically for the sawtooth (only loud at the very beginning)
+            const sawGain = ctx.createGain();
+            sawGain.gain.setValueAtTime(0.35, t); // Sharper and louder twang
+            sawGain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+
+            // Route audio
+            saw.connect(sawGain);
+            sawGain.connect(filter);
             
-            source.connect(gainNode);
+            osc.connect(filter);
+            filter.connect(gainNode);
             gainNode.connect(ctx.destination);
+
+            osc.start(t);
+            saw.start(t);
             
-            source.start();
+            osc.stop(t + 1.5);
+            saw.stop(t + 1.5);
+
+            // Cleanup to avoid memory leaks
+            setTimeout(() => {
+                try {
+                    osc.disconnect();
+                    saw.disconnect();
+                    filter.disconnect();
+                    gainNode.disconnect();
+                    sawGain.disconnect();
+                } catch (e) {
+                    // Already disconnected
+                }
+            }, 1600);
         } catch (e) {
             console.warn("Pluck audio error:", e);
         }
@@ -180,6 +204,25 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
                 className="pointer-events-auto cursor-pointer"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onTouchMove={(e) => {
+                    const touch = e.touches[0];
+                    if (!svgRef.current || !pathRef.current) return;
+                    
+                    if (tweenRef.current) tweenRef.current.kill();
+                    
+                    const rect = svgRef.current.getBoundingClientRect();
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+                    
+                    const clampedY = Math.max(2, Math.min(38, y));
+                    pathRef.current.setAttribute("d", `M 0 20 Q ${x} ${clampedY} ${rect.width} 20`);
+                    
+                    lastXRef.current = x;
+                    lastYRef.current = clampedY;
+                    isHoveredRef.current = true;
+                }}
+                onTouchEnd={handleMouseLeave}
+                onTouchCancel={handleMouseLeave}
                 onClick={(e) => {
                     e.stopPropagation();
                     onClick?.();

@@ -50,12 +50,12 @@ export default function ProjectsPage() {
     <main className="min-h-screen relative overflow-hidden" style={{ background: "var(--bg)", color: "var(--fg)" }}>
       {/* ── Bamboo background — paints first, behind all content ── */}
       <div
-        className="absolute inset-0 pointer-events-none select-none"
+        className="fixed inset-0 pointer-events-none select-none z-[0]"
         style={{
           backgroundImage: "url('/ASSETS/JAPNESE-BAMBOO-IMAGE.svg')",
-          backgroundRepeat: "repeat-x",
-          backgroundPosition: "bottom center",
-          backgroundSize: "auto 90%",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
           opacity: 0.065,
         }}
         aria-hidden="true"

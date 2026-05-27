@@ -139,9 +139,11 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <SmoothScrolling>
-          <TransitionLayout>{children}</TransitionLayout>
-        </SmoothScrolling>
+        <div className="relative w-full max-w-[100vw] overflow-x-hidden">
+          <SmoothScrolling>
+            <TransitionLayout>{children}</TransitionLayout>
+          </SmoothScrolling>
+        </div>
       </body>
     </html>
   );

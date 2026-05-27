@@ -29,7 +29,7 @@ const JOURNEY = [
     },
 ];
 
-export default function About() {
+export default function About({ journeyBg }: { journeyBg?: boolean }) {
     const sectionRef = useRef<HTMLElement>(null);
     const headingRef = useRef<HTMLHeadingElement>(null);
     const bioRef = useRef<HTMLDivElement>(null);
@@ -63,7 +63,8 @@ export default function About() {
             }
 
             if (journeyRef.current) {
-                gsap.fromTo(Array.from(journeyRef.current.children),
+                const children = Array.from(journeyRef.current.children).filter(el => el.tagName !== 'IMG');
+                gsap.fromTo(children,
                     { x: -32, opacity: 0 },
                     {
                         x: 0, opacity: 1, stagger: 0.12, duration: 0.8, ease: "power3.out",
@@ -166,7 +167,7 @@ export default function About() {
                         <p className="text-mono mb-6" style={{ color: "var(--color-muted-ash)" }}>
                             By the numbers
                         </p>
-                        <div ref={statsRef} className="grid grid-cols-2 gap-3">
+                        <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             {[
                                 { value: "4+", label: "VS Code Extensions" },
                                 { value: "15+", label: "Projects Completed" },
@@ -205,7 +206,16 @@ export default function About() {
                     <p className="text-mono mb-8" style={{ color: "var(--color-muted-ash)" }}>
                         My journey
                     </p>
-                    <div ref={journeyRef} className="space-y-0">
+                    <div ref={journeyRef} className="relative space-y-0">
+                        {journeyBg && (
+                            <img
+                                src="/ASSETS/WATER-WAVE.svg"
+                                alt=""
+                                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                                style={{ opacity: 0.035, objectPosition: "center 65%" }}
+                                aria-hidden="true"
+                            />
+                        )}
                         {JOURNEY.map((item, i) => (
                             <div
                                 key={i}

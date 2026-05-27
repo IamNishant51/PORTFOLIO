@@ -178,16 +178,20 @@ export default function ProjectList() {
                 the roots anchored to the floor so stalks grow upward.
             ─────────────────────────────────────────────────────────────────── */}
             <div
-                className="absolute inset-0 pointer-events-none select-none"
-                style={{
-                    backgroundImage: "url('/ASSETS/JAPNESE-BAMBOO-IMAGE.svg')",
-                    backgroundRepeat: "repeat-x",
-                    backgroundPosition: "bottom center",
-                    backgroundSize: "auto 90%",
-                    opacity: 0.065,
-                }}
+                className="absolute inset-0 pointer-events-none select-none overflow-hidden"
                 aria-hidden="true"
-            />
+            >
+                <div 
+                    className="sticky top-0 w-full h-screen"
+                    style={{
+                        backgroundImage: "url('/ASSETS/JAPNESE-BAMBOO-IMAGE.svg')",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center center",
+                        backgroundSize: "cover",
+                        opacity: 0.065,
+                    }}
+                />
+            </div>
             <div className="section-container section-py relative z-10">
                 {/* ── Section label ── */}
                 <div className="section-label">

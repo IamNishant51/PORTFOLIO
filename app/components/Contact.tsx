@@ -118,6 +118,13 @@ export default function Contact() {
                 marginBottom: "clamp(20vh, 30vw, 40vh)",
             }}
         >
+            <img
+                src="/ASSETS/JAPNESE-GATE-IMAGE.svg"
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                style={{ opacity: 0.08, objectPosition: "center center" }}
+                aria-hidden="true"
+            />
             {/* Decorative large text */}
             <div
                 className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none pointer-events-none select-none"
@@ -153,7 +160,7 @@ export default function Contact() {
                         {/* Socials */}
                         <div
                             ref={socialsRef}
-                            className="grid grid-cols-2 gap-3"
+                            className="grid grid-cols-1 sm:grid-cols-2 gap-3"
                         >
                             {SOCIALS.map(({ Icon, label, href, download }) => (
                                 <a
