@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
-import { Star, GitFork, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { Star, GitFork, ArrowUpRight, ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/github";
+import { getProjectBySlug } from "@/lib/projects-data";
 
 interface ProjectCardProps {
   project: Project;
@@ -25,26 +27,12 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
 
   const maxTopics = variant === "featured-large" ? 4 : variant === "featured" ? 3 : 2;
 
-  return (
-    <a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`group relative flex flex-col justify-between p-6 overflow-hidden ${heightClass}`}
-      style={{
-        background: "rgba(240,237,230,0.02)",
-        border: "1px solid var(--border)",
-        transition: "border-color 0.3s ease, background 0.3s ease !important",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hi)";
-        (e.currentTarget as HTMLElement).style.background = "rgba(240,237,230,0.04)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
-        (e.currentTarget as HTMLElement).style.background = "rgba(240,237,230,0.02)";
-      }}
-    >
+  const detail = getProjectBySlug(project.name);
+  const href = detail ? `/projects/${detail.slug}` : project.url;
+  const isExternal = !detail;
+
+  const cardContent = (
+    <>
       {/* Top row */}
       <div className="flex items-start justify-between mb-4">
         <div
@@ -54,10 +42,17 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
           <span className="w-1.5 h-1.5" style={{ background: "var(--accent)" }} />
           {project.language || "Code"}
         </div>
-        <ArrowUpRight
-          className="w-4 h-4 flex-shrink-0 opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          style={{ color: "var(--fg)" }}
-        />
+        {isExternal ? (
+          <ArrowUpRight
+            className="w-4 h-4 flex-shrink-0 opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            style={{ color: "var(--fg)" }}
+          />
+        ) : (
+          <ExternalLink
+            className="w-4 h-4 flex-shrink-0 opacity-30 group-hover:opacity-100 transition-all duration-300"
+            style={{ color: "var(--fg)" }}
+          />
+        )}
       </div>
 
       {/* Content */}
@@ -90,17 +85,31 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
         )}
       </div>
 
-      {/* Stats */}
-      <div
-        className="flex flex-wrap gap-4 mt-4 pt-4 text-mono opacity-40 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ borderTop: "1px solid var(--border)", color: "var(--color-muted-ash)" }}
-      >
-        <span className="flex items-center gap-1.5">
-          <Star className="flex-shrink-0" size={12} /> {project.stars}
-        </span>
-        <span className="flex items-center gap-1.5">
-          <GitFork className="flex-shrink-0" size={12} /> {project.forks}
-        </span>
+      {/* Stats + GitHub link */}
+      <div className="flex items-center justify-between mt-4 pt-4" style={{ borderTop: "1px solid var(--border)" }}>
+        <div
+          className="flex flex-wrap gap-4 text-mono opacity-40 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ color: "var(--color-muted-ash)" }}
+        >
+          <span className="flex items-center gap-1.5">
+            <Star className="flex-shrink-0" size={12} /> {project.stars}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <GitFork className="flex-shrink-0" size={12} /> {project.forks}
+          </span>
+        </div>
+        {detail && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="text-mono flex items-center gap-1 opacity-40 hover:opacity-100 transition-opacity"
+            style={{ color: "var(--color-muted-ash)" }}
+          >
+            GitHub <ExternalLink className="w-3 h-3" />
+          </a>
+        )}
       </div>
 
       {/* Bottom accent line */}
@@ -111,6 +120,54 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
           transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1) !important",
         }}
       />
+    </>
+  );
+
+  if (detail) {
+    return (
+      <Link
+        href={href}
+        className={`group relative flex flex-col justify-between p-6 overflow-hidden ${heightClass}`}
+        style={{
+          background: "rgba(240,237,230,0.02)",
+          border: "1px solid var(--border)",
+          transition: "border-color 0.3s ease, background 0.3s ease !important",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hi)";
+          (e.currentTarget as HTMLElement).style.background = "rgba(240,237,230,0.04)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+          (e.currentTarget as HTMLElement).style.background = "rgba(240,237,230,0.02)";
+        }}
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group relative flex flex-col justify-between p-6 overflow-hidden ${heightClass}`}
+      style={{
+        background: "rgba(240,237,230,0.02)",
+        border: "1px solid var(--border)",
+        transition: "border-color 0.3s ease, background 0.3s ease !important",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hi)";
+        (e.currentTarget as HTMLElement).style.background = "rgba(240,237,230,0.04)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+        (e.currentTarget as HTMLElement).style.background = "rgba(240,237,230,0.02)";
+      }}
+    >
+      {cardContent}
     </a>
   );
 }
