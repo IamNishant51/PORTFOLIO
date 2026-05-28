@@ -43,7 +43,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <span>{post.readTime}</span>
           </div>
 
-          <h1 className="text-h1 mb-6" style={{ color: "var(--fg)" }}>{post.title}</h1>
+          <h1 className="text-heading-lg mb-6" style={{ color: "var(--fg)" }}>{post.title}</h1>
 
           <div className="flex flex-wrap gap-2 mb-12">
             {post.tags.map((tag) => (
@@ -51,24 +51,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             ))}
           </div>
 
-          <div className="space-y-5 text-body leading-relaxed" style={{ color: "var(--color-muted-ash)" }}>
+          <div className="space-y-6 text-body leading-relaxed" style={{ color: "var(--color-muted-ash)", fontSize: "clamp(1rem, 2vw, 1.125rem)" }}>
             {post.content.map((paragraph, i) => {
               if (paragraph.startsWith("## ")) {
-                return <h2 key={i} className="text-heading pt-6" style={{ color: "var(--fg)" }}>{paragraph.replace("## ", "")}</h2>;
+                return <h2 key={i} className="text-subheading pt-8 mb-4" style={{ color: "var(--fg)" }}>{paragraph.replace("## ", "")}</h2>;
               }
               if (paragraph.startsWith("- **")) {
                 const match = paragraph.match(/- \*\*(.+?)\*\*(?: — (.+))?/);
                 if (match) {
                   return (
-                    <p key={i}>
+                    <p key={i} className="mb-3">
                       <strong style={{ color: "var(--fg)" }}>{match[1]}</strong>
                       {match[2] ? <span> — {match[2]}</span> : null}
                     </p>
                   );
                 }
               }
-              if (paragraph === "") return <div key={i} className="h-4" />;
-              return <p key={i}>{paragraph}</p>;
+              if (paragraph === "") return <div key={i} className="h-6" />;
+              return <p key={i} className="leading-relaxed">{paragraph}</p>;
             })}
           </div>
 

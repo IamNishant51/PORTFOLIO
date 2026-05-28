@@ -42,7 +42,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <span className="w-8 h-px" style={{ background: "var(--accent)" }} />
           </div>
 
-          <h1 className="text-h1 mb-3" style={{ color: "var(--fg)" }}>{project.title}</h1>
+          <h1 className="text-heading-lg mb-3" style={{ color: "var(--fg)" }}>{project.title}</h1>
           <p className="text-subheading mb-10" style={{ color: "var(--color-muted-ash)" }}>{project.tagline}</p>
 
           <div className="flex flex-wrap gap-2 mb-12">
