@@ -3,6 +3,7 @@ import { Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "./components/SmoothScrolling";
 import TransitionLayout from "./components/layout/TransitionLayout";
+import LivingCanvas from "./components/LivingCanvas";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,6 +23,10 @@ const spaceMono = Space_Mono({
   fallback: ["monospace"],
 });
 
+// ── Canonical domain (single source of truth) ──────────────────────────────
+// All SEO signals (canonical, OG, JSON-LD, sitemap, robots) point here.
+const CANONICAL_URL = "https://nishantunavane.qzz.io";
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -37,26 +42,35 @@ export const metadata: Metadata = {
     "Full-Stack Developer",
     "VS Code Extension Developer",
     "React Developer",
-    "Next.js",
+    "Next.js Developer",
     "TypeScript",
     "Web Developer",
     "Frontend Developer",
     "Backend Developer",
     "Portfolio",
-    "GSAP",
+    "GSAP Animation",
     "Tailwind CSS",
     "Node.js",
     "MongoDB",
+    "JavaScript Developer",
+    "Software Engineer India",
   ],
-  authors: [{ name: "Nishant Unavane" }],
+  authors: [{ name: "Nishant Unavane", url: CANONICAL_URL }],
   creator: "Nishant Unavane",
   publisher: "Nishant Unavane",
-  metadataBase: new URL("https://nishant-unavane.vercel.app"),
-  alternates: { canonical: "/" },
+  // ── metadataBase: canonical domain so all relative og/twitter URLs resolve correctly ──
+  metadataBase: new URL(CANONICAL_URL),
+  alternates: {
+    canonical: "/",
+  },
+  // ── Google Search Console verification ──
+  verification: {
+    google: "7b0282e0a38e21be",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://nishant-unavane.vercel.app",
+    url: CANONICAL_URL,
     title: "Nishant Unavane — Full-Stack Developer",
     description:
       "Full-Stack Developer crafting high-performance web apps, VS Code extensions, and immersive digital experiences.",
@@ -106,7 +120,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Nishant Unavane",
-    url: "https://nishant-unavane.vercel.app",
+    url: CANONICAL_URL,
     image: "https://ik.imagekit.io/9pfz6g8ri/avatars/dp.png",
     jobTitle: "Full-Stack Developer",
     description:
@@ -114,6 +128,8 @@ export default function RootLayout({
     sameAs: [
       "https://github.com/IamNishant51",
       "https://www.linkedin.com/in/nishant-unavane-008291275/",
+      // Also include Vercel URL so Google knows both domains belong to the same entity
+      "https://nishant-unavane.vercel.app",
     ],
     knowsAbout: [
       "React",
@@ -123,8 +139,14 @@ export default function RootLayout({
       "Tailwind CSS",
       "Node.js",
       "Full-Stack Development",
+      "VS Code Extension Development",
     ],
     email: "nishant.unavane@outlook.com",
+    // ── WebPage for breadcrumb / rich result eligibility ──
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": CANONICAL_URL,
+    },
   };
 
   return (
@@ -137,6 +159,8 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <link rel="preload" href="/ASSETS/HERO-BG.svg" as="image" />
         <meta name="theme-color" content="#0c0c0b" />
+        {/* Canonical: always point to primary domain */}
+        <link rel="canonical" href={CANONICAL_URL} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -146,6 +170,7 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        <LivingCanvas />
         <div className="relative w-full max-w-[100vw] overflow-x-hidden">
           <SmoothScrolling>
             <TransitionLayout>{children}</TransitionLayout>

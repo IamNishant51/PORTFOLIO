@@ -8,11 +8,17 @@ import { getGithubProjects, Project } from "@/lib/github";
 export const revalidate = 3600; // revalidate every hour
 
 export const metadata: Metadata = {
-  title: "Projects | Nishant Unavane",
-  description: "Explore my portfolio of web applications, VS Code extensions, and open-source contributions.",
+  title: "Projects | Nishant Unavane — Full-Stack Developer",
+  description:
+    "Explore Nishant Unavane's portfolio of web applications, VS Code extensions, and open-source contributions built with React, Next.js, and TypeScript.",
+  alternates: {
+    canonical: "https://nishantunavane.qzz.io/projects",
+  },
   openGraph: {
-    title: "Projects | Nishant Unavane",
-    description: "Explore my portfolio of web applications, VS Code extensions, and open-source contributions.",
+    title: "Projects | Nishant Unavane — Full-Stack Developer",
+    description:
+      "Explore my portfolio of web applications, VS Code extensions, and open-source contributions.",
+    url: "https://nishantunavane.qzz.io/projects",
   },
 };
 

@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { reducedMotion } from "@/lib/motion";
 import GuitarString from "./ui/GuitarString";
 import GitBranch from "./ui/svg/GitBranch";
 
@@ -71,6 +72,7 @@ export default function ProjectList() {
     const [hovered, setHovered] = useState<number | null>(null);
     const [selected, setSelected] = useState<Project | null>(null);
     const scrollYRef = useRef(0);
+    const dur = useMemo(() => reducedMotion ? 0.01 : 1, []);
 
     /* ── Mouse-following image reveal ── */
     useEffect(() => {
@@ -143,33 +145,37 @@ export default function ProjectList() {
     /* ── Scroll reveal ── */
     useEffect(() => {
         const ctx = gsap.context(() => {
+            /* Heading: horizontal clip-path wipe */
             gsap.fromTo(headingRef.current,
-                { y: 50, opacity: 0 },
+                { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
                 {
-                    y: 0, opacity: 1, duration: 1, ease: "power4.out",
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                    duration: dur * 1.2, ease: "power2.inOut",
                     scrollTrigger: { trigger: headingRef.current, start: "top 88%", once: true },
                 }
             );
 
+            /* List items: alternating left/right slide-in */
             if (listRef.current) {
-                gsap.fromTo(Array.from(listRef.current.children),
-                    { y: 36, opacity: 0 },
+                const items = Array.from(listRef.current.children);
+                gsap.fromTo(items,
+                    { x: (i) => i % 2 === 0 ? -60 : 60, opacity: 0 },
                     {
-                        y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out",
+                        x: 0, opacity: 1, stagger: 0.1, duration: dur * 0.8, ease: "power2.out",
                         scrollTrigger: { trigger: listRef.current, start: "top 88%", once: true },
                     }
                 );
             }
         }, sectionRef);
         return () => ctx.revert();
-    }, []);
+    }, [dur]);
 
     return (
         <section
             ref={sectionRef}
             id="projects"
             className="relative overflow-hidden"
-            style={{ background: "var(--bg)", borderTop: "1px solid var(--border-hi)" }}
+            style={{ background: "var(--bg)" }}
         >
             {/* ── Bamboo background ─────────────────────────────────────────────
                 Renders FIRST in DOM so it paints behind all sibling content.
@@ -200,10 +206,10 @@ export default function ProjectList() {
                     <span className="section-label-text">Work</span>
                 </div>
 
-                <div ref={headingRef} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14 md:mb-20">
+                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14 md:mb-20">
                     <div>
                         <h2 className="text-heading-lg flex items-center gap-4" style={{ color: "var(--fg)" }}>
-                            <span>
+                            <span ref={headingRef}>
                                 Selected<br />
                                 <span style={{ color: "var(--accent)" }}>Projects</span>
                             </span>
@@ -234,7 +240,28 @@ export default function ProjectList() {
                             className="group relative cursor-pointer"
                             data-cursor="view"
                             onMouseEnter={() => setHovered(project.id)}
-                            onMouseLeave={() => setHovered(null)}
+                            onMouseMove={(e) => {
+                                if (reducedMotion) return;
+                                const rect = e.currentTarget.getBoundingClientRect();
+                                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                                gsap.to(e.currentTarget, {
+                                    rotationY: x * 4,
+                                    rotationX: -y * 4,
+                                    transformPerspective: 800,
+                                    duration: 0.5,
+                                    ease: "power2.out",
+                                });
+                            }}
+                            onMouseLeave={(e) => {
+                                setHovered(null);
+                                gsap.to(e.currentTarget, {
+                                    rotationY: 0,
+                                    rotationX: 0,
+                                    duration: 0.6,
+                                    ease: "power2.out",
+                                });
+                            }}
                             onClick={() => setSelected(project)}
                             role="button"
                             tabIndex={0}

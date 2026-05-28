@@ -105,6 +105,10 @@
   /* ── Named shadow ── */
   --shadow-subtle: rgb(113, 113, 122) 0px 0px 0px 2px;
 
+  /* ── Easing ── */
+  --ease-organic: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-organic-out: cubic-bezier(0.34, 0.1, 0.2, 1);
+
   /* ── Fluid type sizes ── */
   --fluid-display: clamp(2.5rem, 8vw + 0.5rem, 5rem);
   --fluid-heading-lg: clamp(1.75rem, 4vw + 0.5rem, 3rem);

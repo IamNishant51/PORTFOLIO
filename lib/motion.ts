@@ -1,9 +1,15 @@
+export const reducedMotion =
+  typeof window !== "undefined"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    : false;
+
 export const EASE = {
   power1: { in: "power1.in", out: "power1.out", inOut: "power1.inOut" },
   power2: { in: "power2.in", out: "power2.out", inOut: "power2.inOut" },
   power3: { in: "power3.in", out: "power3.out", inOut: "power3.inOut" },
   power4: { in: "power4.in", out: "power4.out", inOut: "power4.inOut" },
   elastic: (amp = 1, period = 0.3) => `elastic.out(${amp}, ${period})`,
+  organic: { in: "power2.in", out: "power2.out", inOut: "power2.inOut" },
   none: "none",
 } as const;
 

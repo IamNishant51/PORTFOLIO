@@ -18,7 +18,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
     /* Only true after client hydration — prevents SSR/client HTML mismatch */
     const [mounted, setMounted] = useState(false);
-    useEffect(() => { setMounted(true); }, []);
+    useEffect(() => { const id = requestAnimationFrame(() => setMounted(true)); return () => cancelAnimationFrame(id); }, []);
 
     /* ── Reveal Sequence ── */
     const playRevealSequence = useCallback(() => {

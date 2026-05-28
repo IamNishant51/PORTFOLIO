@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { reducedMotion } from "@/lib/motion";
 import SignalBeacon from "./ui/svg/SignalBeacon";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -73,34 +74,40 @@ export default function Contact() {
         }
     };
 
+    const dur = useMemo(() => reducedMotion ? 0.01 : 1, []);
+
     useEffect(() => {
         const ctx = gsap.context(() => {
+            /* Heading: clean fade-in with slight y offset */
             gsap.fromTo(headingRef.current,
-                { y: 50, opacity: 0 },
-                {
-                    y: 0, opacity: 1, duration: 1, ease: "power4.out",
-                    scrollTrigger: { trigger: headingRef.current, start: "top 88%", once: true }
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: dur * 0.9, ease: "power2.out",
+                  scrollTrigger: { trigger: headingRef.current, start: "top 88%", once: true },
                 }
             );
+
+            /* Form: 3D perspective rotation entrance */
             gsap.fromTo(formRef.current,
-                { y: 36, opacity: 0 },
+                { rotationX: -15, y: 30, opacity: 0, transformPerspective: 800 },
                 {
-                    y: 0, opacity: 1, duration: 0.9, ease: "power3.out", delay: 0.12,
-                    scrollTrigger: { trigger: formRef.current, start: "top 88%", once: true }
+                    rotationX: 0, y: 0, opacity: 1, duration: dur * 0.9, ease: "power2.out", delay: 0.1,
+                    scrollTrigger: { trigger: formRef.current, start: "top 88%", once: true },
                 }
             );
+
+            /* Socials: scale-in stagger */
             if (socialsRef.current) {
                 gsap.fromTo(Array.from(socialsRef.current.children),
-                    { y: 24, opacity: 0 },
+                    { scale: 0.9, opacity: 0, y: 12 },
                     {
-                        y: 0, opacity: 1, stagger: 0.07, duration: 0.7, ease: "power3.out",
-                        scrollTrigger: { trigger: socialsRef.current, start: "top 90%", once: true }
+                        scale: 1, opacity: 1, y: 0, stagger: 0.06, duration: dur * 0.6, ease: "back.out(1.1)",
+                        scrollTrigger: { trigger: socialsRef.current, start: "top 90%", once: true },
                     }
                 );
             }
         }, sectionRef);
         return () => ctx.revert();
-    }, []);
+    }, [dur]);
 
     const inputStyle: React.CSSProperties = {
         color: "var(--fg)",
@@ -114,7 +121,6 @@ export default function Contact() {
             className="relative overflow-hidden"
             style={{
                 background: "var(--bg)",
-                borderTop: "1px solid var(--border-hi)",
                 marginBottom: "clamp(20vh, 30vw, 40vh)",
             }}
         >

@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { reducedMotion } from "@/lib/motion";
 import CoffeeCup from "./ui/svg/CoffeeCup";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -29,55 +30,93 @@ const JOURNEY = [
     },
 ];
 
+function splitWords(el: HTMLElement) {
+    const text = el.textContent ?? "";
+    el.innerHTML = "";
+    el.setAttribute("aria-label", text);
+    return text.split(/\s+/).map((word, i) => {
+        const span = document.createElement("span");
+        span.className = "inline-block overflow-hidden align-bottom";
+        const inner = document.createElement("span");
+        inner.className = "inline-block";
+        inner.textContent = word + (i < text.split(/\s+/).length - 1 ? "\u00A0" : "");
+        span.appendChild(inner);
+        el.appendChild(span);
+        return inner;
+    });
+}
+
 export default function About({ journeyBg }: { journeyBg?: boolean }) {
     const sectionRef = useRef<HTMLElement>(null);
-    const headingRef = useRef<HTMLHeadingElement>(null);
+    const headingClipRef = useRef<HTMLDivElement>(null);
     const bioRef = useRef<HTMLDivElement>(null);
     const statsRef = useRef<HTMLDivElement>(null);
     const journeyRef = useRef<HTMLDivElement>(null);
     const beliefsRef = useRef<HTMLDivElement>(null);
 
+    const dur = useMemo(() => reducedMotion ? 0.01 : 1, []);
+
     useEffect(() => {
         const ctx = gsap.context(() => {
-            const trigger = (el: Element | null, opts = {}) =>
-                gsap.fromTo(el,
-                    { y: 50, opacity: 0 },
+            /* ── Heading: clip-path reveal ── */
+            if (headingClipRef.current) {
+                gsap.fromTo(headingClipRef.current,
+                    { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
                     {
-                        y: 0, opacity: 1, duration: 0.9, ease: "power3.out",
-                        scrollTrigger: { trigger: el, start: "top 88%", once: true },
-                        ...opts,
+                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                        duration: dur * 1.2,
+                        ease: "power2.inOut",
+                        scrollTrigger: { trigger: headingClipRef.current, start: "top 88%", once: true },
                     }
                 );
+            }
 
-            trigger(headingRef.current, { duration: 1, ease: "power4.out" });
-            trigger(bioRef.current, { duration: 0.9, delay: 0.05 });
+            /* ── Bio: word-split stagger ── */
+            if (bioRef.current) {
+                const words: HTMLElement[] = [];
+                const paragraphs = bioRef.current.querySelectorAll("p");
+                paragraphs.forEach(p => {
+                    const w = splitWords(p);
+                    words.push(...w);
+                });
+                gsap.fromTo(words,
+                    { y: "110%", opacity: 0 },
+                    {
+                        y: "0%", opacity: 1, stagger: 0.025, duration: dur * 0.7, ease: "power2.out",
+                        scrollTrigger: { trigger: bioRef.current, start: "top 88%", once: true },
+                    }
+                );
+            }
 
+            /* ── Stats: scale-in from center ── */
             if (statsRef.current) {
                 gsap.fromTo(Array.from(statsRef.current.children),
-                    { y: 40, opacity: 0 },
+                    { scale: 0.92, opacity: 0 },
                     {
-                        y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out",
+                        scale: 1, opacity: 1, stagger: 0.08, duration: dur * 0.7, ease: "back.out(1.2)",
                         scrollTrigger: { trigger: statsRef.current, start: "top 88%", once: true },
                     }
                 );
             }
 
+            /* ── Journey: slide-in left alternating ── */
             if (journeyRef.current) {
                 const children = Array.from(journeyRef.current.children).filter(el => el.tagName !== 'IMG');
                 gsap.fromTo(children,
                     { x: -32, opacity: 0 },
                     {
-                        x: 0, opacity: 1, stagger: 0.12, duration: 0.8, ease: "power3.out",
+                        x: 0, opacity: 1, stagger: 0.12, duration: dur * 0.8, ease: "power2.out",
                         scrollTrigger: { trigger: journeyRef.current, start: "top 88%", once: true },
                     }
                 );
             }
 
+            /* ── Beliefs: rotate-in stagger ── */
             if (beliefsRef.current) {
                 gsap.fromTo(Array.from(beliefsRef.current.children),
-                    { scale: 0.88, opacity: 0 },
+                    { rotation: -8, opacity: 0, scale: 0.92 },
                     {
-                        scale: 1, opacity: 1, stagger: 0.06, duration: 0.55, ease: "back.out(1.4)",
+                        rotation: 0, opacity: 1, scale: 1, stagger: 0.05, duration: dur * 0.5, ease: "power2.out",
                         scrollTrigger: { trigger: beliefsRef.current, start: "top 90%", once: true },
                     }
                 );
@@ -85,14 +124,14 @@ export default function About({ journeyBg }: { journeyBg?: boolean }) {
         }, sectionRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [dur]);
 
     return (
         <section
             ref={sectionRef}
             id="about"
             className="relative overflow-hidden"
-            style={{ background: "var(--bg)", borderTop: "1px solid var(--border-hi)" }}
+            style={{ background: "var(--bg)" }}
         >
             <div className="section-container section-py">
                 {/* ── Section label ── */}
@@ -103,16 +142,17 @@ export default function About({ journeyBg }: { journeyBg?: boolean }) {
                 </div>
 
                 {/* ── Heading ── */}
-                <h2
-                    ref={headingRef}
-                    className="text-heading-lg mb-16 md:mb-24"
-                    style={{ color: "var(--fg)" }}
-                >
-                    Crafting{" "}
-                    <span style={{ color: "var(--accent)" }}>Digital</span>
-                    <br />
-                    Experiences
-                </h2>
+                <div ref={headingClipRef}>
+                    <h2
+                        className="text-heading-lg mb-16 md:mb-24"
+                        style={{ color: "var(--fg)" }}
+                    >
+                        Crafting{" "}
+                        <span style={{ color: "var(--accent)" }}>Digital</span>
+                        <br />
+                        Experiences
+                    </h2>
+                </div>
 
                 {/* ── Main grid ── */}
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 md:mb-24">

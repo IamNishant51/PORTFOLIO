@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Filter } from "lucide-react";
 import ProjectCard from "@/app/components/projects/ProjectCard";
@@ -7,19 +7,21 @@ import type { Project } from "@/lib/github";
 import GitBranch from "../components/ui/svg/GitBranch";
 
 export default function ProjectsClient({ initialProjects }: { initialProjects: Project[] }) {
-  const [filtered, setFiltered] = useState<Project[]>(initialProjects);
   const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"stars" | "updated" | "name">("stars");
 
-  const languages = Array.from(new Set(initialProjects.map((p) => p.language).filter(Boolean))) as string[];
+  const languages = useMemo(
+    () => Array.from(new Set(initialProjects.map((p) => p.language).filter(Boolean))) as string[],
+    [initialProjects]
+  );
 
-  useEffect(() => {
+  const filtered = useMemo(() => {
     let result = [...initialProjects];
     if (activeLanguage) result = result.filter((p) => p.language === activeLanguage);
     if (sortBy === "stars") result.sort((a, b) => b.stars - a.stars);
     if (sortBy === "name") result.sort((a, b) => a.name.localeCompare(b.name));
     if (sortBy === "updated") result.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-    setFiltered(result);
+    return result;
   }, [activeLanguage, sortBy, initialProjects]);
 
   return (

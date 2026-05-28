@@ -1,8 +1,9 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { reducedMotion } from "@/lib/motion";
 import TechChip from "./ui/svg/TechChip";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -30,22 +31,42 @@ const TECH_LABELS_A = [
 
 export default function SkillsMarquee() {
     const sectionRef = useRef<HTMLElement>(null);
-    const headingRef = useRef<HTMLDivElement>(null);
+    const headingRef = useRef<HTMLSpanElement>(null);
     const row1InitRef = useRef(false);
     const row2InitRef = useRef(false);
     const tl1Ref = useRef<gsap.core.Tween | null>(null);
     const tl2Ref = useRef<gsap.core.Tween | null>(null);
 
+    const dur = useMemo(() => reducedMotion ? 0.01 : 1, []);
+
     useEffect(() => {
         const ctx = gsap.context(() => {
-            /* Heading reveal */
-            gsap.fromTo(headingRef.current,
-                { y: 36, opacity: 0 },
-                {
-                    y: 0, opacity: 1, duration: 0.9, ease: "power3.out",
-                    scrollTrigger: { trigger: headingRef.current, start: "top 88%", once: true },
-                }
-            );
+            /* Heading: char stagger blur-in */
+            if (headingRef.current) {
+                const text = headingRef.current;
+                const chars: HTMLElement[] = [];
+                const raw = text.textContent ?? "";
+                text.innerHTML = "";
+                text.setAttribute("aria-label", raw);
+                raw.split("").forEach((ch) => {
+                    const wrap = document.createElement("span");
+                    wrap.className = "char-wrap";
+                    wrap.setAttribute("aria-hidden", "true");
+                    const inner = document.createElement("span");
+                    inner.className = "inline-block";
+                    inner.textContent = ch === " " ? "\u00A0" : ch;
+                    wrap.appendChild(inner);
+                    text.appendChild(wrap);
+                    chars.push(inner);
+                });
+                gsap.fromTo(chars,
+                    { filter: "blur(8px)", opacity: 0, y: 12 },
+                    {
+                        filter: "blur(0px)", opacity: 1, y: 0, stagger: 0.03, duration: dur * 0.7, ease: "power2.out",
+                        scrollTrigger: { trigger: headingRef.current, start: "top 88%", once: true },
+                    }
+                );
+            }
 
             /* Scroll velocity speed-up for marquees */
             ScrollTrigger.create({
@@ -59,7 +80,7 @@ export default function SkillsMarquee() {
         }, sectionRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [dur]);
 
     /* Row 1 GSAP init — fires once after mount */
     const row1Ref = (el: HTMLDivElement | null) => {
@@ -83,7 +104,7 @@ export default function SkillsMarquee() {
             ref={sectionRef}
             id="skills"
             className="relative overflow-hidden"
-            style={{ background: "var(--bg)", borderTop: "1px solid var(--border-hi)" }}
+            style={{ background: "var(--bg)" }}
         >
             <div className="section-container section-py pb-0 md:pb-0" style={{ paddingBottom: "2rem" }}>
                 {/* Section label */}
@@ -93,9 +114,9 @@ export default function SkillsMarquee() {
                     <span className="section-label-text">Skills</span>
                 </div>
 
-                <div ref={headingRef}>
+                <div>
                     <h2 className="text-heading-lg mb-4 flex items-center gap-4" style={{ color: "var(--fg)" }}>
-                        <span>
+                        <span ref={headingRef}>
                             Tech{" "}
                             <span style={{ color: "var(--accent)" }}>Stack</span>
                         </span>

@@ -113,7 +113,7 @@ export default function GuitarString({ index = 0, onClick }: GuitarStringProps) 
                     filter.disconnect();
                     gainNode.disconnect();
                     sawGain.disconnect();
-                } catch (e) {
+                } catch {
                     // Already disconnected
                 }
             }, 1600);
