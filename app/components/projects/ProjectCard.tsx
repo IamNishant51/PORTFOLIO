@@ -99,16 +99,25 @@ export default function ProjectCard({ project, variant = "grid" }: ProjectCardPr
           </span>
         </div>
         {detail && (
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="text-mono flex items-center gap-1 opacity-40 hover:opacity-100 transition-opacity"
+          <span
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.open(project.url, "_blank", "noopener,noreferrer");
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                window.open(project.url, "_blank", "noopener,noreferrer");
+              }
+            }}
+            role="link"
+            tabIndex={0}
+            className="text-mono flex items-center gap-1 opacity-40 hover:opacity-100 transition-opacity cursor-pointer"
             style={{ color: "var(--color-muted-ash)" }}
           >
             GitHub <ExternalLink className="w-3 h-3" />
-          </a>
+          </span>
         )}
       </div>
 

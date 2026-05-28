@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import Link from "next/link";
 import { reducedMotion } from "@/lib/motion";
 import GuitarString from "./ui/GuitarString";
 import GitBranch from "./ui/svg/GitBranch";
@@ -220,7 +221,7 @@ export default function ProjectList() {
                         <p className="text-body max-w-xs sm:text-right" style={{ color: "var(--color-muted-ash)" }}>
                             Featured work and experiments
                         </p>
-                        <a
+                        <Link
                             href="/projects"
                             className="btn-ghost-primary inline-flex items-center gap-2"
                         >
@@ -228,7 +229,7 @@ export default function ProjectList() {
                             <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import HeroGeometry from "./ui/svg/HeroGeometry";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,32 +25,6 @@ function splitChars(el: HTMLElement) {
 }
 
 const LENS_RADIUS = 110; // px – radius of the reveal circle
-
-function MagneticButton({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
-    const ref = useRef<HTMLButtonElement>(null);
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const onMove = (e: MouseEvent) => {
-            const rect = el.getBoundingClientRect();
-            const x = (e.clientX - rect.left - rect.width / 2) * 0.2;
-            const y = (e.clientY - rect.top - rect.height / 2) * 0.2;
-            gsap.to(el, { x, y, duration: 0.3, ease: "power2.out" });
-        };
-        const onLeave = () => gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-        el.addEventListener("mousemove", onMove);
-        el.addEventListener("mouseleave", onLeave);
-        return () => {
-            el.removeEventListener("mousemove", onMove);
-            el.removeEventListener("mouseleave", onLeave);
-        };
-    }, []);
-    return (
-        <button ref={ref} onClick={onClick} className="btn-ghost-primary">
-            {children}
-        </button>
-    );
-}
 
 const Hero = () => {
     const sectionRef = useRef<HTMLElement>(null);
@@ -368,13 +343,14 @@ const Hero = () => {
 
                         {/* CTA */}
                         <div ref={ctaRef} className="flex flex-wrap items-center gap-5 opacity-0">
-                            <MagneticButton
+                            <button
                                 onClick={() => {
                                     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
                                 }}
+                                className="btn-ghost-primary"
                             >
                                 Get in touch
-                            </MagneticButton>
+                            </button>
                             <a
                                 href="https://ik.imagekit.io/9pfz6g8ri/Nishant_Unavane_FullStack_resume.pdf"
                                 download="Nishant_Unavane_FullStack_resume.pdf"
@@ -493,7 +469,7 @@ const Hero = () => {
                                     NISHANT UNAVANE
                                 </span>
                                 <span className="text-mono flex-shrink-0" style={{ fontSize: "10px", letterSpacing: "0.08em" }}>
-                                    ©&thinsp;2026
+                                    ©&thinsp;2024
                                 </span>
                             </div>
                         </div>

@@ -1,19 +1,10 @@
 "use client";
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { reducedMotion } from "@/lib/motion";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer() {
     const footerRef = useRef<HTMLElement>(null);
     const yearRef = useRef<HTMLSpanElement>(null);
-    const accentLineRef = useRef<HTMLDivElement>(null);
-    const brandRef = useRef<HTMLDivElement>(null);
-    const linksRef = useRef<HTMLElement>(null);
-
-    const dur = useMemo(() => reducedMotion ? 0.01 : 1, []);
 
     useEffect(() => {
         if (yearRef.current) {
@@ -21,31 +12,15 @@ export default function Footer() {
         }
 
         const ctx = gsap.context(() => {
-            /* Brand: fade-in with letter-spacing animation */
-            gsap.fromTo(brandRef.current,
-                { opacity: 0, letterSpacing: "0.1em" },
-                { opacity: 1, letterSpacing: "normal", duration: dur * 1.2, ease: "power2.out", delay: 0.05 }
-            );
-
-            /* Links: stagger fade-in */
-            if (linksRef.current) {
-                gsap.fromTo(Array.from(linksRef.current.children),
-                    { opacity: 0, y: 8 },
-                    { opacity: 1, y: 0, stagger: 0.06, duration: dur * 0.6, ease: "power2.out", delay: 0.15 }
-                );
-            }
-
-            /* Accent line: draw from center outward */
-            gsap.fromTo(accentLineRef.current,
-                { scaleX: 0 },
-                { scaleX: 1, duration: dur * 1.4, ease: "power2.inOut", delay: 0.2,
-                    transformOrigin: "center center",
-                }
+            gsap.fromTo(
+                footerRef.current,
+                { opacity: 0 },
+                { opacity: 1, duration: 1.2, ease: "power2.out", delay: 0.1 }
             );
         }, footerRef);
 
         return () => ctx.revert();
-    }, [dur]);
+    }, []);
 
     return (
         <footer
@@ -53,6 +28,7 @@ export default function Footer() {
             className="fixed bottom-0 left-0 right-0 w-full"
             style={{
                 background: "var(--bg)",
+                borderTop: "1px solid var(--border-hi)",
                 zIndex: 1,
             }}
         >
@@ -86,7 +62,7 @@ export default function Footer() {
             >
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                     {/* Brand */}
-                    <div ref={brandRef}>
+                    <div>
                         <p className="text-heading font-bold mb-1" style={{ color: "var(--fg)", fontSize: "clamp(1.25rem, 3vw, 2rem)" }}>
                             nishant
                         </p>
@@ -96,7 +72,7 @@ export default function Footer() {
                     </div>
 
                     {/* Links */}
-                    <nav ref={linksRef} aria-label="Footer navigation">
+                    <nav aria-label="Footer navigation">
                         <div className="flex items-center gap-6 flex-wrap justify-center">
                             {[
                                 { label: "GitHub", href: "https://github.com/IamNishant51" },
@@ -125,9 +101,8 @@ export default function Footer() {
 
                 {/* Bottom accent line */}
                 <div
-                    ref={accentLineRef}
-                    className="mt-8 h-px origin-center"
-                    style={{ background: "linear-gradient(to right, transparent, var(--accent), transparent)", transform: "scaleX(0)" }}
+                    className="mt-8 h-px"
+                    style={{ background: "linear-gradient(to right, transparent, var(--accent), transparent)" }}
                     aria-hidden="true"
                 />
             </div>
