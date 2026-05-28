@@ -4,26 +4,37 @@ import { MetadataRoute } from 'next'
 const CANONICAL_URL = 'https://nishantunavane.qzz.io'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+    const now = new Date()
     return [
         {
             url: CANONICAL_URL,
-            // Use a fixed date reflecting last meaningful content update
-            // Update this manually when you change homepage content
-            lastModified: new Date('2025-01-15'),
+            lastModified: now,
             changeFrequency: 'monthly',
             priority: 1,
         },
         {
             url: `${CANONICAL_URL}/about`,
-            lastModified: new Date('2025-01-15'),
+            lastModified: now,
             changeFrequency: 'monthly',
             priority: 0.8,
         },
         {
             url: `${CANONICAL_URL}/projects`,
-            lastModified: new Date('2025-01-15'),
+            lastModified: now,
             changeFrequency: 'weekly',
             priority: 0.9,
+        },
+        {
+            url: `${CANONICAL_URL}/skills`,
+            lastModified: now,
+            changeFrequency: 'monthly',
+            priority: 0.7,
+        },
+        {
+            url: `${CANONICAL_URL}/contact`,
+            lastModified: now,
+            changeFrequency: 'monthly',
+            priority: 0.6,
         },
     ]
     // NOTE: Hash-anchor URLs (/#projects, /#skills, /#contact) are intentionally
