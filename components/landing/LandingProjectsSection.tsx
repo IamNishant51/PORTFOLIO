@@ -33,7 +33,7 @@ export function LandingProjectsSection() {
     >
       <ScrollExpand
         src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/all-projects.webp"
-        mobileSrc="/assets/08-project-shots/all-projects-mobile.webp"
+        mobileSrc="https://ik.imagekit.io/9pfz6g8ri/projects-for-mobile-devices.png?tr=orig"
         alt="All Projects Built by Nishant Unavane"
         title={sectionTitle}
         scrollHint="SCROLL TO EXPAND · CLICK TO ENTER"
