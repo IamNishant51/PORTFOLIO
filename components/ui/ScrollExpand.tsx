@@ -14,13 +14,16 @@ const smoothstep = (edge0: number, edge1: number, x: number) => {
 
 export interface ScrollExpandProps {
   src?: string;
+  mobileSrc?: string;
   mediaType?: "image" | "video";
   poster?: string;
   alt?: string;
   title?: React.ReactNode;
   scrollHint?: string;
   startWidth?: number;
+  mobileStartWidth?: number;
   startHeight?: number;
+  mobileStartHeight?: number;
   startRadius?: number;
   endRadius?: number;
   mediaZoom?: number;
@@ -38,13 +41,16 @@ export interface ScrollExpandProps {
 
 export default function ScrollExpand({
   src = "",
+  mobileSrc,
   mediaType = "image",
   poster = "",
   alt = "",
   title = null,
   scrollHint = "",
   startWidth = 52,
+  mobileStartWidth = 88,
   startHeight = 62,
+  mobileStartHeight = 70,
   startRadius = 16,
   endRadius = 0,
   mediaZoom = 1.25,
@@ -64,7 +70,7 @@ export default function ScrollExpand({
   const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
-  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
+  const mediaRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
@@ -72,7 +78,9 @@ export default function ScrollExpand({
 
   const propsRef = useRef({
     startWidth,
+    mobileStartWidth,
     startHeight,
+    mobileStartHeight,
     startRadius,
     endRadius,
     mediaZoom,
@@ -86,7 +94,9 @@ export default function ScrollExpand({
 
   propsRef.current = {
     startWidth,
+    mobileStartWidth,
     startHeight,
+    mobileStartHeight,
     startRadius,
     endRadius,
     mediaZoom,
@@ -106,8 +116,12 @@ export default function ScrollExpand({
 
     const e = smoothstep(0, 1, p);
 
-    const w = c.startWidth + (100 - c.startWidth) * e;
-    const h = c.startHeight + (100 - c.startHeight) * e;
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+    const effStartW = isMobile && c.mobileStartWidth ? c.mobileStartWidth : c.startWidth;
+    const effStartH = isMobile && c.mobileStartHeight ? c.mobileStartHeight : c.startHeight;
+
+    const w = effStartW + (100 - effStartW) * e;
+    const h = effStartH + (100 - effStartH) * e;
     const ix = Math.max(0, (100 - w) / 2);
     const iy = Math.max(0, (100 - h) / 2);
     const r = c.startRadius + (c.endRadius - c.startRadius) * e;
@@ -239,6 +253,17 @@ export default function ScrollExpand({
         loop
         playsInline
       />
+    ) : mobileSrc ? (
+      <picture className="w-full h-full block">
+        <source media="(max-width: 768px)" srcSet={mobileSrc} />
+        <img
+          ref={mediaRef as React.RefObject<HTMLImageElement>}
+          className="scroll-expand__media"
+          src={src}
+          alt={alt}
+          draggable={false}
+        />
+      </picture>
     ) : (
       <img
         ref={mediaRef as React.RefObject<HTMLImageElement>}
