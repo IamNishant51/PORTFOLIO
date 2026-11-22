@@ -9,7 +9,6 @@ import { profile } from "@/content/profile";
 export function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState<string>("arrival");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -19,10 +18,6 @@ export function Nav() {
       if (!ticking) {
         requestAnimationFrame(() => {
           setScrolled(window.scrollY > 30);
-          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          if (maxScroll > 0) {
-            setScrollProgress(Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100)));
-          }
           ticking = false;
         });
         ticking = true;
@@ -55,38 +50,41 @@ export function Nav() {
     };
   }, []);
 
-  // Lock body scroll when mobile sheet is open
+  // Lock body scroll and pause Lenis when mobile sheet is open
   useEffect(() => {
+    const lenis = (window as any).lenis;
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
     };
   }, [mobileMenuOpen]);
 
   const isDark = activeSection === "studio";
 
   // Transparent nav bar that seamlessly blends with the active section background
-  const navBg = scrolled
+  const navBg = mobileMenuOpen
+    ? isDark
+      ? "bg-navy border-b border-white/10"
+      : "bg-paper border-b border-hairline/60"
+    : scrolled
     ? isDark
       ? "bg-transparent backdrop-blur-md border-b border-white/10"
       : "bg-transparent backdrop-blur-md border-b border-hairline/40"
     : "bg-transparent border-b border-transparent";
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 h-[72px] z-40 transition-all duration-calm ${navBg}`}
-    >
-      {/* Top scroll progress indicator */}
-      <div
-        className="absolute top-0 left-0 h-[2px] bg-terracotta transition-all duration-75 ease-out z-50 pointer-events-none"
-        style={{ width: `${scrollProgress}%` }}
-        aria-hidden="true"
-      />
-      <div className="max-w-[1440px] mx-auto h-full px-6 md:px-12 flex items-center justify-between">
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 h-[72px] z-50 transition-all duration-calm ${navBg}`}
+      >
+        <div className="max-w-[1440px] mx-auto h-full px-6 md:px-12 flex items-center justify-between">
         {/* Left: Brand Monogram + Name */}
         <Link
           href="/"
@@ -250,14 +248,16 @@ export function Nav() {
           />
         </button>
       </div>
+    </header>
 
-      {/* Mobile paper sheet navigation overlay */}
-      {mobileMenuOpen && (
-        <div
-          className={`md:hidden fixed inset-0 top-[72px] z-50 flex flex-col px-8 py-8 border-t overflow-y-auto pb-[calc(1.5rem+env(safe-area-inset-bottom))] transition-colors ${
-            isDark ? "bg-navy text-on-dark border-white/15" : "bg-paper text-ink border-hairline"
-          }`}
-        >
+    {/* Mobile paper sheet navigation overlay - rendered outside header containing block */}
+    {mobileMenuOpen && (
+      <div
+        className={`md:hidden fixed inset-x-0 top-[72px] bottom-0 z-50 flex flex-col px-8 py-8 border-t overflow-y-auto pb-[calc(2.5rem+env(safe-area-inset-bottom))] transition-colors ${
+          isDark ? "bg-navy text-on-dark border-white/15" : "bg-paper text-ink border-hairline"
+        }`}
+        style={{ height: "calc(100dvh - 72px)", maxHeight: "calc(100dvh - 72px)" }}
+      >
           <div
             className={`meta-label mb-6 tracking-[0.2em] ${
               isDark ? "text-white/50" : "text-muted"
@@ -369,6 +369,6 @@ export function Nav() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

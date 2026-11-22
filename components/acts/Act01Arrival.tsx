@@ -189,15 +189,7 @@ export function Act01Arrival() {
       });
     }, containerRef);
 
-    // Handoff from Preloader or immediate start on repeat visit
-    const alreadySeen =
-      typeof window !== "undefined" &&
-      sessionStorage.getItem("portfolio_intro_seen") === "true";
-
-    if (alreadySeen) {
-      introTlRef.current?.play();
-    }
-
+    // Handoff from Preloader
     const handleFlightStart = () => {
       introTlRef.current?.play();
     };
@@ -216,7 +208,21 @@ export function Act01Arrival() {
     <section
       id="arrival"
       ref={containerRef}
-      className="relative min-h-[100svh] w-full overflow-hidden flex flex-col justify-between pt-[88px] pb-16"
+      className="relative min-h-[100svh] w-full bg-paper-static overflow-hidden flex flex-col justify-between pt-[88px] pb-16"
+      style={{
+        backgroundColor: "#FBF8F2",
+        // Enforce static tokens for hero section — immune to any dynamic musical color changes
+        ["--color-paper" as string]: "#FBF8F2",
+        ["--color-paper-soft" as string]: "#FBF8F2",
+        ["--color-paper-edge" as string]: "#E7DFCE",
+        ["--color-hairline" as string]: "#DED6C6",
+        ["--color-hairline-strong" as string]: "#C9BEA8",
+        ["--color-ink" as string]: "#1A1815",
+        ["--color-ink-soft" as string]: "#3D3931",
+        ["--color-on-ink" as string]: "#FBF8F2",
+        ["--color-body" as string]: "#4A463D",
+        ["--color-muted" as string]: "#8A8375",
+      }}
       aria-label="Act 01: Arrival"
     >
       {/* Background Constable painted sky plate */}
@@ -301,7 +307,7 @@ export function Act01Arrival() {
             >
               <a
                 href="#work"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-pill bg-ink text-on-ink font-medium text-[0.875rem] hover:bg-ink-soft transition-all min-h-[44px] shadow-sm group"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-pill bg-[#1A1815] text-[#FBF8F2] font-medium text-[0.875rem] hover:bg-[#3D3931] transition-all min-h-[44px] shadow-sm group"
               >
                 <span>View the work</span>
                 <span
@@ -316,7 +322,7 @@ export function Act01Arrival() {
                 href={profile.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-5 py-3 rounded-pill border border-hairline-strong hover:border-ink bg-transparent text-ink font-medium text-[0.875rem] transition-all hover:bg-paper-soft min-h-[44px]"
+                className="inline-flex items-center justify-center px-5 py-3 rounded-pill border border-[#C9BEA8] hover:border-[#1A1815] bg-transparent text-[#1A1815] font-medium text-[0.875rem] transition-all hover:bg-[#FBF8F2] min-h-[44px]"
               >
                 <span>Résumé</span>
                 <span className="ml-1 text-xs" aria-hidden="true">
@@ -341,7 +347,7 @@ export function Act01Arrival() {
             className="lg:col-span-5 flex justify-center lg:justify-end pb-2 pt-6 lg:pt-0 will-change-transform"
           >
             <div className="w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[430px]">
-              <PlateFrame aspectRatio="3/4">
+              <PlateFrame aspectRatio="3/4" className="[&>div]:!bg-[#E7DFCE] [&>div]:!border-[#C9BEA8]">
                 <Image
                   src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp"
                   alt="Optical prism slit-scan portrait of Nishant Unavane with quote: Not every unanswered question needs an immediate answer, some clarity takes living."

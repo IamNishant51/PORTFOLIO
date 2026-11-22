@@ -1,11 +1,23 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import FlexCarousel, { FlexCarouselRef } from "@/components/ui/FlexCarousel";
+import dynamic from "next/dynamic";
+import type { FlexCarouselRef } from "@/components/ui/FlexCarousel";
 import { Reveal } from "@/components/primitives/Reveal";
 import { SpotifyPlatePlayer, PlateTrackItem } from "./SpotifyPlatePlayer";
+
+const FlexCarousel = dynamic(() => import("@/components/ui/FlexCarousel"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-transparent">
+      <span className="meta-label text-xs text-muted font-mono animate-pulse">
+        CALIBRATING EXHIBITION...
+      </span>
+    </div>
+  ),
+});
 
 const carouselItems: PlateTrackItem[] = [
   {
@@ -76,6 +88,23 @@ const carouselItems: PlateTrackItem[] = [
   },
 ];
 
+const PLATE_THEMES = [
+  // 0: Plate I — Be Humble (Ghalib Hona Hai) -> Golden Ochre
+  { bg: "#F8AA06", edge: "#E29900", soft: "#FBBF36", isDark: false },
+  // 1: Plate II — Alternate (Highway to Hell) -> Deep Crimson Red
+  { bg: "#D01E0F", edge: "#A61507", soft: "#E03222", isDark: true },
+  // 2: Plate III — The Developer (Finding Her) -> Dreamy Lilac
+  { bg: "#D3BEF9", edge: "#C1A5F5", soft: "#E1D2FC", isDark: false },
+  // 3: Plate IV — Visual Study (Madira) -> Deep Burgundy Wine
+  { bg: "#681624", edge: "#4D0E19", soft: "#7D1E2F", isDark: true },
+  // 4: Plate V — Optical Monolith (Tandavam) -> Obsidian Monochrome
+  { bg: "#1A1815", edge: "#2B2823", soft: "#2E2B25", isDark: true },
+  // 5: Plate VI — New Arrivals (Unakkul Naane) -> Botanical Warm Gold
+  { bg: "#E8B87A", edge: "#D49E58", soft: "#EFC896", isDark: false },
+];
+const DEFAULT_PAPER = "#FBF8F2";
+const DEFAULT_EDGE = "#E7DFCE";
+
 export function LandingAboutSection() {
   const carouselRef = useRef<FlexCarouselRef>(null);
   const [activeIdx, setActiveIdx] = useState(0);
@@ -83,6 +112,73 @@ export function LandingAboutSection() {
   const [isFocusOpen, setIsFocusOpen] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [hasFlipped, setHasFlipped] = useState(false);
+
+  // Dynamic Musical Background Synchronization: Exact primary color of Nishant's active image
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    const body = document.body;
+
+    if (isPlaying) {
+      const theme = PLATE_THEMES[activeIdx] || PLATE_THEMES[0];
+      root.style.setProperty("--color-paper", theme.bg);
+      root.style.setProperty("--color-paper-soft", theme.soft);
+      root.style.setProperty("--color-paper-edge", theme.edge);
+      body.style.setProperty("--color-paper", theme.bg);
+      body.style.setProperty("--color-paper-soft", theme.soft);
+      body.style.setProperty("--color-paper-edge", theme.edge);
+      body.style.backgroundColor = theme.bg;
+      root.style.backgroundColor = theme.bg;
+
+      if (theme.isDark) {
+        root.style.setProperty("--color-ink", "#FBF8F2");
+        root.style.setProperty("--color-ink-soft", "#EFE9DC");
+        root.style.setProperty("--color-body", "#E7DFCE");
+        root.style.setProperty("--color-muted", "#C9BEA8");
+        root.style.setProperty("--color-hairline", "rgba(255, 255, 255, 0.2)");
+        root.style.setProperty("--color-hairline-strong", "rgba(255, 255, 255, 0.35)");
+      } else {
+        root.style.setProperty("--color-ink", "#1A1815");
+        root.style.setProperty("--color-ink-soft", "#3D3931");
+        root.style.setProperty("--color-body", "#4A463D");
+        root.style.setProperty("--color-muted", "#6B6559");
+        root.style.setProperty("--color-hairline", "rgba(0, 0, 0, 0.15)");
+        root.style.setProperty("--color-hairline-strong", "rgba(0, 0, 0, 0.28)");
+      }
+    } else {
+      root.style.setProperty("--color-paper", DEFAULT_PAPER);
+      root.style.setProperty("--color-paper-soft", DEFAULT_PAPER);
+      root.style.setProperty("--color-paper-edge", DEFAULT_EDGE);
+      body.style.removeProperty("--color-paper");
+      body.style.removeProperty("--color-paper-soft");
+      body.style.removeProperty("--color-paper-edge");
+      body.style.backgroundColor = "";
+      root.style.backgroundColor = "";
+      root.style.removeProperty("--color-ink");
+      root.style.removeProperty("--color-ink-soft");
+      root.style.removeProperty("--color-body");
+      root.style.removeProperty("--color-muted");
+      root.style.removeProperty("--color-hairline");
+      root.style.removeProperty("--color-hairline-strong");
+    }
+
+    return () => {
+      root.style.setProperty("--color-paper", DEFAULT_PAPER);
+      root.style.setProperty("--color-paper-soft", DEFAULT_PAPER);
+      root.style.setProperty("--color-paper-edge", DEFAULT_EDGE);
+      body.style.removeProperty("--color-paper");
+      body.style.removeProperty("--color-paper-soft");
+      body.style.removeProperty("--color-paper-edge");
+      body.style.backgroundColor = "";
+      root.style.backgroundColor = "";
+      root.style.removeProperty("--color-ink");
+      root.style.removeProperty("--color-ink-soft");
+      root.style.removeProperty("--color-body");
+      root.style.removeProperty("--color-muted");
+      root.style.removeProperty("--color-hairline");
+      root.style.removeProperty("--color-hairline-strong");
+    };
+  }, [isPlaying, activeIdx]);
 
   const currentTrack = carouselItems[activeIdx] || carouselItems[0];
 
@@ -173,10 +269,13 @@ export function LandingAboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full py-24 sm:py-32 border-b border-hairline bg-paper scroll-mt-20 overflow-hidden"
+      className="relative w-full py-24 sm:py-32 border-b border-hairline bg-paper scroll-mt-20 overflow-hidden transition-colors duration-700 ease-out"
+      style={{
+        backgroundColor: isPlaying ? (PLATE_THEMES[activeIdx]?.bg || DEFAULT_PAPER) : undefined,
+      }}
       aria-label="About Nishant Unavane — Iconography and Artwork"
     >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col gap-10 sm:gap-12">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col gap-10 sm:gap-12">
         {/* Section Header */}
         <div className="flex flex-col gap-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pt-2">
@@ -217,10 +316,10 @@ export function LandingAboutSection() {
         {/* React Bits FlexCarousel WebGL Exhibition & 3D Album Flip Card */}
         <Reveal delay={0.16}>
           <div className="flex flex-col gap-4">
-            {/* Blended Main Div: matches main bg (bg-paper) with zero borders or box shadows */}
+            {/* Blended Main Div: matches section bg with zero borders or box shadows */}
             <div
               data-lenis-prevent
-              className="relative w-full h-[460px] sm:h-[540px] md:h-[620px] bg-paper overflow-hidden"
+              className="relative w-full h-[460px] sm:h-[540px] md:h-[620px] bg-transparent overflow-hidden"
             >
               <FlexCarousel
                 ref={carouselRef}

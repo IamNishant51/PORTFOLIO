@@ -19,7 +19,7 @@ export function LandingProjectsSection() {
   return (
     <section
       id="work"
-      className="relative w-full bg-paper-soft overflow-visible scroll-mt-20 sm:scroll-mt-24"
+      className="relative w-full bg-paper-static overflow-visible scroll-mt-20 sm:scroll-mt-24"
       aria-label="Act 03: Selected Work & Projects"
     >
       <ScrollExpand
@@ -29,7 +29,6 @@ export function LandingProjectsSection() {
         title={sectionTitle}
         scrollHint="SCROLL TO EXPAND · CLICK TO ENTER"
         useWindowScroll
-        linkHref="/projects"
         startWidth={58}
         mobileStartWidth={88}
         startHeight={64}

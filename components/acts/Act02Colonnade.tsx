@@ -5,6 +5,7 @@ import Image from "next/image";
 import { capabilities } from "@/content/capabilities";
 import { ActHeader } from "@/components/primitives/ActHeader";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
+import Grainient from "@/components/ui/Grainient";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 export function Act02Colonnade() {
@@ -93,26 +94,39 @@ export function Act02Colonnade() {
           {capabilities.map((item) => (
             <div
               key={item.numeral}
-              className="group flex flex-col gap-4 p-7 sm:p-8 lg:p-9 border-hairline bg-paper/85 backdrop-blur-md border-t first:border-t-0 md:first:border-t-0 md:[&:nth-child(2)]:border-t-0 md:border-t md:[&:nth-child(even)]:border-l lg:border-t-0 lg:border-l lg:first:border-l-0 transition-all duration-calm hover:bg-paper-soft hover:shadow-lg hover:-translate-y-1"
+              className="group relative overflow-hidden flex flex-col gap-4 p-7 sm:p-8 lg:p-9 border-hairline bg-paper/85 backdrop-blur-md border-t first:border-t-0 md:first:border-t-0 md:[&:nth-child(2)]:border-t-0 md:border-t md:[&:nth-child(even)]:border-l lg:border-t-0 lg:border-l lg:first:border-l-0 transition-all duration-calm hover:bg-paper-soft hover:shadow-lg hover:-translate-y-1"
             >
-              <div className="flex items-baseline justify-between">
-                <span className="font-serif text-3xl md:text-4xl text-ink group-hover:text-terracotta transition-colors">
-                  {item.numeral}
-                </span>
-                <span className="meta-label text-terracotta text-xs font-semibold">
-                  DISCIPLINE
-                </span>
+              {/* Grainient ambient canvas */}
+              <div className="absolute inset-0 pointer-events-none opacity-25 group-hover:opacity-75 transition-opacity duration-calm">
+                <Grainient
+                  colors={["#FBF8F2", "#EFE9DC", "#E5DEC9", "#D8C6A6", "#C05B3C"]}
+                  flow={0.6}
+                  silk={0.35}
+                  grainAmount={0.06}
+                  speed={0.4}
+                />
               </div>
 
-              <h3 className="display-md text-ink font-normal">{item.discipline}</h3>
+              <div className="relative z-10 flex flex-col gap-4">
+                <div className="flex items-baseline justify-between">
+                  <span className="font-serif text-3xl md:text-4xl text-ink group-hover:text-terracotta transition-colors">
+                    {item.numeral}
+                  </span>
+                  <span className="meta-label text-terracotta text-xs font-semibold">
+                    DISCIPLINE
+                  </span>
+                </div>
 
-              <div className="meta-label text-ink-soft text-[0.6875rem] tracking-[0.16em]">
-                {item.technologies}
+                <h3 className="display-md text-ink font-normal">{item.discipline}</h3>
+
+                <div className="meta-label text-ink-soft text-[0.6875rem] tracking-[0.16em]">
+                  {item.technologies}
+                </div>
+
+                <p className="body-editorial text-body text-[0.9375rem] leading-[1.65] pt-2">
+                  {item.line}
+                </p>
               </div>
-
-              <p className="body-editorial text-body text-[0.9375rem] leading-[1.65] pt-2">
-                {item.line}
-              </p>
             </div>
           ))}
         </div>

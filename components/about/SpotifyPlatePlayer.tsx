@@ -68,10 +68,10 @@ export function SpotifyPlatePlayer({
     const currentSrc = audio.src;
     if (!currentSrc.endsWith(currentTrack.audioSrc)) {
       audio.src = currentTrack.audioSrc;
-      audio.load();
       setCurrentTime(0);
 
       if (isPlaying) {
+        audio.load();
         audio
           .play()
           .catch(() => {
@@ -153,8 +153,7 @@ export function SpotifyPlatePlayer({
         .then(() => {
           setIsPlaying(true);
         })
-        .catch((err) => {
-          console.warn("Audio playback interrupted:", err);
+        .catch(() => {
           setIsPlaying(false);
         });
     }
@@ -232,7 +231,7 @@ export function SpotifyPlatePlayer({
       role="region"
       aria-label="Spotify Archival Audio Player"
     >
-      <audio ref={audioRef} preload="metadata" />
+      <audio ref={audioRef} preload="none" />
 
       {/* Main 3-Column Spotify Controller Layout */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">

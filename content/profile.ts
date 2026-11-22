@@ -33,7 +33,7 @@ export const profile: Profile = {
   email: "nishantunawne0007@gmail.com",
   github: "https://github.com/IamNishant51",
   linkedin: "https://www.linkedin.com/in/nishant-unavane-008291275/",
-  resumeUrl: "https://ik.imagekit.io/9pfz6g8ri/Nishant_Unavane_FullStack_resume.pdf",
+  resumeUrl: "https://ik.imagekit.io/9pfz6g8ri/NISHANT_UNAVANE_LATEST_REUSME.pdf?updatedAt=1792935254878",
   positioning: "I build interfaces, developer tools, coding agents, and the systems that connect them.",
   subPositioning: "Full-stack web applications, VS Code extensions, and autonomous agent systems engineered with Next.js, React 19, TypeScript, Three.js, and modern MCP tooling.",
   stats: [

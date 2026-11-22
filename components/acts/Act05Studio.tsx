@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { profile } from "@/content/profile";
 import { methodSteps } from "@/content/method";
 import { timeline } from "@/content/timeline";
+import Grainient from "@/components/ui/Grainient";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 export function Act05Studio() {
@@ -186,9 +187,20 @@ export function Act05Studio() {
             {methodSteps.map((step) => (
               <div
                 key={step.step}
-                className="group flex flex-col justify-between gap-4 p-6 sm:p-7 lg:p-8 border-t border-hairline bg-paper-soft/90 backdrop-blur-md shadow-sm hover:bg-paper hover:border-terracotta/40 transition-all duration-calm hover:-translate-y-1 rounded-xs"
+                className="group relative overflow-hidden flex flex-col justify-between gap-4 p-6 sm:p-7 lg:p-8 border-t border-hairline bg-paper-soft/90 backdrop-blur-md shadow-sm hover:bg-paper hover:border-terracotta/40 transition-all duration-calm hover:-translate-y-1 rounded-xs"
               >
-                <div className="flex flex-col gap-3">
+                {/* Grainient ambient canvas */}
+                <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-70 transition-opacity duration-calm">
+                  <Grainient
+                    colors={["#FBF8F2", "#EFE9DC", "#E5DEC9", "#D8C6A6", "#C05B3C"]}
+                    flow={0.5}
+                    silk={0.3}
+                    grainAmount={0.05}
+                    speed={0.35}
+                  />
+                </div>
+
+                <div className="relative z-10 flex flex-col gap-3">
                   <span className="font-serif text-3xl sm:text-4xl text-ink/80 tabular-nums group-hover:text-terracotta transition-colors">
                     {step.step}
                   </span>
@@ -222,9 +234,20 @@ export function Act05Studio() {
             {timeline.map((entry, idx) => (
               <div
                 key={idx}
-                className="group flex flex-col justify-between gap-4 p-6 sm:p-7 lg:p-8 border-t border-hairline bg-paper-soft/90 backdrop-blur-md shadow-sm hover:bg-paper hover:border-terracotta/40 transition-all duration-calm hover:-translate-y-1 rounded-xs"
+                className="group relative overflow-hidden flex flex-col justify-between gap-4 p-6 sm:p-7 lg:p-8 border-t border-hairline bg-paper-soft/90 backdrop-blur-md shadow-sm hover:bg-paper hover:border-terracotta/40 transition-all duration-calm hover:-translate-y-1 rounded-xs"
               >
-                <div className="flex flex-col gap-3">
+                {/* Grainient ambient canvas */}
+                <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-70 transition-opacity duration-calm">
+                  <Grainient
+                    colors={["#FBF8F2", "#EFE9DC", "#E5DEC9", "#D8C6A6", "#C05B3C"]}
+                    flow={0.5}
+                    silk={0.3}
+                    grainAmount={0.05}
+                    speed={0.35}
+                  />
+                </div>
+
+                <div className="relative z-10 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <span className="meta-label text-terracotta text-xs font-semibold">
                       {entry.years}

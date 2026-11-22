@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -21,6 +21,24 @@ export function Act06Horizon() {
   const plateRef = useRef<HTMLDivElement>(null);
   const birdsRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const lanyardTriggerRef = useRef<HTMLDivElement>(null);
+  const [lanyardActive, setLanyardActive] = useState(false);
+
+  useEffect(() => {
+    const el = lanyardTriggerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setLanyardActive(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "350px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -86,7 +104,7 @@ export function Act06Horizon() {
     <footer
       id="contact"
       ref={containerRef}
-      className="relative min-h-[100svh] w-full pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 bg-paper overflow-hidden flex flex-col justify-between"
+      className="relative min-h-[100svh] w-full pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 bg-paper-static overflow-hidden flex flex-col justify-between"
       aria-label="Act 06: The Horizon and Footer"
     >
       {/* Background Caspar David Friedrich golden evening horizon plate */}
@@ -183,23 +201,30 @@ export function Act06Horizon() {
           </div>
 
           {/* Right: Interactive 3D Lanyard Card */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+          <div ref={lanyardTriggerRef} className="lg:col-span-5 flex flex-col items-center justify-center">
             <div className="w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] h-[360px] sm:h-[400px] md:h-[440px] lg:h-[460px] relative">
-              <Lanyard
-                frontImage="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-editorial-pass.webp"
-                backImage="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-spiderman.webp"
-                imageFit="cover"
-                finish="metallic"
-                cardColor="#14181F"
-                strapColor="#11161F"
-                metal="silver"
-                gravity={1}
-                damping={0.55}
-                elasticity={0.48}
-                breeze={0.32}
-                size={0.6}
-                strapLength={0.42}
-              />
+              {lanyardActive ? (
+                <Lanyard
+                  frontImage="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-editorial-pass.webp"
+                  backImage="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-spiderman.webp"
+                  imageFit="cover"
+                  finish="metallic"
+                  cardColor="#14181F"
+                  strapColor="#11161F"
+                  metal="silver"
+                  gravity={1}
+                  damping={0.55}
+                  elasticity={0.48}
+                  breeze={0.32}
+                  size={0.6}
+                  strapLength={0.42}
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center border border-hairline-strong bg-paper-edge/30 rounded-xs gap-2">
+                  <span className="meta-label text-muted text-xs font-mono">EDITORIAL PASS ARTIFACT</span>
+                  <span className="text-[0.625rem] text-muted font-mono tracking-widest">( VIP ACCESS )</span>
+                </div>
+              )}
             </div>
             <p className="meta-label text-muted text-[0.625rem] tracking-wider mt-1 text-center select-none">
               ( EDITORIAL METALLIC PASS · DRAG TO SWING · CLICK TO REVEAL SPIDER-MAN )

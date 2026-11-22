@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #F6F2E9;
+  --color-paper: #FBF8F2;
   --color-paper-soft: #FBF8F2;
   --color-paper-deep: #EFE9DC;
   --color-paper-edge: #E7DFCE;
+  --color-paper-static: #FBF8F2;
+  --color-plate-wash-1: #EEDBB8;
+  --color-plate-wash-2: #ECD0C7;
+  --color-plate-wash-3: #DFD5EC;
+  --color-plate-wash-4: #D0DDE5;
+  --color-plate-wash-5: #DDDCD8;
+  --color-plate-wash-6: #D2E3D2;
   --color-ink: #1A1815;
   --color-ink-soft: #3D3931;
   --color-body: #4A463D;
   --color-muted: #8A8375;
   --color-hairline: #DED6C6;
   --color-hairline-strong: #C9BEA8;
-  --color-on-ink: #F6F2E9;
+  --color-on-ink: #FBF8F2;
   --color-on-dark: #F3EEE3;
 
   --color-sky: #A8C6DB;
@@ -76,6 +83,30 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   max-width: 100%;
   overflow-x: clip;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html, body, main, section, footer, nav, [data-dynamic-paper="true"] {
+    transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.bg-paper-static {
+  background-color: var(--color-paper-static) !important;
+}
+
+#arrival {
+  --color-paper: #FBF8F2 !important;
+  --color-paper-soft: #FBF8F2 !important;
+  --color-paper-edge: #E7DFCE !important;
+  --color-hairline: #DED6C6 !important;
+  --color-hairline-strong: #C9BEA8 !important;
+  --color-ink: #1A1815 !important;
+  --color-ink-soft: #3D3931 !important;
+  --color-on-ink: #FBF8F2 !important;
+  --color-body: #4A463D !important;
+  --color-muted: #8A8375 !important;
 }
 
 body {

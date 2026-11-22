@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { experiments } from "@/content/experiments";
 import { ActHeader } from "@/components/primitives/ActHeader";
+import Grainient from "@/components/ui/Grainient";
 import { gsap } from "@/lib/gsap";
 
 export function Act04Sea() {
@@ -62,11 +63,22 @@ export function Act04Sea() {
           {experiments.map((item, idx) => (
             <article
               key={item.title}
-              className={`flex flex-col justify-between p-6 sm:p-7 md:p-8 lg:p-9 rounded-xs border border-hairline bg-paper/85 backdrop-blur-md shadow-[0_4px_24px_rgba(26,24,21,0.04)] ${
+              className={`group relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 md:p-8 lg:p-9 rounded-xs border border-hairline bg-paper/85 backdrop-blur-md shadow-[0_4px_24px_rgba(26,24,21,0.04)] ${
                 idx === 1 ? "md:translate-y-6" : idx === 2 ? "md:translate-y-12" : ""
               }`}
             >
-              <div className="flex flex-col gap-4">
+              {/* Grainient ambient canvas */}
+              <div className="absolute inset-0 pointer-events-none opacity-25 group-hover:opacity-75 transition-opacity duration-calm">
+                <Grainient
+                  colors={["#FBF8F2", "#EFE9DC", "#E5DEC9", "#D8C6A6", "#C05B3C"]}
+                  flow={0.6}
+                  silk={0.35}
+                  grainAmount={0.06}
+                  speed={0.4}
+                />
+              </div>
+
+              <div className="relative z-10 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                   <span className="meta-label text-terracotta text-xs font-semibold">
                     ( {String(idx + 1).padStart(2, "0")} )
@@ -95,17 +107,17 @@ export function Act04Sea() {
                 </p>
               </div>
 
-              <div className="pt-6 md:pt-8 flex justify-end">
+              <div className="relative z-10 pt-6 md:pt-8 flex justify-end">
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 meta-label text-ink hover:text-terracotta transition-colors group py-2.5 px-3 -my-2 -mx-3 min-h-[44px]"
+                  className="inline-flex items-center gap-2 meta-label text-ink hover:text-terracotta transition-colors group/link py-2.5 px-3 -my-2 -mx-3 min-h-[44px]"
                   aria-label={`Explore ${item.title}`}
                 >
                   <span>EXPLORE</span>
                   <span
-                    className="transition-transform duration-standard group-hover:translate-x-1"
+                    className="transition-transform duration-standard group-hover/link:translate-x-1"
                     aria-hidden="true"
                   >
                     ↗
