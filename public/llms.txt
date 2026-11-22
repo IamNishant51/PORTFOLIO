@@ -1,0 +1,32 @@
+# Nishant Unavane — Portfolio (2027 Edition)
+> Full-Stack Developer & Agentic AI Systems Engineer based in Pune, India.
+
+## About
+Nishant Unavane builds interfaces, developer tools, coding agents, and the systems that connect them. His engineering focuses on full-stack web applications, VS Code extensions, and autonomous agent architectures built with Next.js, React 19, TypeScript, Three.js, Fastify, and Model Context Protocol (MCP) tooling.
+
+## Key Metrics
+- 4+ VS Code extensions published
+- 15+ projects shipped
+- 2+ years professional software development
+- 10,340+ community downloads across tools
+
+## Flagship Projects
+1. Custom-PI (https://custom-pi-ai.vercel.app / https://github.com/IamNishant51/Custom-PI)
+   - Category: Coding agent / local-first platform
+   - Description: A dual terminal and web platform for autonomous coding agents with persistent memory graph, multi-agent orchestration, browser automation, and MCP tool synthesis. 4,458 npm downloads.
+2. Synapse (https://synapsememory.vercel.app / https://github.com/IamNishant51/Synapse)
+   - Category: Memory / knowledge graph
+   - Description: A Cognee-based cognitive memory dashboard engineered for continuous ingestion, entity conflict reconciliation, temporal state tracking, and 3D visual knowledge-graph traversal.
+3. Carto (https://marketplace.visualstudio.com/items?itemName=nishantunavane.carto / https://github.com/IamNishant51/CARTO-VS-CODE-EXTENSION)
+   - Category: VS Code context engine
+   - Description: A production VS Code extension that digests an entire repository into structured, token-optimized Markdown context with file trees, architectural stack analysis, real-time diff preview, and LLM prompt generation.
+4. Ollama Agent (https://github.com/IamNishant51/Ollama-Agent-vs-code-extension)
+   - Category: VS Code / local models
+   - Description: A local-first VS Code assistant featuring automatic local model discovery, real-time code streaming, workspace context injection, inline diff previews, automated test authoring, and zero telemetry egress.
+
+## Contact & Links
+- Website: https://nishantunavane.qzz.io
+- GitHub: https://github.com/IamNishant51
+- LinkedIn: https://www.linkedin.com/in/nishant-unavane-008291275/
+- Email: nishantunawne0007@gmail.com
+- Résumé: https://ik.imagekit.io/9pfz6g8ri/Nishant_Unavane_FullStack_resume.pdf
