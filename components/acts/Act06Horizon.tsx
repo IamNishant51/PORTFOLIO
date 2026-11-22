@@ -120,14 +120,6 @@ export function Act06Horizon() {
 
       {/* Main Closing Section */}
       <div className="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 flex flex-col gap-6 md:gap-8">
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between meta-label">
-            <span>ACT 06 / 06 · THE HORIZON</span>
-            <span className="hidden sm:inline">INVITATION</span>
-          </div>
-          <div className="w-full h-[1px] bg-hairline" />
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: Invitation Copy */}
           <div className="lg:col-span-7 flex flex-col justify-between self-stretch">

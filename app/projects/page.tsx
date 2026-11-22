@@ -40,9 +40,6 @@ export default function ProjectsPage() {
 
         {/* Hero Section */}
         <header className="flex flex-col gap-6 max-w-4xl">
-          <div className="meta-label text-terracotta tracking-[0.2em] font-mono text-[0.75rem]">
-            ACT 03 ARCHIVE · CURATED COLLECTION
-          </div>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal leading-[1.05] tracking-tight">
             A Collection of <em className="italic">Selected</em> Works and other Projects.
           </h1>

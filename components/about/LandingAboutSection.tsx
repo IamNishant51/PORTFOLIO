@@ -179,19 +179,6 @@ export function LandingAboutSection() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col gap-10 sm:gap-12">
         {/* Section Header */}
         <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center justify-between gap-4 meta-label text-[0.6875rem]">
-            <span className="text-terracotta tracking-[0.22em]">
-              ACT 04.5 · ICONOGRAPHY & IDENTITY
-            </span>
-            <div className="flex items-center gap-3 text-muted font-mono">
-              <span>6 ARCHIVAL PLATES</span>
-              <span aria-hidden="true">·</span>
-              <span>SYNCHRONIZED SOUNDTRACK</span>
-            </div>
-          </div>
-
-          <div className="w-full h-[1px] bg-hairline" />
-
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pt-2">
             <div className="max-w-[62ch]">
               <Reveal>

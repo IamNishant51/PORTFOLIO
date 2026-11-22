@@ -51,8 +51,6 @@ export function Act04Sea() {
     >
       <div className="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 flex flex-col gap-16 md:gap-20">
         <ActHeader
-          actNumber="04"
-          label="FIELD NOTES"
           headlineRegular="Smaller "
           headlineItalic="boats."
           headlineSuffix=""

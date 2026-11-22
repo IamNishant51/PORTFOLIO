@@ -341,10 +341,7 @@ export function Act01Arrival() {
             className="lg:col-span-5 flex justify-center lg:justify-end pb-2 pt-6 lg:pt-0 will-change-transform"
           >
             <div className="w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[430px]">
-              <PlateFrame
-                caption="PLATE 01 · NISHANT UNAVANE · OPTICAL PRISM STUDY · 2027"
-                aspectRatio="3/4"
-              >
+              <PlateFrame aspectRatio="3/4">
                 <Image
                   src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp"
                   alt="Optical prism slit-scan portrait of Nishant Unavane with quote: Not every unanswered question needs an immediate answer, some clarity takes living."

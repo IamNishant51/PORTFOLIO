@@ -110,18 +110,6 @@ export function Act05Studio() {
       <div className="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 flex flex-col gap-16 md:gap-20">
         {/* Header */}
         <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between meta-label text-muted">
-              <span>
-                ACT 05 / 06 · THE STUDIO
-              </span>
-              <span className="hidden sm:inline">
-                PUNE · REMOTE
-              </span>
-            </div>
-            <div className="w-full h-[1px] bg-hairline" />
-          </div>
-
           <div className="flex flex-col gap-4">
             <h2 className="display-xl text-ink font-normal">
               How the work <em className="italic font-serif">gets made.</em>

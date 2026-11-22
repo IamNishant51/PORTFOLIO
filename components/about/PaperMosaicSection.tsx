@@ -6,7 +6,7 @@ import { PlateFrame } from "@/components/primitives/PlateFrame";
 
 const archivalNotes = [
   {
-    badge: "ACT 04.5 · DOSSIER",
+    badge: "DOSSIER",
     title: "Nishant Unavane",
     detail: "B. 03 Jan 2006 · Pune, Maharashtra · Full-Stack & AI Systems",
   },

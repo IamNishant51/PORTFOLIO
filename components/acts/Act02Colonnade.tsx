@@ -79,9 +79,6 @@ export function Act02Colonnade() {
       {/* Main Content */}
       <div className="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 flex flex-col gap-16 md:gap-20">
         <ActHeader
-          actNumber="02"
-          label="THE FOUNDATION"
-          coordinates="18°31'12&quot;N 73°51'22&quot;E"
           headlineRegular="Four columns "
           headlineItalic="hold"
           headlineSuffix=" it up."

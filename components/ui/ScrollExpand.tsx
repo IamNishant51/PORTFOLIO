@@ -254,7 +254,7 @@ export default function ScrollExpand({
         playsInline
       />
     ) : mobileSrc ? (
-      <picture className="w-full h-full block">
+      <picture className="contents">
         <source media="(max-width: 768px)" srcSet={mobileSrc} />
         <img
           ref={mediaRef as React.RefObject<HTMLImageElement>}
