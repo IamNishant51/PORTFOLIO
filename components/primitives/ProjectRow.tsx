@@ -13,7 +13,7 @@ interface ProjectRowProps {
 
 export function ProjectRow({
   project,
-  fallbackPlate = "/assets/04-act3-temple/a3-temple-plate.webp",
+  fallbackPlate = "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/04-act3-temple/a3-temple-plate.webp",
 }: ProjectRowProps) {
   const [isHovered, setIsHovered] = useState(false);
   const rowRef = useRef<HTMLElement>(null);

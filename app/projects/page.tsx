@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: "Projects & Selected Works — Nishant Unavane",
     description:
       "Flagship coding agents, cognitive memory graphs, VS Code context engines, and experimental motion primitives.",
-    images: ["/assets/08-project-shots/all-projects.webp"],
+    images: ["https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/all-projects.webp"],
   },
 };
 
@@ -82,7 +82,7 @@ export default function ProjectsPage() {
         {/* Collection Hero Showcase — Pure Frameless Artwork */}
         <div className="relative w-full aspect-[2000/1126] overflow-hidden rounded-xs">
           <Image
-            src="/assets/08-project-shots/all-projects.webp"
+            src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/all-projects.webp"
             alt="Projects Built by Nishant Unavane"
             fill
             priority

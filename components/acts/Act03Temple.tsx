@@ -123,7 +123,7 @@ export function Act03Temple() {
                 <PlateFrame caption="PLATE 03 — ARCHITECTURAL STUDY · CUSTOM-PI AUTONOMOUS RUNTIME">
                   <div className="relative w-full aspect-[2/3] overflow-hidden group rounded-xs bg-paper-edge shadow-inner">
                     <Image
-                      src={featured.image || "/assets/04-act3-temple/a3-custom-pi-plate.webp"}
+                      src={featured.image || "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/04-act3-temple/a3-custom-pi-plate.webp"}
                       alt="Classical architectural plate detailing the Custom-PI autonomous agent runtime architecture"
                       fill
                       sizes="(max-width: 1024px) 100vw, 460px"
@@ -152,7 +152,7 @@ export function Act03Temple() {
             <ProjectRow
               key={project.id}
               project={project}
-              fallbackPlate="/assets/04-act3-temple/a3-temple-plate.webp"
+              fallbackPlate="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/04-act3-temple/a3-temple-plate.webp"
             />
           ))}
         </div>

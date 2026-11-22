@@ -32,7 +32,7 @@ export function LandingProjectsSection() {
       aria-label="Act 03: Selected Work & Projects"
     >
       <ScrollExpand
-        src="/assets/08-project-shots/all-projects.webp"
+        src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/all-projects.webp"
         mobileSrc="/assets/08-project-shots/all-projects-mobile.webp"
         alt="All Projects Built by Nishant Unavane"
         title={sectionTitle}

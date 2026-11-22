@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "About Nishant Unavane — Portfolio 2027",
     description:
       "Full-stack developer and AI systems engineer based in Pune, India. 10,340+ community downloads, local-first coding agents, and tactile interfaces.",
-    images: ["/assets/about/plate-01-be-humble.webp"],
+    images: ["https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/plate-01-be-humble.webp"],
   },
 };
 

@@ -101,7 +101,7 @@ export function Nav() {
             }`}
           >
             <Image
-              src="/assets/09-brand/monogram.svg"
+              src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/monogram.svg"
               alt=""
               width={16}
               height={16}

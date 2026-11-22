@@ -126,7 +126,7 @@ export function Act02Colonnade() {
             <PlateFrame caption="PLATE 02 — CAPITAL STUDY · 1920×1080">
               <div className="relative w-full h-36 overflow-hidden group">
                 <Image
-                  src="/assets/03-act2-colonnade/a2-engraving-detail.webp"
+                  src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/03-act2-colonnade/a2-engraving-detail.webp"
                   alt="Fine architectural engraving study of a classical column capital"
                   fill
                   sizes="288px"

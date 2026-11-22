@@ -124,7 +124,7 @@ export const aboutData: AboutData = {
       subtitle: "Ochre paper fold with star-visor profile & bold condensed typography",
       medium: "Vintage ochre screenprint, folded stock texture & graphic overlay",
       year: "2027",
-      src: "/assets/about/plate-01-be-humble.webp",
+      src: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/plate-01-be-humble.webp",
       aspect: "aspect-[3/4]",
       description:
         "A reminder that true strength lies in humility. Profile study featuring bold condensed typography 'BE HUMBLE', archival paper fold textures, and graphic star eyewear.",
@@ -137,7 +137,7 @@ export const aboutData: AboutData = {
       subtitle: "Deep crimson poster with flared neoclassical serif display",
       medium: "Crimson wash, custom flared display typography & halo vignette",
       year: "2027",
-      src: "/assets/about/plate-02-alternate.webp",
+      src: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/plate-02-alternate.webp",
       aspect: "aspect-[3/4]",
       description:
         "Neoclassical editorial study with flared organic serif typography 'ALTERNATE' towering over a poised standing portrait in earth tones.",
@@ -150,7 +150,7 @@ export const aboutData: AboutData = {
       subtitle: "Lilac botanical collage with crimson visor bar & mirror portrait",
       medium: "Monochrome silver-gelatin portrait, lilac field & botanical lily collage",
       year: "2027",
-      src: "/assets/about/plate-03-the-developer.webp",
+      src: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/plate-03-the-developer.webp",
       aspect: "aspect-[3/4]",
       description:
         "High-contrast monochrome mirror study in biker leather, accented with an authoritative crimson visor bar, botanical lily crown, and dynamic typographic angles.",
@@ -163,7 +163,7 @@ export const aboutData: AboutData = {
       subtitle: "Modular crimson & black letterform mask with barcode register",
       medium: "Modular typeface grid mask, barcode register mark & studio portrait",
       year: "2027",
-      src: "/assets/about/plate-05-visual-study.webp",
+      src: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/plate-05-visual-study.webp",
       aspect: "aspect-[3/4]",
       description:
         "Geometric typographic overlay study. The face of the developer fragmented through towering black and crimson 'NSHNT' letterforms with technical barcode alignment.",
@@ -176,7 +176,7 @@ export const aboutData: AboutData = {
       subtitle: "Silver-gelatin portrait with horizontal luminous ocular bar",
       medium: "Silver-gelatin 35mm monochrome & luminous horizontal slit projection",
       year: "2027",
-      src: "/assets/about/plate-06-monochrome-glare.webp",
+      src: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/plate-06-monochrome-glare.webp",
       aspect: "aspect-[3/4]",
       description:
         "Surrealist monochrome apparatus. Studio portrait in heavy knitwear bisected by a floating rectangular luminous window exposing an inverted ocular gesture.",
@@ -189,7 +189,7 @@ export const aboutData: AboutData = {
       subtitle: "Sage & forest botanical contours with outline typography",
       medium: "Forest green botanical color fields, outline lettering & side profile",
       year: "2027",
-      src: "/assets/about/plate-07-new-arrivals.webp",
+      src: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/plate-07-new-arrivals.webp",
       aspect: "aspect-[3/4]",
       description:
         "Fluid organic landscape study. Side profile with wireframe eyewear emerging through undulating sage and forest green curved shapes with layered 'NEW ARRIVALS' typography.",

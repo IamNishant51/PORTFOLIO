@@ -219,13 +219,13 @@ body {
 
 /* Texture classes */
 .paper-grain-bg {
-  background-image: url("/assets/01-textures/paper-grain.webp");
+  background-image: url("https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/01-textures/paper-grain.webp");
   background-repeat: repeat;
   background-size: 512px 512px;
 }
 
 .halftone-overlay {
-  background-image: url("/assets/01-textures/halftone-45.webp");
+  background-image: url("https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/01-textures/halftone-45.webp");
   background-repeat: repeat;
   mix-blend-mode: multiply;
   opacity: 0.25;

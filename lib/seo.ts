@@ -20,7 +20,7 @@ export function getSiteMetadata(title?: string, description?: string): Metadata 
       canonical: siteUrl,
     },
     icons: {
-      icon: "/assets/09-brand/monogram.svg",
+      icon: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/monogram.svg",
     },
     openGraph: {
       title: pageTitle,
@@ -29,7 +29,7 @@ export function getSiteMetadata(title?: string, description?: string): Metadata 
       siteName: profile.name,
       images: [
         {
-          url: "/assets/09-brand/og-image.webp",
+          url: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/og-image.webp",
           width: 1200,
           height: 630,
           alt: "Nishant Unavane — Portfolio 2027",
@@ -41,7 +41,7 @@ export function getSiteMetadata(title?: string, description?: string): Metadata 
       card: "summary_large_image",
       title: pageTitle,
       description: pageDescription,
-      images: ["/assets/09-brand/og-image.webp"],
+      images: ["https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/og-image.webp"],
     },
   };
 }

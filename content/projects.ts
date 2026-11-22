@@ -36,7 +36,7 @@ export const projects: Project[] = [
       repo: "https://github.com/IamNishant51/Custom-PI",
       live: "https://custom-pi-ai.vercel.app",
     },
-    image: "/assets/08-project-shots/custom-pi.webp",
+    image: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/custom-pi.webp",
   },
   {
     id: "02",
@@ -53,7 +53,7 @@ export const projects: Project[] = [
       repo: "https://github.com/IamNishant51/Synapse",
       live: "https://synapsememory.vercel.app",
     },
-    image: "/assets/08-project-shots/synapse.webp",
+    image: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/synapse.webp",
   },
   {
     id: "03",
@@ -70,7 +70,7 @@ export const projects: Project[] = [
       repo: "https://github.com/IamNishant51/CARTO-VS-CODE-EXTENSION",
       marketplace: "https://marketplace.visualstudio.com/items?itemName=nishantunavane.carto",
     },
-    image: "/assets/08-project-shots/carto.webp",
+    image: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/carto.webp",
   },
   {
     id: "04",
@@ -86,6 +86,6 @@ export const projects: Project[] = [
     links: {
       repo: "https://github.com/IamNishant51/Ollama-Agent-vs-code-extension",
     },
-    image: "/assets/08-project-shots/ollama-agent.webp",
+    image: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/ollama-agent.webp",
   },
 ];

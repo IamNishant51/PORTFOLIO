@@ -69,7 +69,7 @@ export function PageTransitionCurtain() {
       >
         <div className="w-12 h-12 flex items-center justify-center border border-hairline-strong rounded-xs bg-paper-edge shadow-md">
           <Image
-            src="/assets/09-brand/monogram.svg"
+            src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/monogram.svg"
             alt=""
             width={24}
             height={24}

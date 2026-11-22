@@ -111,7 +111,7 @@ export function PaperMosaicSection() {
             aspectRatio="3/4"
           >
             <Image
-              src="/assets/about/paper-mosaic-portrait.webp"
+              src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/about/paper-mosaic-portrait.webp"
               alt="Tactile Paper-Tile Mosaic Portrait of Nishant Unavane with handwritten archival sticky notes"
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 840px"

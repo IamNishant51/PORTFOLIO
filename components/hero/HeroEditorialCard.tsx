@@ -85,7 +85,7 @@ export function HeroEditorialCard() {
       {/* Terracotta Silhouette Aura Layer behind Nishant */}
       <div className="absolute inset-0 pointer-events-none z-10 translate-x-2.5 translate-y-2 opacity-95">
         <Image
-          src="/assets/02-act1-arrival/hero-silhouette-terracotta.webp"
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-silhouette-terracotta.webp"
           alt=""
           fill
           sizes="(max-width: 768px) 340px, 410px"
@@ -97,7 +97,7 @@ export function HeroEditorialCard() {
       {/* Foreground Cutout Photo */}
       <div className="absolute inset-0 pointer-events-none z-20">
         <Image
-          src="/assets/02-act1-arrival/hero-portrait.webp"
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-portrait.webp"
           alt="Portrait of Nishant Unavane"
           fill
           priority

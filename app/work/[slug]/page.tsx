@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: CaseStudyProps): Promise<Meta
     openGraph: {
       title: `${project.title} — ${project.subtitle}`,
       description: project.description,
-      images: [project.image || "/assets/04-act3-temple/a3-temple-plate.webp"],
+      images: [project.image || "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/04-act3-temple/a3-temple-plate.webp"],
     },
   };
 }
@@ -126,7 +126,7 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
             >
               <div className="relative w-full aspect-[2/3] overflow-hidden rounded-xs bg-paper-edge shadow-inner">
                 <Image
-                  src={project.image || "/assets/04-act3-temple/a3-temple-plate.webp"}
+                  src={project.image || "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/04-act3-temple/a3-temple-plate.webp"}
                   alt={`Architectural study plate representing ${project.title}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 620px"

@@ -225,7 +225,7 @@ export function Act01Arrival() {
         className="absolute inset-0 -top-16 -bottom-16 w-full h-[120%] pointer-events-none z-0 scale-[1.04] will-change-transform"
       >
         <Image
-          src="/assets/02-act1-arrival/a1-sky-plate.webp"
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/a1-sky-plate.webp"
           alt="John Constable atmospheric sky study with warm horizon and luminous cloud banks"
           fill
           priority
@@ -241,7 +241,7 @@ export function Act01Arrival() {
         aria-hidden="true"
       >
         <Image
-          src="/assets/02-act1-arrival/a1-clouds-far.webp"
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/a1-clouds-far.webp"
           alt=""
           fill
           sizes="(max-width: 768px) 480px, 650px"
@@ -256,7 +256,7 @@ export function Act01Arrival() {
         aria-hidden="true"
       >
         <Image
-          src="/assets/02-act1-arrival/a1-heron.webp"
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/a1-heron.webp"
           alt=""
           fill
           sizes="(max-width: 768px) 80px, 128px"
@@ -346,7 +346,7 @@ export function Act01Arrival() {
                 aspectRatio="3/4"
               >
                 <Image
-                  src="/assets/02-act1-arrival/hero-slit-portrait.webp"
+                  src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp"
                   alt="Optical prism slit-scan portrait of Nishant Unavane with quote: Not every unanswered question needs an immediate answer, some clarity takes living."
                   fill
                   priority

@@ -95,7 +95,7 @@ export function Act06Horizon() {
         className="absolute inset-0 w-full h-full pointer-events-none opacity-35 z-0 scale-[1.04] will-change-transform"
       >
         <Image
-          src="/assets/07-act6-horizon/a6-horizon-plate.webp"
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/07-act6-horizon/a6-horizon-plate.webp"
           alt="Caspar David Friedrich golden evening horizon landscape with warm glowing sky"
           fill
           sizes="100vw"
@@ -110,7 +110,7 @@ export function Act06Horizon() {
         aria-hidden="true"
       >
         <Image
-          src="/assets/07-act6-horizon/a6-birds.webp"
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/07-act6-horizon/a6-birds.webp"
           alt=""
           fill
           sizes="144px"
@@ -194,8 +194,8 @@ export function Act06Horizon() {
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             <div className="w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] h-[360px] sm:h-[400px] md:h-[440px] lg:h-[460px] relative">
               <Lanyard
-                frontImage="/assets/02-act1-arrival/hero-editorial-pass.webp"
-                backImage="/assets/02-act1-arrival/hero-spiderman.webp"
+                frontImage="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-editorial-pass.webp"
+                backImage="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-spiderman.webp"
                 imageFit="cover"
                 finish="metallic"
                 cardColor="#14181F"
