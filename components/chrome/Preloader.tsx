@@ -39,6 +39,17 @@ export function Preloader() {
       return;
     }
 
+    // Return visits in the same session skip the full ~3.3s show.
+    // A first visit in a session still plays the whole preloader.
+    try {
+      if (sessionStorage.getItem("preloader-seen")) {
+        setHidden(true);
+        setComplete(true);
+        document.body.style.overflow = "";
+        return;
+      }
+    } catch {}
+
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
@@ -80,6 +91,9 @@ export function Preloader() {
     const triggerArchitecturalExit = () => {
       if (completedRef.current) return;
       completedRef.current = true;
+      try {
+        sessionStorage.setItem("preloader-seen", "1");
+      } catch {}
       document.body.style.overflow = "";
 
       // Dispatch hero handoff right as the shutters start opening
@@ -264,6 +278,9 @@ export function Preloader() {
       onClick={() => {
         if (!completedRef.current) {
           completedRef.current = true;
+          try {
+            sessionStorage.setItem("preloader-seen", "1");
+          } catch {}
           document.body.style.overflow = "";
           window.dispatchEvent(new CustomEvent("preloader-flight-start"));
           window.dispatchEvent(new CustomEvent("preloader-docked"));
