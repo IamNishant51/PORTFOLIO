@@ -4,7 +4,6 @@ import "./globals.css";
 import { getSiteMetadata, generatePersonJsonLd } from "@/lib/seo";
 import { Nav } from "@/components/chrome/Nav";
 import { Grain } from "@/components/chrome/Grain";
-import { Cursor } from "@/components/chrome/Cursor";
 import { Preloader } from "@/components/chrome/Preloader";
 import { PageTransitionCurtain } from "@/components/chrome/PageTransitionCurtain";
 import { SmoothScrollProvider } from "@/lib/lenis";
@@ -63,7 +62,6 @@ export default function RootLayout({
           <Preloader />
           <PageTransitionCurtain />
           <Grain />
-          <Cursor />
           <Nav />
           <main id="main-content" className="relative z-10">
             {children}
