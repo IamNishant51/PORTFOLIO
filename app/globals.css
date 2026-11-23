@@ -285,3 +285,14 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Hide the native cursor on fine-pointer devices: the custom cursor
+   (Cursor.tsx) is the only pointer there. Touch devices keep theirs. */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"] {
+    cursor: none;
+  }
+}
