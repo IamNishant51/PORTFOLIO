@@ -348,7 +348,7 @@ Build on **shadcn/ui** for behaviour (dialog, accordion, tooltip, sheet, form) a
 4. `ProjectRow` — hairline-topped row, index numeral in serif, title `display-lg`, one-line proof, stack in mono, hover: the row's artwork thumbnail slides in from the right at 0.7 opacity.
 5. `StatBlock` — serif numeral + mono label + hairline above.
 6. `MarqueeStrip` — mono stack list scrolling at 40s, paused on hover, used once (between Act 3 and 4) to separate two heavy scenes.
-7. `Cursor` — 8px ink dot + 28px ring, ring scales to 1.6 and fills `paper-soft` over interactive elements. Disabled on touch.
+7. `Cursor` — removed 2026-11-23 at the owner's request. The site uses the native cursor only; there is no custom cursor component and no `cursor: none` anywhere.
 
 **React Bits usage:** allowed for **max 2** components (recommend `TextPressure` or `RotatingText` for one act title, and `ScrollVelocity` for the marquee). Everything else hand-built. Any React Bits component must be re-skinned to these tokens before it ships — default React Bits styling is instant AI-slop.
 
