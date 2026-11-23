@@ -6,6 +6,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { profile } from "@/content/profile";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { PlateFrame } from "@/components/primitives/PlateFrame";
 
 const Lanyard = dynamic(() => import("@/components/ui/Lanyard"), {
   ssr: false,
@@ -51,37 +52,10 @@ export function Act06Horizon() {
       // 1. Background footer plate zoom.
       // Mobile uses a gentler zoom: the tall phone footer already crops the
       // plate hard, so a desktop-strength zoom would leave only a sliver.
-      mm.add("(max-width: 767px)", () => {
-        if (plateRef.current) {
-          gsap.to(plateRef.current, {
-            scale: 1.05,
-            yPercent: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top bottom",
-              end: "bottom bottom",
-              scrub: 0.8,
-            },
-          });
-        }
-
-        if (birdsRef.current) {
-          gsap.to(birdsRef.current, {
-            xPercent: 7,
-            yPercent: -5,
-            rotate: -4,
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top bottom",
-              end: "bottom bottom",
-              scrub: 0.8,
-            },
-          });
-        }
-      });
-
+      // Desktop only. The plate zoom and the birds flight run on the
+      // full-bleed desktop plate; on mobile the footer is paper with a
+      // framed horizon plate instead (see below), so there is no
+      // background plate or birds to animate there.
       mm.add("(min-width: 768px)", () => {
         if (plateRef.current) {
           gsap.to(plateRef.current, {
@@ -144,34 +118,27 @@ export function Act06Horizon() {
       className="relative min-h-[100svh] w-full pt-16 sm:pt-20 md:pt-24 pb-[max(2rem,env(safe-area-inset-bottom))] sm:pb-[max(2.5rem,env(safe-area-inset-bottom))] md:pb-[max(3rem,env(safe-area-inset-bottom))] bg-paper-static overflow-hidden flex flex-col justify-between"
       aria-label="Act 06: The Horizon and Footer"
     >
-      {/* Background footer plate — classical columns over a mountain valley */}
+      {/* Background footer plate — desktop only. The 16:9 artwork cannot
+          crop to a phone portrait without losing the columns (edges) or
+          the peak (centre), so on mobile the footer is clean paper with
+          the whole scene framed as a plate at the bottom (see below). */}
       <div
         ref={plateRef}
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-50 md:opacity-35 z-0 scale-[1.04] will-change-transform"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-35 z-0 scale-[1.04] will-change-transform hidden md:block"
       >
-        {/* Desktop plate (landscape, as before) */}
         <Image
           src="https://ik.imagekit.io/9pfz6g8ri/footer.png"
           alt="Classical stone columns framing a bright mountain valley under a blue sky with doves and wildflowers"
           fill
           sizes="100vw"
-          className="hidden md:block object-cover object-bottom"
-        />
-        {/* Mobile plate: centre crop of the same artwork (sky, peak and valley),
-            so the tall phone footer shows the mountains instead of a thin sliver. */}
-        <Image
-          src="https://ik.imagekit.io/9pfz6g8ri/footer.png?tr=w-800,h-1400,cm-extract,fo-center"
-          alt="Classical stone columns framing a bright mountain valley under a blue sky with doves and wildflowers"
-          fill
-          sizes="100vw"
-          className="block md:hidden object-cover object-center"
+          className="object-cover object-bottom"
         />
       </div>
 
-      {/* Birds drifting in flight */}
+      {/* Birds drifting in flight — desktop only, they belong to the sky */}
       <div
         ref={birdsRef}
-        className="absolute right-4 sm:right-16 top-16 md:top-24 w-24 h-18 sm:w-32 sm:h-24 md:w-36 md:h-28 pointer-events-none z-10 opacity-80 will-change-transform"
+        className="absolute right-4 sm:right-16 top-16 md:top-24 w-24 h-18 sm:w-32 sm:h-24 md:w-36 md:h-28 pointer-events-none z-10 opacity-80 will-change-transform hidden md:block"
         aria-hidden="true"
       >
         <Image
@@ -347,6 +314,27 @@ export function Act06Horizon() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Mobile horizon plate — the whole scene, framed. A phone portrait
+          cannot crop the 16:9 artwork without losing the columns or the
+          peak, so on mobile the image is shown whole in a museum plate
+          instead of as a washed-out background wash. */}
+      <div className="relative z-20 mx-auto w-full max-w-[1440px] px-6 mt-10 block md:hidden">
+        <PlateFrame
+          caption="PLATE 06 — THE HORIZON · COLUMNS OVER THE VALLEY"
+          aspectRatio="16/9"
+        >
+          <div className="relative w-full h-full overflow-hidden">
+            <Image
+              src="https://ik.imagekit.io/9pfz6g8ri/footer.png"
+              alt="Classical stone columns framing a bright mountain valley under a blue sky with doves and wildflowers"
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+        </PlateFrame>
       </div>
     </footer>
   );
