@@ -208,7 +208,7 @@ export function Act01Arrival() {
     <section
       id="arrival"
       ref={containerRef}
-      className="relative min-h-[100svh] w-full bg-paper-static overflow-hidden flex flex-col justify-between pt-[88px] pb-16"
+      className="relative min-h-[100svh] w-full bg-paper-static overflow-hidden flex flex-col justify-between pt-[72px] pb-16"
       style={{
         backgroundColor: "#FBF8F2",
         // Enforce static tokens for hero section — immune to any dynamic musical color changes
@@ -276,7 +276,7 @@ export function Act01Arrival() {
         className="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 flex-1 flex flex-col justify-end"
       >
         {/* Main Content Grid: H1 baseline lands at ~65% */}
-        <div className="pt-20 md:pt-32 lg:pt-36 pb-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+        <div className="pt-10 md:pt-32 lg:pt-36 pb-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
           {/* Main Title & Subtitle */}
           <div className="lg:col-span-7 flex flex-col gap-6">
             <h1 className="display-mega text-ink font-normal leading-[0.92]">
