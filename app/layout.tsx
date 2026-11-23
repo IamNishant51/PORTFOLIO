@@ -4,7 +4,6 @@ import "./globals.css";
 import { getSiteMetadata, generatePersonJsonLd } from "@/lib/seo";
 import { Nav } from "@/components/chrome/Nav";
 import { Grain } from "@/components/chrome/Grain";
-import { Preloader } from "@/components/chrome/Preloader";
 import { PageTransitionCurtain } from "@/components/chrome/PageTransitionCurtain";
 import { SmoothScrollProvider } from "@/lib/lenis";
 
@@ -59,7 +58,6 @@ export default function RootLayout({
       </head>
       <body className="bg-paper text-ink selection:bg-paper-edge selection:text-ink min-h-screen antialiased">
         <SmoothScrollProvider>
-          <Preloader />
           <PageTransitionCurtain />
           <Grain />
           <Nav />
