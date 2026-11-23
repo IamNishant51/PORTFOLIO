@@ -1,9 +1,10 @@
 name: Onpush Deploy
 
+# Disabled 2026-11-23: this workflow failed on all 25 runs (Setup SSH step)
+# and never deployed anything — the live site deploys via Vercel.
+# Kept manual-only so it can be re-enabled if the server deploy is ever needed.
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
