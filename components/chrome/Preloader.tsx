@@ -1,272 +1,279 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-const COLUMNS = [
-  { id: "01", name: "SYSTEMS", label: "NISHANT UNAVANE" },
-  { id: "02", name: "INTERFACES", label: "PUNE, IN" },
-  { id: "03", name: "COGNITION", label: "18°31'N 73°51'E" },
-  { id: "04", name: "2027", label: "STUDIO ARCHIVE" },
-];
+/**
+ * The Colonnade — the site's intro.
+ *
+ * Built from the award-winning preloader pattern (hairline progress +
+ * colonnade split reveal): one paper plate, one serif wordmark rising
+ * from its masks, one 1px terracotta hairline tracking real loading
+ * (fonts + hero images, capped), and a small odometer-reel number in
+ * the corner. At 100 the plate parts along its own columns and the
+ * hero — already painted underneath — is revealed, its entrance
+ * starting while the columns are still lifting.
+ *
+ * It plays once per session, never on return navigation, and is skipped
+ * entirely under prefers-reduced-motion. Total time to a readable hero
+ * is capped at ~2.5s; Escape or click skips it immediately.
+ */
+
+// Module-level flag: once the intro has played (or been skipped) in this
+// JS session it never plays again — even if the user navigates away
+// mid-intro and comes back. sessionStorage is the second guard (it
+// survives a full reload in the same tab).
+let introSeen = false;
+const SEEN_KEY = "preloader-seen";
+
+function markSeen() {
+  introSeen = true;
+  try {
+    sessionStorage.setItem(SEEN_KEY, "1");
+  } catch {}
+}
+
+function hasSeen(): boolean {
+  if (introSeen) return true;
+  try {
+    return sessionStorage.getItem(SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+const HERO_PORTRAIT =
+  "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp";
+const HERO_SKY =
+  "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/a1-sky-plate.webp";
 
 export function Preloader() {
   const pathname = usePathname();
-  const [complete, setComplete] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  // Render-time check: if the intro was already seen, never render it —
+  // not even for one frame (no flash on reload or return navigation).
+  const [hidden, setHidden] = useState<boolean>(() => pathname !== "/" || hasSeen());
   const [percent, setPercent] = useState(0);
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const columnsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const titleLine1Ref = useRef<HTMLHeadingElement>(null);
-  const titleLine2Ref = useRef<HTMLHeadingElement>(null);
-  const apertureRef = useRef<HTMLDivElement>(null);
-  const apertureImgRef = useRef<HTMLDivElement>(null);
+  const line1Ref = useRef<HTMLSpanElement>(null);
+  const line2Ref = useRef<HTMLSpanElement>(null);
+  const tagRef = useRef<HTMLParagraphElement>(null);
+  const metaRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
   const tensReelRef = useRef<HTMLDivElement>(null);
   const onesReelRef = useRef<HTMLDivElement>(null);
-  const archCurveRef = useRef<SVGPathElement>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
   const completedRef = useRef(false);
+  const skipRef = useRef<() => void>(() => {});
 
   useEffect(() => {
-    // Only run on homepage landing
+    // Not the homepage: nothing to do.
     if (pathname !== "/") {
       setHidden(true);
-      setComplete(true);
       document.body.style.overflow = "";
       return;
     }
 
-    // Return visits in the same session skip the full ~3.3s show.
-    // A first visit in a session still plays the whole preloader.
-    try {
-      if (sessionStorage.getItem("preloader-seen")) {
-        setHidden(true);
-        setComplete(true);
-        document.body.style.overflow = "";
-        return;
-      }
-    } catch {}
-
-    if (typeof window !== "undefined") {
-      window.scrollTo(0, 0);
-    }
-    document.body.style.overflow = "hidden";
-
-    // Setup subtle luxury tick audio
-    try {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (AudioCtx) {
-        audioCtxRef.current = new AudioCtx();
-        if (audioCtxRef.current.state === "suspended") {
-          audioCtxRef.current.resume().catch(() => {});
-        }
-      }
-    } catch {}
-
-    const playLuxuryClick = (pitch = 1) => {
-      const ctx = audioCtxRef.current;
-      if (!ctx || ctx.state !== "running") return;
-      try {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime((720 + Math.random() * 160) * pitch, ctx.currentTime);
-        gain.gain.setValueAtTime(0.02, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.035);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.04);
-      } catch {}
-    };
-
-    let isCancelled = false;
-
-    // Master Exit: The Architectural Colonnade Reveal
-    const triggerArchitecturalExit = () => {
-      if (completedRef.current) return;
-      completedRef.current = true;
-      try {
-        sessionStorage.setItem("preloader-seen", "1");
-      } catch {}
-      document.body.style.overflow = "";
-
-      // Dispatch hero handoff right as the shutters start opening
+    const dispatchHero = () => {
       window.dispatchEvent(new CustomEvent("preloader-flight-start"));
       window.dispatchEvent(new CustomEvent("preloader-docked"));
-
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline({
-          onComplete: () => {
-            setComplete(true);
-            setHidden(true);
-          },
-        });
-
-        // 1. Text and Aperture ascend with clip-path wipe
-        tl.to(
-          [titleLine1Ref.current, titleLine2Ref.current],
-          {
-            yPercent: -130,
-            opacity: 0,
-            duration: 0.55,
-            stagger: 0.06,
-            ease: "power3.in",
-          },
-          0
-        );
-
-        tl.to(
-          apertureRef.current,
-          {
-            scale: 1.12,
-            opacity: 0,
-            duration: 0.5,
-            ease: "power2.in",
-          },
-          0.05
-        );
-
-        // 2. Parabolic elastic arch curve pulls upward
-        if (archCurveRef.current) {
-          tl.to(
-            archCurveRef.current,
-            {
-              attr: { d: "M 0 0 Q 50 -35 100 0 L 100 100 L 0 100 Z" },
-              duration: 0.45,
-              ease: "power2.in",
-            },
-            0.15
-          );
-        }
-
-        // 3. Staggered vertical Colonnade shutter opening (from center columns to edges!)
-        const validCols = columnsRef.current.filter(Boolean);
-        tl.to(
-          validCols,
-          {
-            yPercent: -100,
-            duration: 0.95,
-            stagger: {
-              amount: 0.28,
-              from: "center",
-              ease: "power2.inOut",
-            },
-            ease: "power4.inOut",
-          },
-          0.2
-        );
-
-        // 4. Final container fade
-        if (containerRef.current) {
-          tl.to(
-            containerRef.current,
-            {
-              opacity: 0,
-              duration: 0.25,
-            },
-            "-=0.2"
-          );
-        }
-      });
-
-      return () => ctx.revert();
     };
 
-    // Master Entrance Timeline
-    const masterTl = gsap.timeline({
-      defaults: { ease: "power3.out" },
-    });
-
-    // 1. Text reveals rising up from overflow hidden masks
-    masterTl.fromTo(
-      [titleLine1Ref.current, titleLine2Ref.current],
-      { yPercent: 130, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 1.1, stagger: 0.12, ease: "power4.out" },
-      0.1
-    );
-
-    // 2. Central optical aperture rises & zooms slowly
-    masterTl.fromTo(
-      apertureRef.current,
-      { scale: 0.88, opacity: 0, y: 30 },
-      { scale: 1, opacity: 1, y: 0, duration: 1.2, ease: "power3.out" },
-      0.2
-    );
-
-    if (apertureImgRef.current) {
-      masterTl.fromTo(
-        apertureImgRef.current,
-        { scale: 1.2 },
-        { scale: 1.0, duration: 2.2, ease: "power1.out" },
-        0.2
-      );
+    // Already seen: skip the intro, but still wake the hero entrance.
+    // The hero's timeline is paused until it hears these events, and the
+    // dispatch is deferred a frame so Act01Arrival has attached its
+    // listeners by the time they fire.
+    if (hasSeen()) {
+      setHidden(true);
+      document.body.style.overflow = "";
+      requestAnimationFrame(dispatchHero);
+      return;
     }
 
-    // 3. Odometer Roll Animation
-    const counterObj = { val: 0 };
-    let lastTick = 0;
+    // Reduced motion: no intro at all; the hero shows in its final state.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      markSeen();
+      setHidden(true);
+      document.body.style.overflow = "";
+      requestAnimationFrame(dispatchHero);
+      return;
+    }
 
-    const countTween = gsap.to(counterObj, {
-      val: 100,
-      duration: 2.1,
+    // --- First visit: play the intro ---
+    window.scrollTo(0, 0);
+    document.body.style.overflow = "hidden";
+    const lenis = (
+      window as unknown as { lenis?: { stop(): void; start(): void } }
+    ).lenis;
+    lenis?.stop();
+
+    let cancelled = false;
+    const progress = { val: 0 };
+
+    // Transform-only progress: the hairline fill scales, the counter
+    // digits move on reels. No textContent rewrite per frame.
+    const setProgress = (v: number) => {
+      const p = Math.max(0, Math.min(100, Math.round(v)));
+      if (fillRef.current) {
+        fillRef.current.style.transform = `scaleX(${p / 100})`;
+      }
+      const tens = Math.floor(p / 10);
+      const ones = p % 10;
+      if (tensReelRef.current) {
+        tensReelRef.current.style.transform = `translateY(-${(tens / 11) * 100}%)`;
+      }
+      if (onesReelRef.current) {
+        onesReelRef.current.style.transform = `translateY(-${(ones / 10) * 100}%)`;
+      }
+      setPercent((prev) => (prev === p ? prev : p));
+    };
+
+    // Entrance: the name rises from its masks, line by line.
+    const introTl = gsap.timeline({ defaults: { ease: "expo.out" } });
+    introTl.fromTo(
+      [line1Ref.current, line2Ref.current],
+      { yPercent: 120, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 1.0, stagger: 0.1 },
+      0.05
+    );
+    introTl.fromTo(
+      [tagRef.current, metaRef.current, bottomRef.current],
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+      0.35
+    );
+
+    // Honest progress: wait for the fonts and the hero images, with a
+    // cap so a slow asset never holds the page hostage. A failed decode
+    // counts as arrived.
+    const decode = (src: string) =>
+      new Promise<void>((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          img.decode().then(() => resolve()).catch(() => resolve());
+        };
+        img.onerror = () => resolve();
+        img.src = src;
+      });
+    const gate = Promise.race([
+      Promise.all([
+        document.fonts ? document.fonts.ready : Promise.resolve(),
+        decode(HERO_PORTRAIT),
+        decode(HERO_SKY),
+      ]),
+      new Promise((resolve) => setTimeout(resolve, 2200)),
+    ]);
+
+    let exitTl: gsap.core.Timeline | null = null;
+
+    const runExit = (fast = false) => {
+      if (completedRef.current) return;
+      completedRef.current = true;
+      markSeen();
+      document.body.style.overflow = "";
+      lenis?.start();
+      // Hero handoff: its entrance starts as the columns lift.
+      dispatchHero();
+
+      const cols = columnsRef.current.filter(Boolean);
+      exitTl = gsap.timeline({
+        onComplete: () => {
+          setHidden(true);
+          ScrollTrigger.refresh();
+        },
+      });
+      // Content lifts away first.
+      exitTl.to(
+        [
+          line1Ref.current,
+          line2Ref.current,
+          tagRef.current,
+          metaRef.current,
+          bottomRef.current,
+        ],
+        {
+          yPercent: -130,
+          opacity: 0,
+          duration: fast ? 0.3 : 0.45,
+          stagger: 0.05,
+          ease: "power3.in",
+        },
+        0
+      );
+      // Then the colonnade parts, centre-out, revealing the hero.
+      exitTl.to(
+        cols,
+        {
+          yPercent: -100,
+          duration: fast ? 0.6 : 0.9,
+          stagger: {
+            amount: fast ? 0.18 : 0.25,
+            from: "center",
+            ease: "power2.inOut",
+          },
+          ease: "expo.inOut",
+        },
+        0.12
+      );
+      exitTl.to(containerRef.current, { opacity: 0, duration: 0.25 }, "-=0.2");
+    };
+
+    skipRef.current = () => runExit(true);
+
+    // Count to 92, hold there until the real assets are ready, then
+    // finish the count and lift the colonnade.
+    const countTween = gsap.to(progress, {
+      val: 92,
+      duration: 1.15,
       ease: "power2.inOut",
       onUpdate: () => {
-        if (isCancelled || completedRef.current) return;
-        const currentInt = Math.floor(counterObj.val);
-        setPercent(currentInt);
-
-        // Calculate odometer translateY
-        const tens = Math.floor(currentInt / 10);
-        const ones = currentInt % 10;
-
-        if (tensReelRef.current) {
-          tensReelRef.current.style.transform = `translateY(-${(tens / 11) * 100}%)`;
-        }
-        if (onesReelRef.current) {
-          onesReelRef.current.style.transform = `translateY(-${(ones / 10) * 100}%)`;
-        }
-
-        // Subtle audio click every 12 counts
-        if (currentInt - lastTick >= 12) {
-          lastTick = currentInt;
-          playLuxuryClick(1.0 + currentInt / 200);
-        }
+        if (!cancelled) setProgress(progress.val);
       },
       onComplete: () => {
-        if (isCancelled || completedRef.current) return;
-        setPercent(100);
-        if (tensReelRef.current) tensReelRef.current.style.transform = `translateY(-${(10 / 11) * 100}%)`;
-        if (onesReelRef.current) onesReelRef.current.style.transform = `translateY(-0%)`;
-        setTimeout(triggerArchitecturalExit, 160);
+        if (cancelled) return;
+        gate.then(() => {
+          if (cancelled) return;
+          gsap.to(progress, {
+            val: 100,
+            duration: 0.35,
+            ease: "power2.out",
+            onUpdate: () => {
+              if (!cancelled) setProgress(progress.val);
+            },
+            onComplete: () => {
+              if (cancelled) return;
+              setProgress(100);
+              setTimeout(() => runExit(false), 120);
+            },
+          });
+        });
       },
     });
 
-    // Hard fallback safety timer (3.5s max)
-    const safetyTimeout = setTimeout(triggerArchitecturalExit, 3500);
+    // Hard safety: never hold the page longer than 3 seconds.
+    const safety = setTimeout(() => {
+      if (!cancelled) runExit(false);
+    }, 3000);
 
-    // Escape key listener for immediate skip
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        countTween.kill();
-        masterTl.kill();
-        triggerArchitecturalExit();
-      }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") runExit(true);
     };
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", onKey);
 
     return () => {
-      isCancelled = true;
-      clearTimeout(safetyTimeout);
+      cancelled = true;
+      // Leaving mid-intro still counts as seen — coming back never
+      // replays it.
+      markSeen();
+      clearTimeout(safety);
       countTween.kill();
-      masterTl.kill();
-      window.removeEventListener("keydown", handleKeyDown);
+      introTl.kill();
+      exitTl?.kill();
+      window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      lenis?.start();
     };
   }, [pathname]);
 
@@ -275,174 +282,119 @@ export function Preloader() {
   return (
     <aside
       ref={containerRef}
-      onClick={() => {
-        if (!completedRef.current) {
-          completedRef.current = true;
-          try {
-            sessionStorage.setItem("preloader-seen", "1");
-          } catch {}
-          document.body.style.overflow = "";
-          window.dispatchEvent(new CustomEvent("preloader-flight-start"));
-          window.dispatchEvent(new CustomEvent("preloader-docked"));
-          const validCols = columnsRef.current.filter(Boolean);
-          gsap.to(validCols, {
-            yPercent: -100,
-            duration: 0.65,
-            stagger: { amount: 0.18, from: "center" },
-            ease: "power4.inOut",
-            onComplete: () => {
-              setComplete(true);
-              setHidden(true);
-            },
-          });
-        }
-      }}
-      className={`fixed inset-0 z-[100] w-screen h-[100dvh] overflow-hidden select-none cursor-pointer bg-transparent ${
-        complete ? "pointer-events-none" : "pointer-events-auto"
-      }`}
-      aria-label="Architectural Colonnade Preloader"
+      onClick={() => skipRef.current()}
+      className="fixed inset-0 z-[100] w-screen h-[100dvh] overflow-hidden select-none cursor-pointer bg-paper"
+      aria-label="Site introduction"
     >
-      {/* 4 Architectural Colonnade Columns (The structural shutters that part into the sky) */}
-      <div className="absolute inset-0 w-full h-full flex pointer-events-none">
-        {COLUMNS.map((col, idx) => (
+      {/* The colonnade: five paper panels on desktop, three on mobile.
+          They are the exit — they part, centre-out, to reveal the hero. */}
+      <div
+        className="absolute inset-0 w-full h-full flex pointer-events-none"
+        aria-hidden="true"
+      >
+        {Array.from({ length: 5 }).map((_, idx) => (
           <div
-            key={col.id}
+            key={idx}
             ref={(el) => {
               columnsRef.current[idx] = el;
             }}
-            className="relative w-1/4 h-full bg-paper border-r border-hairline/60 last:border-r-0 flex flex-col justify-between p-4 sm:p-6 md:p-8 will-change-transform"
-          >
-            {/* Column Top Architectural Stamp (No overlap, clean responsive) */}
-            <div className="flex items-center justify-between font-mono text-[0.6875rem] text-muted tracking-widest">
-              <span className="text-terracotta font-semibold">[ {col.id} ]</span>
-              <span className="hidden sm:inline text-ink font-medium">{col.name}</span>
-            </div>
-
-            {/* Column Bottom Architectural Stamp */}
-            <div className="flex items-center justify-between font-mono text-[0.6875rem] text-muted tracking-widest border-t border-hairline/40 pt-3">
-              <span className="text-ink font-medium truncate max-w-[90%]">{col.label}</span>
-            </div>
-          </div>
+            className={`relative h-full bg-paper border-r border-hairline/60 last:border-r-0 will-change-transform ${
+              idx >= 3 ? "hidden sm:block w-1/5" : "w-1/3 sm:w-1/5"
+            }`}
+          />
         ))}
       </div>
 
-      {/* Parabolic Bottom Curve SVG (Liquid tension pull at exit) */}
-      <svg
-        className="absolute bottom-0 left-0 w-full h-20 sm:h-28 pointer-events-none fill-paper z-20"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          ref={archCurveRef}
-          d="M 0 0 Q 50 0 100 0 L 100 100 L 0 100 Z"
-        />
-      </svg>
-
-      {/* Floating Kinetic Center Content Layer */}
-      <div className="relative z-30 w-full h-full max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 flex flex-col justify-between py-8 sm:py-10 pointer-events-none">
-        {/* Top spacer (keeps grid pure) */}
-        <div className="h-6" />
-
-        {/* Central Stage: Kinetic Display Typography & Optical Slit Aperture */}
-        <div className="flex flex-col items-center justify-center gap-5 sm:gap-7 my-auto">
-          {/* Kinetic Masked Title Line 1 */}
-          <div className="overflow-hidden">
-            <h1
-              ref={titleLine1Ref}
-              className="font-serif text-4xl sm:text-6xl md:text-8xl text-ink font-normal leading-[0.92] tracking-tight will-change-transform text-center"
-            >
-              Software,
-            </h1>
-          </div>
-
-          {/* Optical Slit-Scan Museum Aperture */}
-          <div
-            ref={apertureRef}
-            className="relative w-28 sm:w-36 md:w-44 h-40 sm:h-52 md:h-64 rounded-xs border border-terracotta/40 bg-paper-edge p-1 shadow-[0_16px_40px_rgba(26,24,21,0.12)] overflow-hidden will-change-transform"
-          >
-            <div
-              ref={apertureImgRef}
-              className="relative w-full h-full overflow-hidden rounded-[1px] bg-ink"
-            >
-              <Image
-                src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp"
-                alt="Optical slit portrait of Nishant Unavane"
-                fill
-                priority
-                sizes="(max-width: 640px) 144px, 176px"
-                className="object-cover"
-              />
-              {/* Subtle glass reflection highlight */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/15 pointer-events-none" />
-            </div>
-
-            {/* Aperture Bottom Index Badge */}
-            <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-paper/95 backdrop-blur-xs border border-hairline px-2 py-0.5 flex items-center justify-between z-10">
-              <span className="font-mono text-[0.6875rem] text-ink font-semibold tracking-wider">
-                PORTRAIT 01
-              </span>
-              <span className="font-mono text-[0.6875rem] text-terracotta font-bold">
-                PRISM
-              </span>
-            </div>
-          </div>
-
-          {/* Kinetic Masked Title Line 2 */}
-          <div className="overflow-hidden">
-            <h2
-              ref={titleLine2Ref}
-              className="font-serif text-4xl sm:text-6xl md:text-8xl text-ink font-normal leading-[0.92] tracking-tight will-change-transform text-center"
-            >
-              made by <em className="italic font-serif text-terracotta">hand.</em>
-            </h2>
-          </div>
+      {/* Content: one wordmark, one hairline, one number. Nothing else. */}
+      <div className="relative z-10 w-full h-full max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 flex flex-col justify-between py-8 sm:py-10 pb-[calc(2rem+env(safe-area-inset-bottom))] pointer-events-none">
+        {/* Top meta row */}
+        <div
+          ref={metaRef}
+          className="flex items-center justify-between font-mono text-[0.6875rem] text-muted tracking-[0.18em] uppercase"
+        >
+          <span className="text-ink font-medium">Portfolio — 2027</span>
+          <span>18°31'N — 73°51'E</span>
         </div>
 
-        {/* Bottom Horizon: Mechanical Slot Odometer Counter + Escape Key */}
-        <div className="flex items-end justify-between border-t border-hairline/70 pt-4">
-          {/* Mechanical Odometer Counter */}
-          <div className="flex items-baseline gap-1.5">
-            {/* Digit Reels Window */}
-            <div className="flex items-baseline font-serif text-5xl sm:text-7xl md:text-8xl text-ink font-normal leading-none tracking-tight h-[1em] overflow-hidden">
-              {/* Tens Reel (0-10) */}
-              <div
-                ref={tensReelRef}
-                className="flex flex-col will-change-transform transition-transform duration-75 ease-out"
-              >
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((d) => (
-                  <span key={d} className="h-[1em] flex items-center justify-center">
-                    {d === 10 ? "10" : d}
-                  </span>
-                ))}
-              </div>
-
-              {/* Ones Reel (0-9) */}
-              <div
-                ref={onesReelRef}
-                className="flex flex-col will-change-transform transition-transform duration-75 ease-out"
-              >
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
-                  <span key={d} className="h-[1em] flex items-center justify-center">
-                    {d}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <span className="font-mono text-terracotta text-sm sm:text-base font-semibold">
-              %
+        {/* Wordmark, left-aligned and asymmetric, like the rest of the site */}
+        <div className="flex flex-col items-start my-auto">
+          <div className="overflow-hidden">
+            <span
+              ref={line1Ref}
+              className="block font-serif text-ink leading-[0.95] tracking-[-0.02em] text-[clamp(2.75rem,8vw,7rem)] will-change-transform"
+            >
+              Nishant
             </span>
           </div>
+          <div className="overflow-hidden">
+            <span
+              ref={line2Ref}
+              className="block font-serif italic text-terracotta leading-[0.95] tracking-[-0.02em] text-[clamp(2.75rem,8vw,7rem)] will-change-transform"
+            >
+              Unavane
+            </span>
+          </div>
+          <p
+            ref={tagRef}
+            className="mt-5 font-mono text-[0.6875rem] text-muted tracking-[0.18em] uppercase"
+          >
+            Software, made by hand
+          </p>
+        </div>
 
-          {/* Interactive Affordance & Authorial Stamp */}
-          <div className="flex flex-col items-end gap-1 font-mono text-[0.6875rem] text-muted">
-            <span className="text-ink font-semibold tracking-wider">
-              {percent < 100 ? "CALIBRATING APPARATUS..." : "EXHIBITION UNVEILING"}
+        {/* Bottom: hairline progress + counter + skip */}
+        <div ref={bottomRef} className="flex flex-col gap-3">
+          <div
+            className="relative h-px w-full bg-hairline"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={percent}
+            aria-label="Loading"
+          >
+            <div
+              ref={fillRef}
+              className="absolute inset-y-0 left-0 w-full bg-terracotta origin-left will-change-transform"
+              style={{ transform: "scaleX(0)" }}
+            />
+          </div>
+          <div className="flex items-end justify-between">
+            <span className="font-mono text-[0.6875rem] text-muted tracking-[0.18em] uppercase">
+              [ Esc or click to skip ]
             </span>
-            <span className="text-muted/70 tracking-widest">
-              [ ESC OR CLICK TO SKIP ↗ ]
-            </span>
+            <div className="flex items-baseline gap-1">
+              <div className="flex items-baseline font-serif text-3xl sm:text-4xl text-ink leading-none h-[1em] overflow-hidden">
+                <div
+                  ref={tensReelRef}
+                  className="flex flex-col will-change-transform"
+                >
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((d) => (
+                    <span
+                      key={d}
+                      className="h-[1em] flex items-center justify-center"
+                    >
+                      {d === 10 ? "10" : d}
+                    </span>
+                  ))}
+                </div>
+                <div
+                  ref={onesReelRef}
+                  className="flex flex-col will-change-transform"
+                >
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
+                    <span
+                      key={d}
+                      className="h-[1em] flex items-center justify-center"
+                    >
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <span className="font-mono text-terracotta text-sm font-semibold">
+                %
+              </span>
+            </div>
           </div>
         </div>
       </div>
