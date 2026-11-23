@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { experiments } from "@/content/experiments";
 import { ActHeader } from "@/components/primitives/ActHeader";
 import Grainient from "@/components/ui/Grainient";
@@ -58,9 +59,11 @@ export function Act04Sea() {
           sub="Side projects, tools and experiments that didn't need to become companies."
         />
 
-        {/* 3 Experiments Cards: Staggered asymmetric layout */}
+        {/* 6 Experiments Cards: Staggered asymmetric layout.
+            The full catalogue (28) lives on /projects — the homepage shows
+            the first six and links to the rest. */}
         <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 pt-6">
-          {experiments.map((item, idx) => (
+          {experiments.slice(0, 6).map((item, idx) => (
             <article
               key={item.title}
               className={`group relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 md:p-8 lg:p-9 rounded-xs border border-hairline bg-paper/85 backdrop-blur-md shadow-[0_4px_24px_rgba(26,24,21,0.04)] ${
@@ -126,6 +129,19 @@ export function Act04Sea() {
               </div>
             </article>
           ))}
+        </div>
+
+        {/* Full catalogue link */}
+        <div className="flex justify-center pt-2">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 meta-label text-ink hover:text-terracotta transition-colors py-2 px-3 min-h-[44px]"
+          >
+            <span>VIEW ALL {experiments.length} FIELD EXPERIMENTS</span>
+            <span className="font-serif text-sm" aria-hidden="true">
+              →
+            </span>
+          </Link>
         </div>
       </div>
     </section>

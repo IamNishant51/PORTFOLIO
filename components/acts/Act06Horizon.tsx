@@ -48,7 +48,7 @@ export function Act06Horizon() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // 1. Background Caspar David Friedrich horizon plate zoom.
+      // 1. Background footer plate zoom.
       // Mobile uses a gentler zoom: the tall phone footer already crops the
       // plate hard, so a desktop-strength zoom would leave only a sliver.
       mm.add("(max-width: 767px)", () => {
@@ -144,25 +144,24 @@ export function Act06Horizon() {
       className="relative min-h-[100svh] w-full pt-16 sm:pt-20 md:pt-24 pb-[max(2rem,env(safe-area-inset-bottom))] sm:pb-[max(2.5rem,env(safe-area-inset-bottom))] md:pb-[max(3rem,env(safe-area-inset-bottom))] bg-paper-static overflow-hidden flex flex-col justify-between"
       aria-label="Act 06: The Horizon and Footer"
     >
-      {/* Background Caspar David Friedrich golden evening horizon plate */}
+      {/* Background footer plate — classical columns over a mountain valley */}
       <div
         ref={plateRef}
         className="absolute inset-0 w-full h-full pointer-events-none opacity-50 md:opacity-35 z-0 scale-[1.04] will-change-transform"
       >
         {/* Desktop plate (landscape, as before) */}
         <Image
-          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/07-act6-horizon/a6-horizon-plate.webp"
-          alt="Caspar David Friedrich golden evening horizon landscape with warm glowing sky"
+          src="https://ik.imagekit.io/9pfz6g8ri/footer.png"
+          alt="Classical stone columns framing a bright mountain valley under a blue sky with doves and wildflowers"
           fill
           sizes="100vw"
           className="hidden md:block object-cover object-bottom"
         />
-        {/* Mobile plate: centre crop of the same plate (golden sky + figure),
-            so the tall phone footer shows the horizon instead of a dark sliver.
-            Swap this URL for the new footer artwork when it is ready. */}
+        {/* Mobile plate: centre crop of the same artwork (sky, peak and valley),
+            so the tall phone footer shows the mountains instead of a thin sliver. */}
         <Image
-          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/07-act6-horizon/a6-horizon-plate.webp?tr=w-800,h-1400,cm-extract,fo-center"
-          alt="Caspar David Friedrich golden evening horizon landscape with warm glowing sky"
+          src="https://ik.imagekit.io/9pfz6g8ri/footer.png?tr=w-800,h-1400,cm-extract,fo-center"
+          alt="Classical stone columns framing a bright mountain valley under a blue sky with doves and wildflowers"
           fill
           sizes="100vw"
           className="block md:hidden object-cover object-center"
