@@ -46,7 +46,7 @@ export function AboutMetrics() {
 
         {/* Contact & Correspondence Terminal */}
         <Reveal delay={0.2}>
-          <div className="p-8 sm:p-12 bg-paper-edge border border-hairline-strong rounded-xs flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-[0_8px_32px_rgba(26,24,21,0.05)]">
+          <div className="p-5 sm:p-12 bg-paper-edge border border-hairline-strong rounded-xs flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-[0_8px_32px_rgba(26,24,21,0.05)]">
             <div className="flex flex-col gap-3 max-w-[540px]">
               <span className="meta-label text-terracotta text-[0.75rem] tracking-[0.2em]">
                 DIRECT CORRESPONDENCE
@@ -63,16 +63,16 @@ export function AboutMetrics() {
             <div className="flex flex-col gap-4 font-mono text-[0.8125rem]">
               {/* Primary Email Pill */}
               <div className="flex items-center justify-between gap-4 p-3 bg-paper border border-hairline-strong rounded-xs">
-                <div className="flex flex-col">
+                <div className="flex flex-col min-w-0">
                   <span className="meta-label text-[0.625rem] text-muted">PRIMARY GMAIL</span>
-                  <span className="text-ink font-medium select-all">
+                  <span className="text-ink font-medium select-all break-all">
                     {aboutData.emails.primary}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleCopy(aboutData.emails.primary)}
-                  className="px-3 py-1.5 border border-hairline-strong rounded-full text-[0.6875rem] hover:border-ink hover:bg-paper-soft transition-colors cursor-pointer"
+                  className="px-3 py-1.5 border border-hairline-strong rounded-full text-[0.6875rem] hover:border-ink hover:bg-paper-soft transition-colors cursor-pointer shrink-0"
                 >
                   {copiedEmail === aboutData.emails.primary ? "COPIED ✓" : "COPY"}
                 </button>
@@ -80,23 +80,23 @@ export function AboutMetrics() {
 
               {/* Secondary Email Pill */}
               <div className="flex items-center justify-between gap-4 p-3 bg-paper border border-hairline-strong rounded-xs">
-                <div className="flex flex-col">
+                <div className="flex flex-col min-w-0">
                   <span className="meta-label text-[0.625rem] text-muted">SECONDARY GMAIL</span>
-                  <span className="text-ink select-all">
+                  <span className="text-ink select-all break-all">
                     {aboutData.emails.secondary}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleCopy(aboutData.emails.secondary)}
-                  className="px-3 py-1.5 border border-hairline-strong rounded-full text-[0.6875rem] hover:border-ink hover:bg-paper-soft transition-colors cursor-pointer"
+                  className="px-3 py-1.5 border border-hairline-strong rounded-full text-[0.6875rem] hover:border-ink hover:bg-paper-soft transition-colors cursor-pointer shrink-0"
                 >
                   {copiedEmail === aboutData.emails.secondary ? "COPIED ✓" : "COPY"}
                 </button>
               </div>
 
               {/* Profiles Row */}
-              <div className="flex items-center justify-between gap-3 pt-2 meta-label text-[0.75rem]">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 meta-label text-[0.75rem]">
                 <a
                   href={aboutData.socials.github}
                   target="_blank"

@@ -77,20 +77,20 @@ export function AboutHero() {
                 <span className="text-muted text-[0.6875rem]">COORDINATES</span>
                 <span className="text-muted text-[0.75rem]">{aboutData.coordinates}</span>
               </div>
-              <div className="flex justify-between items-baseline border-t border-hairline pt-3">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-0.5 sm:gap-2 border-t border-hairline pt-3">
                 <span className="text-muted text-[0.6875rem]">PRIMARY MAIL</span>
                 <a
                   href={`mailto:${aboutData.emails.primary}`}
-                  className="text-terracotta hover:underline truncate max-w-[200px]"
+                  className="text-terracotta hover:underline break-all"
                 >
                   {aboutData.emails.primary}
                 </a>
               </div>
-              <div className="flex justify-between items-baseline">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-0.5 sm:gap-2">
                 <span className="text-muted text-[0.6875rem]">ALT MAIL</span>
                 <a
                   href={`mailto:${aboutData.emails.secondary}`}
-                  className="text-ink hover:underline truncate max-w-[200px]"
+                  className="text-ink hover:underline break-all"
                 >
                   {aboutData.emails.secondary}
                 </a>
