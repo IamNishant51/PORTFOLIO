@@ -26,9 +26,8 @@ export function Act01Arrival() {
 
     const ctx = gsap.context(() => {
       // 1. Entrance timeline: Line-by-line clip wipe for Instrument Serif headline
-      introTlRef.current = gsap.timeline({
-        paused: true,
-      });
+      // No loading screen: the entrance plays as soon as the hero mounts.
+      introTlRef.current = gsap.timeline();
       const introTl = introTlRef.current;
 
       if (line1Ref.current && line2Ref.current) {
@@ -189,28 +188,7 @@ export function Act01Arrival() {
       });
     }, containerRef);
 
-    // Handoff from Preloader
-    const handleFlightStart = () => {
-      introTlRef.current?.play();
-    };
-
-    window.addEventListener("preloader-flight-start", handleFlightStart);
-    window.addEventListener("preloader-docked", handleFlightStart);
-
-    // Fallback: if the intro already played (reload, or return
-    // navigation), the preloader's event may have fired before these
-    // listeners attached. The hero's entrance is paused until it hears
-    // the event, so a missed event would leave the hero invisible
-    // forever. If the intro is already seen, play now instead.
-    try {
-      if (sessionStorage.getItem("preloader-seen") === "1") {
-        introTlRef.current?.play();
-      }
-    } catch {}
-
     return () => {
-      window.removeEventListener("preloader-flight-start", handleFlightStart);
-      window.removeEventListener("preloader-docked", handleFlightStart);
       ctx.revert();
     };
   }, []);
