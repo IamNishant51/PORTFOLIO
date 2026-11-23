@@ -1,23 +1,28 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import NextImage from "next/image";
 import { usePathname } from "next/navigation";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { PlateFrame } from "@/components/primitives/PlateFrame";
 
 /**
  * The Colonnade — the site's intro.
  *
  * Built from the award-winning preloader pattern (hairline progress +
  * colonnade split reveal): one paper plate, one serif wordmark rising
- * from its masks, one 1px terracotta hairline tracking real loading
- * (fonts + hero images, capped), and a small odometer-reel number in
- * the corner. At 100 the plate parts along its own columns and the
- * hero — already painted underneath — is revealed, its entrance
- * starting while the columns are still lifting.
+ * from its masks, the hero's own portrait in a framed plate beside it,
+ * one 1px terracotta hairline tracking real loading (fonts + hero
+ * images, capped), and a small odometer-reel number in the corner.
+ * At 100 the plate parts along its own columns and the hero — already
+ * painted underneath — is revealed, its entrance starting while the
+ * columns are still lifting.
  *
  * It plays once per session, never on return navigation, and is skipped
  * entirely under prefers-reduced-motion. Total time to a readable hero
- * is capped at ~2.5s; Escape or click skips it immediately.
+ * is capped at ~2.5s; Escape or click skips it immediately. A plain
+ * 5-second backstop unmounts it even if the exit animation stalls,
+ * so a stuck loader is structurally impossible.
  */
 
 // Module-level flag: once the intro has played (or been skipped) in this
@@ -62,6 +67,8 @@ export function Preloader() {
   const tagRef = useRef<HTMLParagraphElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const portraitImgRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const tensReelRef = useRef<HTMLDivElement>(null);
   const onesReelRef = useRef<HTMLDivElement>(null);
@@ -144,6 +151,24 @@ export function Preloader() {
       { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
       0.35
     );
+    // The portrait plate rises with the wordmark, and the image inside
+    // settles from a slight zoom — the loader is a cover, not a blank.
+    if (portraitRef.current) {
+      introTl.fromTo(
+        portraitRef.current,
+        { opacity: 0, y: 28, scale: 0.98 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out" },
+        0.45
+      );
+    }
+    if (portraitImgRef.current) {
+      introTl.fromTo(
+        portraitImgRef.current,
+        { scale: 1.12 },
+        { scale: 1, duration: 1.8, ease: "power2.out" },
+        0.3
+      );
+    }
 
     // Honest progress: wait for the fonts and the hero images, with a
     // cap so a slow asset never holds the page hostage. A failed decode
@@ -192,6 +217,7 @@ export function Preloader() {
           tagRef.current,
           metaRef.current,
           bottomRef.current,
+          portraitRef.current,
         ],
         {
           yPercent: -130,
@@ -257,6 +283,16 @@ export function Preloader() {
       if (!cancelled) runExit(false);
     }, 3000);
 
+    // Absolute backstop: the intro must unmount even if the GSAP exit
+    // timeline stalls and its onComplete never fires. This is a plain
+    // state flip, independent of any animation, so a stuck loader is
+    // structurally impossible past 5 seconds.
+    const backstop = setTimeout(() => {
+      document.body.style.overflow = "";
+      lenis?.start();
+      setHidden(true);
+    }, 5000);
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") runExit(true);
     };
@@ -268,6 +304,7 @@ export function Preloader() {
       // replays it.
       markSeen();
       clearTimeout(safety);
+      clearTimeout(backstop);
       countTween.kill();
       introTl.kill();
       exitTl?.kill();
@@ -305,7 +342,9 @@ export function Preloader() {
         ))}
       </div>
 
-      {/* Content: one wordmark, one hairline, one number. Nothing else. */}
+      {/* Content: one wordmark, one portrait plate, one hairline, one
+          number. The portrait is the hero's own image, so the loader
+          previews the page it is about to reveal. */}
       <div className="relative z-10 w-full h-full max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 flex flex-col justify-between py-8 sm:py-10 pb-[calc(2rem+env(safe-area-inset-bottom))] pointer-events-none">
         {/* Top meta row */}
         <div
@@ -316,30 +355,54 @@ export function Preloader() {
           <span>18°31'N — 73°51'E</span>
         </div>
 
-        {/* Wordmark, left-aligned and asymmetric, like the rest of the site */}
-        <div className="flex flex-col items-start my-auto">
-          <div className="overflow-hidden">
-            <span
-              ref={line1Ref}
-              className="block font-serif text-ink leading-[0.95] tracking-[-0.02em] text-[clamp(2.75rem,8vw,7rem)] will-change-transform"
+        {/* Wordmark + portrait plate, left-aligned and asymmetric, like
+            the rest of the site. The portrait is the hero's own image,
+            so the loader previews the page it is about to reveal. */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-12 my-auto">
+          <div className="flex flex-col items-start">
+            <div className="overflow-hidden">
+              <span
+                ref={line1Ref}
+                className="block font-serif text-ink leading-[0.95] tracking-[-0.02em] text-[clamp(2.75rem,8vw,7rem)] will-change-transform"
+              >
+                Nishant
+              </span>
+            </div>
+            <div className="overflow-hidden">
+              <span
+                ref={line2Ref}
+                className="block font-serif italic text-terracotta leading-[0.95] tracking-[-0.02em] text-[clamp(2.75rem,8vw,7rem)] will-change-transform"
+              >
+                Unavane
+              </span>
+            </div>
+            <p
+              ref={tagRef}
+              className="mt-5 font-mono text-[0.6875rem] text-muted tracking-[0.18em] uppercase"
             >
-              Nishant
-            </span>
+              Software, made by hand
+            </p>
           </div>
-          <div className="overflow-hidden">
-            <span
-              ref={line2Ref}
-              className="block font-serif italic text-terracotta leading-[0.95] tracking-[-0.02em] text-[clamp(2.75rem,8vw,7rem)] will-change-transform"
-            >
-              Unavane
-            </span>
-          </div>
-          <p
-            ref={tagRef}
-            className="mt-5 font-mono text-[0.6875rem] text-muted tracking-[0.18em] uppercase"
+          <div
+            ref={portraitRef}
+            className="w-full sm:w-[280px] lg:w-[320px] shrink-0 will-change-transform"
           >
-            Software, made by hand
-          </p>
+            <PlateFrame>
+              <div
+                ref={portraitImgRef}
+                className="relative w-full h-[160px] sm:h-[300px] lg:h-[340px] overflow-hidden will-change-transform"
+              >
+                <NextImage
+                  src={HERO_PORTRAIT}
+                  alt="Portrait of Nishant Unavane"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 320px"
+                  className="object-cover object-top sm:object-center"
+                  priority
+                />
+              </div>
+            </PlateFrame>
+          </div>
         </div>
 
         {/* Bottom: hairline progress + counter + skip */}
