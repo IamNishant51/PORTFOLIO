@@ -46,36 +46,73 @@ export function Act06Horizon() {
     }
 
     const ctx = gsap.context(() => {
-      // 1. Background Caspar David Friedrich horizon plate zoom
-      if (plateRef.current) {
-        gsap.to(plateRef.current, {
-          scale: 1.18,
-          yPercent: 8,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom bottom",
-            scrub: 0.8,
-          },
-        });
-      }
+      const mm = gsap.matchMedia();
 
-      // 2. Birds flight path across the sky
-      if (birdsRef.current) {
-        gsap.to(birdsRef.current, {
-          xPercent: 35,
-          yPercent: -18,
-          rotate: -4,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom bottom",
-            scrub: 0.8,
-          },
-        });
-      }
+      // 1. Background Caspar David Friedrich horizon plate zoom.
+      // Mobile uses a gentler zoom: the tall phone footer already crops the
+      // plate hard, so a desktop-strength zoom would leave only a sliver.
+      mm.add("(max-width: 767px)", () => {
+        if (plateRef.current) {
+          gsap.to(plateRef.current, {
+            scale: 1.05,
+            yPercent: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom bottom",
+              scrub: 0.8,
+            },
+          });
+        }
+
+        if (birdsRef.current) {
+          gsap.to(birdsRef.current, {
+            xPercent: 7,
+            yPercent: -5,
+            rotate: -4,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom bottom",
+              scrub: 0.8,
+            },
+          });
+        }
+      });
+
+      mm.add("(min-width: 768px)", () => {
+        if (plateRef.current) {
+          gsap.to(plateRef.current, {
+            scale: 1.18,
+            yPercent: 8,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom bottom",
+              scrub: 0.8,
+            },
+          });
+        }
+
+        // 2. Birds flight path across the sky
+        if (birdsRef.current) {
+          gsap.to(birdsRef.current, {
+            xPercent: 35,
+            yPercent: -18,
+            rotate: -4,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom bottom",
+              scrub: 0.8,
+            },
+          });
+        }
+      });
 
       // 4. Headline reveal
       if (headlineRef.current) {
@@ -104,20 +141,31 @@ export function Act06Horizon() {
     <footer
       id="contact"
       ref={containerRef}
-      className="relative min-h-[100svh] w-full pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 bg-paper-static overflow-hidden flex flex-col justify-between"
+      className="relative min-h-[100svh] w-full pt-16 sm:pt-20 md:pt-24 pb-[max(2rem,env(safe-area-inset-bottom))] sm:pb-[max(2.5rem,env(safe-area-inset-bottom))] md:pb-[max(3rem,env(safe-area-inset-bottom))] bg-paper-static overflow-hidden flex flex-col justify-between"
       aria-label="Act 06: The Horizon and Footer"
     >
       {/* Background Caspar David Friedrich golden evening horizon plate */}
       <div
         ref={plateRef}
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-35 z-0 scale-[1.04] will-change-transform"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-50 md:opacity-35 z-0 scale-[1.04] will-change-transform"
       >
+        {/* Desktop plate (landscape, as before) */}
         <Image
           src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/07-act6-horizon/a6-horizon-plate.webp"
           alt="Caspar David Friedrich golden evening horizon landscape with warm glowing sky"
           fill
           sizes="100vw"
-          className="object-cover object-bottom"
+          className="hidden md:block object-cover object-bottom"
+        />
+        {/* Mobile plate: centre crop of the same plate (golden sky + figure),
+            so the tall phone footer shows the horizon instead of a dark sliver.
+            Swap this URL for the new footer artwork when it is ready. */}
+        <Image
+          src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/07-act6-horizon/a6-horizon-plate.webp?tr=w-800,h-1400,cm-extract,fo-center"
+          alt="Caspar David Friedrich golden evening horizon landscape with warm glowing sky"
+          fill
+          sizes="100vw"
+          className="block md:hidden object-cover object-center"
         />
       </div>
 
@@ -162,7 +210,7 @@ export function Act06Horizon() {
               <div>
                 <a
                   href={`mailto:${profile.email}`}
-                  className="font-serif text-2xl sm:text-3xl md:text-4xl lg:display-lg text-ink hover:text-terracotta transition-colors duration-hoverIn underline decoration-hairline-strong underline-offset-8 break-all inline-block hover:translate-x-1 transition-transform"
+                  className="font-serif text-[1.375rem] min-[400px]:text-2xl sm:text-3xl md:text-4xl lg:display-lg text-ink hover:text-terracotta transition-colors duration-hoverIn underline decoration-hairline-strong underline-offset-8 break-words inline-block hover:translate-x-1 transition-transform"
                   aria-label={`Send email to ${profile.email}`}
                 >
                   {profile.email}
@@ -174,7 +222,7 @@ export function Act06Horizon() {
                   href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="meta-label text-ink hover:text-terracotta transition-colors text-xs font-semibold py-2 px-2.5 -my-1 -mx-1 inline-flex items-center min-h-[40px]"
+                  className="meta-label text-ink hover:text-terracotta transition-colors text-xs font-semibold py-2 px-2.5 -my-1 -mx-1 inline-flex items-center min-h-[44px]"
                 >
                   GITHUB ↗
                 </a>
@@ -183,7 +231,7 @@ export function Act06Horizon() {
                   href={profile.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="meta-label text-ink hover:text-terracotta transition-colors text-xs font-semibold py-2 px-2.5 -my-1 -mx-1 inline-flex items-center min-h-[40px]"
+                  className="meta-label text-ink hover:text-terracotta transition-colors text-xs font-semibold py-2 px-2.5 -my-1 -mx-1 inline-flex items-center min-h-[44px]"
                 >
                   LINKEDIN ↗
                 </a>
@@ -192,7 +240,7 @@ export function Act06Horizon() {
                   href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="meta-label text-ink hover:text-terracotta transition-colors text-xs font-semibold py-2 px-2.5 -my-1 -mx-1 inline-flex items-center min-h-[40px]"
+                  className="meta-label text-ink hover:text-terracotta transition-colors text-xs font-semibold py-2 px-2.5 -my-1 -mx-1 inline-flex items-center min-h-[44px]"
                 >
                   RÉSUMÉ ↗
                 </a>
@@ -248,16 +296,16 @@ export function Act06Horizon() {
           <div className="flex flex-col gap-2">
             <span className="meta-label text-muted">NAVIGATE</span>
             <nav className="flex flex-col gap-1.5" aria-label="Footer navigation">
-              <a href="#arrival" className="hover:text-terracotta transition-colors py-1">
+              <a href="#arrival" className="hover:text-terracotta transition-colors py-1.5">
                 Arrival (Hero)
               </a>
-              <a href="#colonnade" className="hover:text-terracotta transition-colors py-1">
+              <a href="#colonnade" className="hover:text-terracotta transition-colors py-1.5">
                 Disciplines
               </a>
-              <a href="#work" className="hover:text-terracotta transition-colors py-1">
+              <a href="#work" className="hover:text-terracotta transition-colors py-1.5">
                 Selected Work
               </a>
-              <a href="#studio" className="hover:text-terracotta transition-colors py-1">
+              <a href="#studio" className="hover:text-terracotta transition-colors py-1.5">
                 The Studio
               </a>
             </nav>
@@ -271,7 +319,7 @@ export function Act06Horizon() {
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-terracotta transition-colors py-1"
+                className="hover:text-terracotta transition-colors py-1.5"
               >
                 GitHub Profile ↗
               </a>
@@ -279,11 +327,11 @@ export function Act06Horizon() {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-terracotta transition-colors py-1"
+                className="hover:text-terracotta transition-colors py-1.5"
               >
                 LinkedIn Profile ↗
               </a>
-              <Link href="/colophon" className="hover:text-terracotta transition-colors py-1">
+              <Link href="/colophon" className="hover:text-terracotta transition-colors py-1.5">
                 Site Colophon
               </Link>
             </div>
