@@ -8,7 +8,7 @@ import { PlateFrame } from "@/components/primitives/PlateFrame";
 export const metadata: Metadata = {
   title: "Projects & Experiments — Nishant Unavane · Portfolio 2027",
   description:
-    "A collection of 4 flagship autonomous systems, memory infrastructure, and 3 developer tools & visual experiments built by Nishant Unavane.",
+    "A collection of 4 flagship autonomous systems, memory infrastructure, and 28 developer tools & visual experiments built by Nishant Unavane.",
   openGraph: {
     title: "Projects & Selected Works — Nishant Unavane",
     description:
@@ -32,7 +32,7 @@ export default function ProjectsPage() {
               <span>BACK TO PORTFOLIO</span>
             </Link>
             <span className="hidden sm:inline font-mono">
-              CATALOGUE RAISONNÉ · 7 REPOSITORIES & SYSTEMS · 2024–2027
+              CATALOGUE RAISONNÉ · 32 REPOSITORIES & SYSTEMS · 2024–2027
             </span>
           </div>
           <div className="w-full h-[1px] bg-hairline" />
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
             A Collection of <em className="italic">Selected</em> Works and other Projects.
           </h1>
           <p className="body-editorial text-ink-soft text-lg sm:text-xl md:text-2xl leading-relaxed max-w-[62ch]">
-            Four production systems engineered for local-first autonomous agents, cognitive memory graphs, and token-optimized developer tools, alongside three focused motion and spatial experiments.
+            Four production systems engineered for local-first autonomous agents, cognitive memory graphs, and token-optimized developer tools, alongside twenty-eight field experiments, tools and side projects.
           </p>
 
           {/* Quick Stats Summary Grid */}
@@ -56,7 +56,7 @@ export default function ProjectsPage() {
               </span>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="font-serif text-2xl sm:text-3xl text-ink">03</span>
+              <span className="font-serif text-2xl sm:text-3xl text-ink">28</span>
               <span className="meta-label text-[0.625rem] text-muted font-mono">
                 FIELD EXPERIMENTS
               </span>
@@ -261,7 +261,7 @@ export default function ProjectsPage() {
               </p>
             </div>
             <span className="meta-label text-muted text-xs font-mono">
-              PROJECTS 05 — 07
+              PROJECTS 05 — 32
             </span>
           </div>
 
@@ -366,7 +366,7 @@ export default function ProjectsPage() {
                 ))}
                 {experiments.map((exp, eIdx) => (
                   <tr key={exp.title} className="hover:bg-paper transition-colors">
-                    <td className="py-3.5 px-4 text-muted">0{eIdx + 5}</td>
+                    <td className="py-3.5 px-4 text-muted">{String(eIdx + 5).padStart(2, "0")}</td>
                     <td className="py-3.5 px-4 font-serif text-base text-ink font-normal">
                       {exp.title}
                     </td>
