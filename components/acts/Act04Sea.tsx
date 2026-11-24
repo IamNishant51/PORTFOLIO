@@ -98,12 +98,12 @@ export function Act04Sea() {
                 <h3 className="display-md text-ink font-normal">{item.title}</h3>
 
                 {item.image && (
-                  <div className="relative w-full aspect-[3/4] my-3 rounded-xs overflow-hidden border border-hairline bg-paper-edge shadow-xs">
+                  <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] my-3 rounded-xs overflow-hidden border border-hairline bg-paper-edge shadow-xs">
                     <Image
                       src={item.image}
                       alt={`${item.title} preview`}
                       fill
-                      sizes="(max-width: 768px) 100vw, 400px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                       className="object-contain p-2"
                     />
                   </div>

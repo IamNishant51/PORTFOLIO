@@ -36,7 +36,7 @@ export const projects: Project[] = [
       repo: "https://github.com/IamNishant51/Custom-PI",
       live: "https://custom-pi-ai.vercel.app",
     },
-    image: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/custom-pi.webp",
+    image: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/projects/custom-pi.png?v=2",
   },
   {
     id: "02",

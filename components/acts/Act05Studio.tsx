@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import dynamic from "next/dynamic";
 import { profile } from "@/content/profile";
 import { methodSteps } from "@/content/method";
 import { timeline } from "@/content/timeline";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-
-const Grainient = dynamic(() => import("@/components/ui/Grainient"), {
-  ssr: false,
-});
 
 export function Act05Studio() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -63,7 +65,7 @@ export function Act05Studio() {
         const cards = methodContainerRef.current.children;
         gsap.fromTo(
           cards,
-          { opacity: 0, y: 50, scale: 0.96 },
+          { opacity: 0, y: 40, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
@@ -80,18 +82,19 @@ export function Act05Studio() {
         );
       }
 
-      // 3. Timeline items sequential slide
+      // 3. Timeline items sequential entrance
       if (timelineContainerRef.current) {
         const items = timelineContainerRef.current.children;
         gsap.fromTo(
           items,
-          { opacity: 0, x: -30 },
+          { opacity: 0, y: 40, scale: 0.98 },
           {
             opacity: 1,
-            x: 0,
+            y: 0,
+            scale: 1,
             stagger: 0.14,
-            duration: 0.7,
-            ease: "power2.out",
+            duration: 0.8,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: timelineContainerRef.current,
               start: "top 85%",
@@ -179,48 +182,59 @@ export function Act05Studio() {
           </div>
         </div>
 
-        {/* Studio Method: 4 steps in asymmetric grid */}
+        {/* Studio Method: 4 steps in grid using shadcn Card */}
         <div className="flex flex-col gap-8 pt-6 sm:pt-8">
           <div className="meta-label text-muted tracking-[0.2em]">
             METHOD · FOUR STEPS
           </div>
           <div
             ref={methodContainerRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7"
           >
-            {methodSteps.map((step) => (
-              <div
+            {methodSteps.map((step, idx) => (
+              <Card
                 key={step.step}
-                className="group relative overflow-hidden flex flex-col justify-between gap-4 p-6 sm:p-7 lg:p-8 border-t border-hairline bg-paper-soft/90 backdrop-blur-md shadow-sm hover:bg-paper hover:border-terracotta/40 transition-all duration-calm hover:-translate-y-1 rounded-xs"
+                className="group relative flex flex-col justify-between overflow-hidden border border-hairline bg-paper-soft/75 hover:bg-paper hover:border-hairline-strong transition-all duration-calm hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(26,24,21,0.06)] rounded-xs"
               >
-                {/* Grainient ambient canvas */}
-                <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-70 transition-opacity duration-calm">
-                  <Grainient
-                    colors={["#FBF8F2", "#EFE9DC", "#E5DEC9", "#D8C6A6", "#C05B3C"]}
-                    flow={0.5}
-                    silk={0.3}
-                    grainAmount={0.05}
-                    speed={0.35}
-                  />
+                {/* Subtle top architectural highlight */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent group-hover:bg-terracotta/80 transition-colors duration-calm" />
+
+                <div>
+                  <CardHeader className="p-6 sm:p-7 pb-3 flex flex-col gap-4">
+                    <div className="flex items-baseline justify-between border-b border-hairline/60 pb-3">
+                      <span className="font-serif text-3xl sm:text-4xl text-ink/80 group-hover:text-terracotta transition-colors duration-calm tabular-nums">
+                        {step.step}
+                      </span>
+                      <span className="meta-label text-muted text-[0.625rem] tracking-[0.2em]">
+                        PHASE · 0{idx + 1}
+                      </span>
+                    </div>
+                    <CardTitle className="font-serif text-xl sm:text-2xl font-normal text-ink leading-snug group-hover:translate-x-0.5 transition-transform duration-calm">
+                      {step.title}
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent className="px-6 sm:px-7 py-2">
+                    <p className="body-sm text-body leading-relaxed">
+                      {step.body}
+                    </p>
+                  </CardContent>
                 </div>
 
-                <div className="relative z-10 flex flex-col gap-3">
-                  <span className="font-serif text-3xl sm:text-4xl text-ink/80 tabular-nums group-hover:text-terracotta transition-colors">
-                    {step.step}
+                <CardFooter className="px-6 sm:px-7 pt-3 pb-5 mt-3 border-t border-hairline/60 flex items-center justify-between text-muted">
+                  <span className="meta-label text-[0.625rem] tracking-[0.16em]">
+                    PRACTICE
                   </span>
-                  <h3 className="title-ui text-ink font-medium text-lg">
-                    {step.title}
-                  </h3>
-                  <p className="body-sm text-body leading-relaxed">
-                    {step.body}
-                  </p>
-                </div>
-              </div>
+                  <span className="font-mono text-xs text-muted/80">
+                    0{idx + 1} / 04
+                  </span>
+                </CardFooter>
+              </Card>
             ))}
           </div>
         </div>
 
-        {/* Record / Timeline: 3 entries in balanced grid */}
+        {/* Record / Timeline: 3 entries in balanced grid using shadcn Card */}
         <div className="flex flex-col gap-8 pt-6 sm:pt-8">
           <div className="flex items-center justify-between border-b border-hairline pb-3">
             <span className="meta-label text-muted tracking-[0.2em]">
@@ -233,41 +247,47 @@ export function Act05Studio() {
 
           <div
             ref={timelineContainerRef}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7"
           >
             {timeline.map((entry, idx) => (
-              <div
+              <Card
                 key={idx}
-                className="group relative overflow-hidden flex flex-col justify-between gap-4 p-6 sm:p-7 lg:p-8 border-t border-hairline bg-paper-soft/90 backdrop-blur-md shadow-sm hover:bg-paper hover:border-terracotta/40 transition-all duration-calm hover:-translate-y-1 rounded-xs"
+                className="group relative flex flex-col justify-between overflow-hidden border border-hairline bg-paper-soft/75 hover:bg-paper hover:border-hairline-strong transition-all duration-calm hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(26,24,21,0.06)] rounded-xs"
               >
-                {/* Grainient ambient canvas */}
-                <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-70 transition-opacity duration-calm">
-                  <Grainient
-                    colors={["#FBF8F2", "#EFE9DC", "#E5DEC9", "#D8C6A6", "#C05B3C"]}
-                    flow={0.5}
-                    silk={0.3}
-                    grainAmount={0.05}
-                    speed={0.35}
-                  />
+                {/* Subtle top architectural highlight */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent group-hover:bg-terracotta/80 transition-colors duration-calm" />
+
+                <div>
+                  <CardHeader className="p-6 sm:p-7 pb-3 flex flex-col gap-4">
+                    <div className="flex items-baseline justify-between border-b border-hairline/60 pb-3">
+                      <span className="meta-label text-terracotta text-xs font-semibold tracking-wider">
+                        {entry.years}
+                      </span>
+                      <span className="font-mono text-xs text-muted">
+                        0{idx + 1}
+                      </span>
+                    </div>
+                    <CardTitle className="font-serif text-2xl text-ink font-normal leading-snug group-hover:translate-x-0.5 transition-transform duration-calm">
+                      {entry.title}
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent className="px-6 sm:px-7 py-2">
+                    <p className="body-sm text-body leading-relaxed">
+                      {entry.body}
+                    </p>
+                  </CardContent>
                 </div>
 
-                <div className="relative z-10 flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <span className="meta-label text-terracotta text-xs font-semibold">
-                      {entry.years}
-                    </span>
-                    <span className="font-mono text-xs text-muted">
-                      0{idx + 1}
-                    </span>
-                  </div>
-                  <h4 className="font-serif text-2xl text-ink group-hover:translate-x-1 transition-transform">
-                    {entry.title}
-                  </h4>
-                  <p className="body-sm text-body leading-relaxed">
-                    {entry.body}
-                  </p>
-                </div>
-              </div>
+                <CardFooter className="px-6 sm:px-7 pt-3 pb-5 mt-3 border-t border-hairline/60 flex items-center justify-between text-muted">
+                  <span className="meta-label text-[0.625rem] tracking-[0.16em]">
+                    EXPERIENCE
+                  </span>
+                  <span className="font-serif text-sm text-muted group-hover:text-terracotta group-hover:translate-x-1 transition-all duration-calm">
+                    →
+                  </span>
+                </CardFooter>
+              </Card>
             ))}
           </div>
         </div>

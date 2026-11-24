@@ -121,15 +121,15 @@ export function ProjectRow({
           </p>
 
           {/* Mobile Touch Preview Plate */}
-          <div className="block md:hidden relative w-full h-44 my-3 rounded-xs border border-hairline-strong overflow-hidden bg-paper-edge">
+          <div className="block md:hidden relative w-full aspect-[2/3] max-w-[280px] mx-auto my-3 rounded-xs border border-hairline-strong overflow-hidden bg-paper-edge shadow-xs">
             <Image
               src={imageSrc}
               alt={`Screenshot preview of ${project.title}`}
               fill
-              sizes="(max-width: 768px) 100vw, 300px"
-              className="object-cover"
+              sizes="(max-width: 768px) 280px, 300px"
+              className="object-contain p-2"
             />
-            <div className="absolute inset-0 bg-ink/5 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-ink/5 mix-blend-multiply pointer-events-none" />
           </div>
         </div>
 
