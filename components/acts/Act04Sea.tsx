@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { experiments } from "@/content/experiments";
 import { ActHeader } from "@/components/primitives/ActHeader";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 import { gsap } from "@/lib/gsap";
 
 export function Act04Sea() {
@@ -82,18 +82,18 @@ export function Act04Sea() {
                 <h3 className="display-md text-ink font-normal">{item.title}</h3>
 
                 {item.image && (
-                  <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] my-3 rounded-xs overflow-hidden border border-hairline bg-paper-edge shadow-xs">
-                    <Image
+                  <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] my-3 overflow-hidden">
+                    <SkeletonImage
                       src={item.image}
                       alt={`${item.title} preview`}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                      className="object-contain p-2"
+                      className="object-contain"
                     />
                   </div>
                 )}
 
-                <p className="body-editorial text-ink-soft font-medium text-[0.9375rem] leading-relaxed">
+                <p className="body-editorial text-body text-[0.9375rem] leading-relaxed">
                   {item.line}
                 </p>
               </div>

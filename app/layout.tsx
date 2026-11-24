@@ -10,7 +10,7 @@ import { SmoothScrollProvider } from "@/lib/lenis";
 const instrumentSerif = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   variable: "--font-instrument-serif",
   display: "swap",
 });

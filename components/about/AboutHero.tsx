@@ -41,11 +41,11 @@ export function AboutHero() {
             <Reveal delay={0.08}>
               <h1 className="display-mega text-ink font-normal leading-[0.92] tracking-tight">
                 The mind behind the{" "}
-                <em className="italic font-serif text-terracotta">machine.</em>
+                <em className="font-serif text-ink">machine.</em>
               </h1>
             </Reveal>
             <Reveal delay={0.16}>
-              <p className="body-editorial text-body text-xl sm:text-2xl max-w-[62ch] font-serif italic">
+              <p className="body-editorial text-body text-xl sm:text-2xl max-w-[62ch] font-serif">
                 &ldquo;{aboutData.bioLead}&rdquo;
               </p>
             </Reveal>

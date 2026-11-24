@@ -68,11 +68,11 @@ export function Nav() {
 
   const isDark = false;
 
-  // Paper nav bar that seamlessly blends with the active section background
+  // Transparent nav bar that seamlessly blends with the active section background
   const navBg = mobileMenuOpen
     ? "bg-paper border-b border-hairline/60"
     : scrolled
-    ? "bg-paper/95 border-b border-hairline/60"
+    ? "bg-transparent backdrop-blur-md border-b border-hairline/40"
     : "bg-transparent border-b border-transparent";
 
   return (
@@ -114,7 +114,7 @@ export function Nav() {
 
         {/* Center: Editorial Nav Links (Desktop) */}
         <nav
-          className="hidden md:flex items-center gap-6 lg:gap-8 text-[0.875rem] font-semibold text-ink transition-colors"
+          className="hidden md:flex items-center gap-6 lg:gap-8 text-[0.875rem] font-medium text-ink transition-colors"
           aria-label="Primary navigation"
         >
           <a

@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 import { projects } from "@/content/projects";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 import { generateProjectJsonLd } from "@/lib/seo";
 
 interface CaseStudyProps {
@@ -129,13 +129,13 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
             <PlateFrame
               caption={`PLATE 03 — ARCHITECTURAL CASE STUDY: ${project.title.toUpperCase()}`}
             >
-              <div className="relative w-full aspect-[2/3] overflow-hidden rounded-xs bg-paper-edge shadow-inner">
-                <Image
+              <div className="relative w-full aspect-[2/3] overflow-hidden">
+                <SkeletonImage
                   src={project.image || "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/04-act3-temple/a3-temple-plate.webp"}
                   alt={`Architectural study plate representing ${project.title}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 620px"
-                  className="object-contain p-2"
+                  className="object-contain"
                   priority
                 />
               </div>

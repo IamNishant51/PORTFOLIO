@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { profile } from "@/content/profile";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 
 const Lanyard = dynamic(() => import("@/components/ui/Lanyard"), {
   ssr: false,
@@ -162,7 +163,7 @@ export function Act06Horizon() {
               >
                 Let&apos;s make something
                 <br />
-                <em className="italic font-serif">worth keeping.</em>
+                <em className="font-serif">worth keeping.</em>
               </h2>
             </div>
 
@@ -312,7 +313,7 @@ export function Act06Horizon() {
           aspectRatio="16/9"
         >
           <div className="relative w-full h-full overflow-hidden">
-            <Image
+            <SkeletonImage
               src="https://ik.imagekit.io/9pfz6g8ri/footer.png"
               alt="Classical stone columns framing a bright mountain valley under a blue sky with doves and wildflowers"
               fill

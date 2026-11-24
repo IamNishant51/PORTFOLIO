@@ -52,7 +52,7 @@ export function AboutMetrics() {
                 DIRECT CORRESPONDENCE
               </span>
               <h3 className="display-lg text-ink font-normal leading-[0.98]">
-                Open for <em className="italic font-serif">collaboration.</em>
+                Open for <em className="font-serif">collaboration.</em>
               </h3>
               <p className="body-editorial text-body text-base">
                 For agent systems engineering, full-stack architectures, or technical leadership.

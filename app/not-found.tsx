@@ -8,7 +8,7 @@ export default function NotFound() {
           ACT 404 · THE MISSING ROOM
         </span>
         <h1 className="font-serif text-5xl md:text-7xl text-ink font-normal">
-          This path ends <em className="italic">here.</em>
+          This path ends <em className="font-serif">here.</em>
         </h1>
         <p className="body-editorial text-body text-base">
           The page you are looking for has been moved or does not exist in this edition.

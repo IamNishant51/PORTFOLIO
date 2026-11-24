@@ -8,7 +8,7 @@
   --color-paper-static: #F3F7EE;
   --color-ink: #0A0B0A;
   --color-ink-soft: #1D201C;
-  --color-body: #333731;
+  --color-body: #2E332C;
   --color-muted: #555A52;
   --color-hairline: #D2DACB;
   --color-hairline-strong: #B6C2AB;
@@ -183,7 +183,7 @@ body {
   .body-editorial {
     font-family: var(--font-sans);
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.65;
     letter-spacing: 0.005em;
     text-wrap: pretty;
@@ -194,7 +194,7 @@ body {
   .body-sm {
     font-family: var(--font-sans);
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.6;
     text-wrap: pretty;
     color: var(--color-body);
@@ -203,12 +203,29 @@ body {
   .meta-label {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.4;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-muted);
   }
+}
+
+em, .italic {
+  font-style: normal;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.animate-skeleton {
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
 }
 
 @media (max-width: 639px) {

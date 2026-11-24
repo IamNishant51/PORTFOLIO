@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { profile } from "@/content/profile";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 export function Act01Arrival() {
@@ -262,14 +263,14 @@ export function Act01Arrival() {
               </span>
               <span className="block overflow-hidden pb-1">
                 <span ref={line2Ref} className="block will-change-transform">
-                  made by <em className="italic font-serif">hand.</em>
+                  made by <em className="font-serif">hand.</em>
                 </span>
               </span>
             </h1>
 
             <p
               ref={subRef}
-              className="body-editorial text-ink-soft text-lg md:text-xl max-w-[58ch] leading-relaxed font-medium"
+              className="body-editorial text-body text-lg md:text-xl max-w-[58ch] leading-relaxed"
             >
               Full-stack developer and agentic systems engineer. I build interfaces,
               developer tools, and the coding agents that use them.
@@ -314,7 +315,7 @@ export function Act01Arrival() {
           >
             <div className="w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[430px]">
               <PlateFrame aspectRatio="3/4">
-                <Image
+                <SkeletonImage
                   src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp"
                   alt="Optical prism slit-scan portrait of Nishant Unavane with quote: Not every unanswered question needs an immediate answer, some clarity takes living."
                   fill

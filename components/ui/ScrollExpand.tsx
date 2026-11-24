@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import "./ScrollExpand.css";
 
 const clamp = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
@@ -75,6 +74,7 @@ export default function ScrollExpand({
   const overlayRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
+  const [mediaLoaded, setMediaLoaded] = useState(false);
 
   const propsRef = useRef({
     startWidth,
@@ -257,25 +257,41 @@ export default function ScrollExpand({
       <picture className="contents">
         <source media="(max-width: 768px)" srcSet={mobileSrc} />
         <img
-          ref={mediaRef as React.RefObject<HTMLImageElement>}
-          className="scroll-expand__media"
+          ref={(el) => {
+            mediaRef.current = el;
+            if (el && el.complete && el.naturalWidth > 0) setMediaLoaded(true);
+          }}
+          className={`scroll-expand__media transition-opacity duration-300 ${mediaLoaded ? "opacity-100" : "opacity-0"}`}
           src={src}
           alt={alt}
+          onLoad={() => setMediaLoaded(true)}
+          onError={() => setMediaLoaded(true)}
           draggable={false}
         />
       </picture>
     ) : (
       <img
-        ref={mediaRef as React.RefObject<HTMLImageElement>}
-        className="scroll-expand__media"
+        ref={(el) => {
+          mediaRef.current = el;
+          if (el && el.complete && el.naturalWidth > 0) setMediaLoaded(true);
+        }}
+        className={`scroll-expand__media transition-opacity duration-300 ${mediaLoaded ? "opacity-100" : "opacity-0"}`}
         src={src}
         alt={alt}
+        onLoad={() => setMediaLoaded(true)}
+        onError={() => setMediaLoaded(true)}
         draggable={false}
       />
     );
 
   const frameContent = (
     <>
+      {!mediaLoaded && mediaType === "image" && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-paper-deep animate-skeleton pointer-events-none"
+        />
+      )}
       {media}
       <div ref={scrimRef} className="scroll-expand__scrim" />
       {children ? (

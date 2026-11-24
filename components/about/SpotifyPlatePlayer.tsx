@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import Image from "next/image";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 
 export interface PlateTrackItem {
   src: string;
@@ -240,10 +240,10 @@ export function SpotifyPlatePlayer({
           {/* Plate Artwork / Song Cover Thumbnail with flip indicator */}
           <div
             onClick={onToggleFlip || onToggleFocus}
-            className="relative w-12 h-14 sm:w-14 sm:h-16 flex-shrink-0 rounded-xs overflow-hidden border border-hairline-strong bg-paper cursor-pointer group shadow-xs hover:border-terracotta transition-colors"
+            className="relative w-12 h-14 sm:w-14 sm:h-16 flex-shrink-0 overflow-hidden cursor-pointer group"
             title={onToggleFlip ? "Click to flip between artwork and song cover" : "Click to toggle focused lens"}
           >
-            <Image
+            <SkeletonImage
               src={isFlipped ? currentTrack.coverSrc : currentTrack.src}
               alt={isFlipped ? `${currentTrack.songTitle} Cover` : currentTrack.alt}
               fill

@@ -24,7 +24,7 @@ export function AboutBio() {
           <div className="lg:col-span-7 flex flex-col gap-8">
             <Reveal>
               <h2 className="display-xl text-ink font-normal leading-[0.96]">
-                Code as <em className="italic font-serif">printmaking.</em>
+                Code as <em className="font-serif">printmaking.</em>
               </h2>
             </Reveal>
 
@@ -39,7 +39,7 @@ export function AboutBio() {
             {/* Quote Callout */}
             <Reveal delay={0.24}>
               <div className="p-6 bg-paper-edge border-l-2 border-terracotta border-hairline border-t border-r border-b rounded-xs">
-                <blockquote className="font-serif italic text-xl text-ink leading-snug">
+                <blockquote className="font-serif text-xl text-ink leading-snug">
                   &ldquo;A local model on your own machine that answers in twelve milliseconds with
                   zero egress beats a massive cloud model that lags, telemetry-tracks, and breaks when
                   the Wi-Fi wavers.&rdquo;

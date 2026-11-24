@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import { aboutData, AboutPlate } from "@/content/about";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 import { Reveal } from "@/components/primitives/Reveal";
 import { gsap } from "@/lib/gsap";
 
@@ -46,7 +46,7 @@ export function AboutPlatesGallery() {
               caption={`${activePlate.plate} · ${activePlate.title.toUpperCase()} · ARCHIVES`}
               aspectRatio="3/4"
             >
-              <Image
+              <SkeletonImage
                 src={activePlate.src}
                 alt={`${activePlate.title} — ${activePlate.subtitle}`}
                 fill
@@ -123,14 +123,14 @@ export function AboutPlatesGallery() {
                       key={plate.id}
                       type="button"
                       onClick={() => setActiveIdx(idx)}
-                      className={`relative aspect-[3/4] rounded-xs overflow-hidden border transition-all cursor-pointer group focus-visible:outline-ink focus-visible:outline-2 ${
+                      className={`relative aspect-[3/4] overflow-hidden transition-all cursor-pointer group focus-visible:outline-ink focus-visible:outline-2 ${
                         isSelected
-                          ? "border-ink shadow-[0_0_0_2px_rgba(10,11,10,0.25)] scale-[1.03]"
-                          : "border-hairline-strong opacity-70 hover:opacity-100 hover:border-ink"
+                          ? "opacity-100 scale-[1.03]"
+                          : "opacity-65 hover:opacity-100"
                       }`}
                       aria-label={`Select ${plate.plate}: ${plate.title}`}
                     >
-                      <Image
+                      <SkeletonImage
                         src={plate.src}
                         alt=""
                         fill
@@ -162,22 +162,14 @@ export function AboutPlatesGallery() {
                 onClick={() => setActiveIdx(idx)}
                 className="cursor-pointer group flex flex-col gap-2"
               >
-                <div
-                  className={`relative aspect-[3/4] rounded-xs overflow-hidden border p-1 bg-paper-edge transition-all ${
-                    idx === activeIdx
-                      ? "border-terracotta"
-                      : "border-hairline group-hover:border-hairline-strong"
-                  }`}
-                >
-                  <div className="relative w-full h-full overflow-hidden rounded-[1px]">
-                    <Image
-                      src={plate.src}
-                      alt={plate.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <SkeletonImage
+                    src={plate.src}
+                    alt={plate.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
                 <div className="flex flex-col">
                   <span className="meta-label text-terracotta text-[0.625rem]">

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { projects } from "@/content/projects";
 import { experiments } from "@/content/experiments";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 
 export const metadata: Metadata = {
   title: "Projects & Experiments — Nishant Unavane · Portfolio 2027",
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
         {/* Hero Section */}
         <header className="flex flex-col gap-6 max-w-4xl">
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal leading-[1.05] tracking-tight">
-            A Collection of <em className="italic">Selected</em> Works and other Projects.
+            A Collection of <em className="font-serif">Selected</em> Works and other Projects.
           </h1>
           <p className="body-editorial text-ink-soft text-lg sm:text-xl md:text-2xl leading-relaxed max-w-[62ch]">
             Four production systems engineered for local-first autonomous agents, cognitive memory graphs, and token-optimized developer tools, alongside nineteen field experiments, tools and side projects.
@@ -84,8 +84,8 @@ export default function ProjectsPage() {
         </header>
 
         {/* Collection Hero Showcase — Pure Frameless Artwork */}
-        <div className="relative w-full aspect-[2000/1126] overflow-hidden rounded-xs">
-          <Image
+        <div className="relative w-full aspect-[2000/1126] overflow-hidden">
+          <SkeletonImage
             src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/all-projects.webp"
             alt="Projects Built by Nishant Unavane"
             fill
@@ -103,7 +103,7 @@ export default function ProjectsPage() {
                 PART I · FLAGSHIP PRODUCTION REPOSITORIES
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal">
-                Four systems built, <em className="italic">and maintained.</em>
+                Four systems built, <em className="font-serif">and maintained.</em>
               </h2>
             </div>
             <span className="meta-label text-muted text-xs font-mono">
@@ -119,19 +119,19 @@ export default function ProjectsPage() {
                 id={project.slug}
                 className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start border border-hairline bg-paper-soft p-6 sm:p-8 md:p-10 rounded-xs shadow-[0_4px_24px_rgba(26,24,21,0.04)]"
               >
-                {/* Visual Plate Column: Full vertical artwork without cropping */}
+                {/* Visual Plate Column: Full vertical artwork without frame */}
                 <div className="lg:col-span-5 flex flex-col gap-3">
                   <PlateFrame
                     caption={`PLATE 0${idx + 1} · ${project.title.toUpperCase()} · ${project.category.toUpperCase()}`}
                   >
-                    <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] bg-paper-edge flex items-center justify-center overflow-hidden">
+                    <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] flex items-center justify-center overflow-hidden">
                       {project.image ? (
-                        <Image
+                        <SkeletonImage
                           src={project.image}
                           alt={`${project.title} — ${project.subtitle}`}
                           fill
                           sizes="(max-width: 1024px) 100vw, 420px"
-                          className="object-contain p-2"
+                          className="object-contain"
                         />
                       ) : (
                         <div className="p-8 text-center meta-label text-muted">
@@ -160,7 +160,7 @@ export default function ProjectsPage() {
                       <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal leading-tight">
                         {project.title}
                       </h3>
-                      <p className="font-serif italic text-xl sm:text-2xl text-ink-soft">
+                      <p className="font-serif text-xl sm:text-2xl text-ink-soft">
                         {project.subtitle}
                       </p>
                     </div>
@@ -261,7 +261,7 @@ export default function ProjectsPage() {
                 PART II · FIELD NOTES & EXPERIMENTAL TOOLS
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal">
-                Smaller <em className="italic">boats.</em>
+                Smaller <em className="font-serif">boats.</em>
               </h2>
               <p className="body-editorial text-ink-soft text-base sm:text-lg max-w-[62ch]">
                 Side projects, tools and experiments that didn&apos;t need to become companies.
@@ -280,18 +280,18 @@ export default function ProjectsPage() {
                 className="flex flex-col justify-between p-6 sm:p-7 rounded-xs border border-hairline bg-paper-soft shadow-[0_4px_24px_rgba(26,24,21,0.03)]"
               >
                 <div className="flex flex-col gap-5">
-                  {/* Full Vertical Poster Art without cropping */}
+                  {/* Full Vertical Poster Art without frame */}
                   <PlateFrame
                     caption={`PLATE ${String(idx + projects.length + 1).padStart(2, "0")} · ${exp.title.toUpperCase()}`}
                   >
-                    <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] bg-paper-edge flex items-center justify-center overflow-hidden">
+                    <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] flex items-center justify-center overflow-hidden">
                       {exp.image ? (
-                        <Image
+                        <SkeletonImage
                           src={exp.image}
                           alt={exp.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-                          className="object-contain p-2"
+                          className="object-contain"
                         />
                       ) : (
                         <div className="p-4 text-center meta-label text-muted">

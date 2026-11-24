@@ -33,7 +33,7 @@ export default function ColophonPage() {
         {/* Title */}
         <div className="flex flex-col gap-4">
           <h1 className="display-xl text-ink font-normal leading-[0.96]">
-            How this site was <em className="italic font-serif">made.</em>
+            How this site was <em className="font-serif">made.</em>
           </h1>
           <p className="body-editorial text-body text-lg">
             A light-theme, neo-classical editorial portfolio engineered as a continuous

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import type { FlexCarouselRef } from "@/components/ui/FlexCarousel";
 import { Reveal } from "@/components/primitives/Reveal";
+import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 import { SpotifyPlatePlayer, PlateTrackItem } from "./SpotifyPlatePlayer";
 
 const FlexCarousel = dynamic(() => import("@/components/ui/FlexCarousel"), {
@@ -283,7 +283,7 @@ export function LandingAboutSection() {
               <Reveal>
                 <h2 className="display-xl text-ink font-normal leading-[0.94]">
                   The apparatus of a{" "}
-                  <em className="italic font-serif text-ink">builder.</em>
+                  <em className="font-serif text-ink">builder.</em>
                 </h2>
               </Reveal>
             </div>
@@ -378,9 +378,9 @@ export function LandingAboutSection() {
                           WebkitBackfaceVisibility: "hidden",
                           transform: "rotateY(0deg) translateZ(1px)",
                         }}
-                        className="absolute inset-0 w-full h-full bg-paper-edge border border-hairline-strong rounded-xs overflow-hidden"
+                        className="absolute inset-0 w-full h-full overflow-hidden"
                       >
-                        <Image
+                        <SkeletonImage
                           src={currentTrack.src}
                           alt={currentTrack.alt}
                           fill
@@ -402,7 +402,7 @@ export function LandingAboutSection() {
                           WebkitBackfaceVisibility: "hidden",
                           transform: "rotateY(180deg) translateZ(1px)",
                         }}
-                        className="absolute inset-0 w-full h-full bg-ink border border-hairline-strong rounded-xs overflow-hidden flex flex-col justify-between p-3.5 sm:p-4 text-paper"
+                        className="absolute inset-0 w-full h-full bg-ink overflow-hidden flex flex-col justify-between p-3.5 sm:p-4 text-paper"
                       >
                         {/* Header of Album Sleeve */}
                         <div className="flex items-center justify-between text-[0.5625rem] sm:text-[0.625rem] font-mono tracking-widest text-muted border-b border-hairline/20 pb-2">
@@ -411,8 +411,8 @@ export function LandingAboutSection() {
                         </div>
 
                         {/* Album Cover Main Artwork */}
-                        <div className="relative w-full flex-1 my-2.5 rounded-xs overflow-hidden border border-hairline/25 bg-black/60 shadow-inner">
-                          <Image
+                        <div className="relative w-full flex-1 my-2.5 overflow-hidden">
+                          <SkeletonImage
                             src={currentTrack.coverSrc}
                             alt={`${currentTrack.songTitle} official album cover`}
                             fill

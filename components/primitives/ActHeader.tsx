@@ -81,7 +81,7 @@ export function ActHeader({
       <div className="flex flex-col gap-4">
         <h2 ref={titleRef} className="display-xl text-ink font-normal will-change-transform">
           {headlineRegular}
-          <em className="italic font-serif">{headlineItalic}</em>
+          <em className="font-serif">{headlineItalic}</em>
           {headlineSuffix}
         </h2>
         {sub && (

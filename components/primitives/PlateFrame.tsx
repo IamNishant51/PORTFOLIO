@@ -15,16 +15,14 @@ export function PlateFrame({
 }: PlateFrameProps) {
   return (
     <figure className={`w-full flex flex-col gap-2.5 min-w-0 ${className}`}>
-      {/* Museum matting frame */}
       <div
-        className="w-full p-[10px] bg-paper-edge border border-hairline-strong rounded-xs overflow-hidden relative shadow-[0_4px_24px_rgba(26,24,21,0.06)]"
+        className="w-full overflow-hidden relative"
         style={aspectRatio ? { aspectRatio } : undefined}
       >
-        <div className="relative w-full h-full overflow-hidden rounded-[1px]">
+        <div className="relative w-full h-full overflow-hidden">
           {children}
         </div>
       </div>
-      {/* Optional mono caption underneath */}
       {caption && (
         <figcaption className="w-full meta-label text-muted text-[0.625rem] tracking-[0.16em] sm:tracking-[0.2em] leading-normal break-words sm:break-normal">
           {caption}

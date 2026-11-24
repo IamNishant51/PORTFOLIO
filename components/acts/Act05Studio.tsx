@@ -120,9 +120,9 @@ export function Act05Studio() {
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <h2 className="display-xl text-ink font-normal">
-              How the work <em className="italic font-serif">get&apos;s Done.</em>
+              How the work <em className="font-serif">get&apos;s Done.</em>
             </h2>
-            <p className="body-editorial text-ink-soft font-medium text-lg max-w-[62ch]">
+            <p className="body-editorial text-body text-lg max-w-[62ch]">
               {profile.positioning}
             </p>
           </div>
@@ -215,7 +215,7 @@ export function Act05Studio() {
                   </CardHeader>
 
                   <CardContent className="px-6 sm:px-7 py-2">
-                    <p className="body-sm text-ink-soft font-medium leading-relaxed">
+                    <p className="body-sm text-body leading-relaxed">
                       {step.body}
                     </p>
                   </CardContent>
@@ -273,7 +273,7 @@ export function Act05Studio() {
                   </CardHeader>
 
                   <CardContent className="px-6 sm:px-7 py-2">
-                    <p className="body-sm text-ink-soft font-medium leading-relaxed">
+                    <p className="body-sm text-body leading-relaxed">
                       {entry.body}
                     </p>
                   </CardContent>

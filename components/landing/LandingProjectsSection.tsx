@@ -37,7 +37,7 @@ export function LandingProjectsSection() {
         mobileStartWidth={88}
         startHeight={64}
         mobileStartHeight={70}
-        startRadius={16}
+        startRadius={0}
         endRadius={0}
         mediaZoom={1.15}
         scrollDistance={1.2}
