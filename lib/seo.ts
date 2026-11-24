@@ -20,7 +20,18 @@ export function getSiteMetadata(title?: string, description?: string): Metadata 
       canonical: siteUrl,
     },
     icons: {
-      icon: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/monogram.svg",
+      icon: [
+        { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+        { url: "/favicon.svg", type: "image/svg+xml" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+    manifest: "/site.webmanifest",
+    appleWebApp: {
+      title: "Nishant",
     },
     openGraph: {
       title: pageTitle,
