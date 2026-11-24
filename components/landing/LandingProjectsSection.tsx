@@ -42,6 +42,7 @@ export function LandingProjectsSection() {
         mediaZoom={1.15}
         scrollDistance={1.2}
         holdDistance={0.35}
+        smoothing={0.04}
         overlayScrim={0}
       >
         <div className="pointer-events-auto">

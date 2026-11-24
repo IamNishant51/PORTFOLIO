@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { profile } from "@/content/profile";
+import { getLenis } from "@/lib/lenis";
 
 export function Nav() {
   const pathname = usePathname();
@@ -52,7 +53,7 @@ export function Nav() {
 
   // Lock body scroll and pause Lenis when mobile sheet is open
   useEffect(() => {
-    const lenis = (window as any).lenis;
+    const lenis = getLenis();
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
       lenis?.stop();

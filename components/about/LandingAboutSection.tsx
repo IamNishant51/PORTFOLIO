@@ -309,11 +309,8 @@ export function LandingAboutSection() {
         {/* React Bits FlexCarousel WebGL Exhibition & 3D Album Flip Card */}
         <Reveal delay={0.16}>
           <div className="flex flex-col gap-4">
-            {/* Blended Main Div: matches section bg with zero borders or box shadows */}
-            <div
-              data-lenis-prevent
-              className="relative w-full h-[460px] sm:h-[540px] md:h-[620px] bg-transparent overflow-hidden"
-            >
+            {/* Blended Main Div: vertical wheel flows to Lenis; horizontal wheel/drag controls carousel */}
+            <div className="relative w-full h-[460px] sm:h-[540px] md:h-[620px] bg-transparent overflow-hidden">
               <FlexCarousel
                 ref={carouselRef}
                 items={carouselItems}
@@ -326,7 +323,7 @@ export function LandingAboutSection() {
                 squeeze={0.16}
                 focusOnClick
                 captions
-                captureWheel={true}
+                captureWheel={false}
                 hideFocusedCard={isFocusOpen && hasFlipped}
                 onChange={handleCarouselChange}
                 onSelect={handleCarouselSelect}
