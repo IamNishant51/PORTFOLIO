@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { projects } from "@/content/projects";
+import { getAllWorks } from "@/content/projects";
 
 const siteUrl = "https://nishantunavane.qzz.io";
 
@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const projectRoutes = projects.map((p) => ({
+  const projectRoutes = getAllWorks().map((p) => ({
     url: `${siteUrl}/work/${p.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

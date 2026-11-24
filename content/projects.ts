@@ -1,6 +1,8 @@
 // content/projects.ts — Single source of truth for flagship projects
 // Strictly from CONTENT.md. Do not invent or alter metrics.
 
+import { experiments } from "./experiments";
+
 export interface Project {
   id: string;
   index: string;
@@ -18,6 +20,13 @@ export interface Project {
   };
   metrics: string;
   image?: string;
+}
+
+export function toWorkSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 export const projects: Project[] = [
@@ -89,3 +98,32 @@ export const projects: Project[] = [
     image: "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/08-project-shots/ollama-agent.webp",
   },
 ];
+
+export function getAllWorks(): Project[] {
+  const mappedExperiments: Project[] = experiments.map((exp, idx) => {
+    const num = String(projects.length + idx + 1).padStart(2, "0");
+    const isGitHub = exp.url.includes("github.com");
+    return {
+      id: num,
+      index: num,
+      slug: toWorkSlug(exp.title),
+      title: exp.title,
+      category: exp.tag,
+      subtitle: exp.tag,
+      description: exp.line,
+      stack: exp.tag
+        .split("/")
+        .map((s) => s.trim())
+        .filter(Boolean),
+      proof: [],
+      links: isGitHub ? { repo: exp.url } : { live: exp.url },
+      metrics: exp.tag,
+      image: exp.image,
+    };
+  });
+  return [...projects, ...mappedExperiments];
+}
+
+export function getWorkBySlug(slug: string): Project | undefined {
+  return getAllWorks().find((w) => w.slug === slug);
+}

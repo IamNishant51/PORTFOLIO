@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { projects } from "@/content/projects";
+import { projects, toWorkSlug } from "@/content/projects";
 import { experiments } from "@/content/experiments";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
 import { SkeletonImage } from "@/components/primitives/SkeletonImage";
@@ -22,64 +22,51 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main className="min-h-screen bg-paper text-ink selection:bg-paper-edge selection:text-ink pt-24 sm:pt-32 pb-24">
+    <div className="min-h-screen bg-paper text-ink selection:bg-paper-edge selection:text-ink pt-24 sm:pt-32 pb-24">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col gap-16 md:gap-24">
         {/* Navigation Breadcrumb Bar */}
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between meta-label text-[0.6875rem] text-muted">
             <Link
               href="/#work"
-              className="text-ink hover:text-terracotta transition-colors flex items-center gap-1.5 py-1 min-h-[44px]"
+              className="text-ink hover:text-ink-soft transition-colors flex items-center gap-1.5 py-1 min-h-[44px]"
             >
               <span>←</span>
               <span>BACK TO PORTFOLIO</span>
             </Link>
-            <span className="hidden sm:inline font-mono">
-              CATALOGUE RAISONNÉ · {projects.length + experiments.length} REPOSITORIES & SYSTEMS · 2024–2027
-            </span>
           </div>
           <div className="w-full h-[1px] bg-hairline" />
         </div>
 
-        {/* Hero Section */}
-        <header className="flex flex-col gap-6 max-w-4xl">
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal leading-[1.05] tracking-tight">
-            A Collection of <em className="font-serif">Selected</em> Works and other Projects.
-          </h1>
-          <p className="body-editorial text-ink-soft text-lg sm:text-xl md:text-2xl leading-relaxed max-w-[62ch]">
-            Four production systems engineered for local-first autonomous agents, cognitive memory graphs, and token-optimized developer tools, alongside nineteen field experiments, tools and side projects.
-          </p>
-
-          {/* Quick Stats Summary Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-hairline">
-            <div className="flex flex-col gap-1">
-              <span className="font-serif text-2xl sm:text-3xl text-ink">
-                {String(projects.length).padStart(2, "0")}
-              </span>
-              <span className="meta-label text-[0.625rem] text-muted font-mono">
-                FLAGSHIP SYSTEMS
-              </span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-serif text-2xl sm:text-3xl text-ink">
-                {String(experiments.length).padStart(2, "0")}
-              </span>
-              <span className="meta-label text-[0.625rem] text-muted font-mono">
-                FIELD EXPERIMENTS
-              </span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-serif text-2xl sm:text-3xl text-ink">10,340+</span>
-              <span className="meta-label text-[0.625rem] text-muted font-mono">
-                COMMUNITY DOWNLOADS
-              </span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-serif text-2xl sm:text-3xl text-ink">100%</span>
-              <span className="meta-label text-[0.625rem] text-muted font-mono">
-                LOCAL-FIRST CAPABLE
-              </span>
-            </div>
+        {/* Quick Stats Summary Grid */}
+        <header className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-6 border-b border-hairline max-w-4xl">
+          <div className="flex flex-col gap-1">
+            <span className="font-serif text-2xl sm:text-3xl text-ink">
+              {String(projects.length).padStart(2, "0")}
+            </span>
+            <span className="meta-label text-[0.625rem] text-muted font-mono">
+              FLAGSHIP SYSTEMS
+            </span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-serif text-2xl sm:text-3xl text-ink">
+              {String(experiments.length).padStart(2, "0")}
+            </span>
+            <span className="meta-label text-[0.625rem] text-muted font-mono">
+              FIELD EXPERIMENTS
+            </span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-serif text-2xl sm:text-3xl text-ink">10,340+</span>
+            <span className="meta-label text-[0.625rem] text-muted font-mono">
+              COMMUNITY DOWNLOADS
+            </span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-serif text-2xl sm:text-3xl text-ink">100%</span>
+            <span className="meta-label text-[0.625rem] text-muted font-mono">
+              LOCAL-FIRST CAPABLE
+            </span>
           </div>
         </header>
 
@@ -314,14 +301,21 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-hairline mt-6">
+                <div className="pt-6 border-t border-hairline mt-6 flex flex-wrap items-center justify-between gap-3">
+                  <Link
+                    href={`/work/${toWorkSlug(exp.title)}`}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-paper border border-hairline-strong hover:border-ink hover:bg-paper-deep text-ink text-xs font-mono font-semibold tracking-wider uppercase transition-colors min-h-[40px]"
+                  >
+                    <span>READ CASE STUDY</span>
+                    <span className="font-serif text-sm">→</span>
+                  </Link>
                   <a
                     href={exp.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider font-semibold text-ink hover:text-terracotta transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider font-semibold text-muted hover:text-ink transition-colors py-2 min-h-[40px]"
                   >
-                    <span>EXPLORE REPOSITORY</span>
+                    <span>EXPLORE</span>
                     <span className="font-serif text-sm">↗</span>
                   </a>
                 </div>
@@ -356,6 +350,6 @@ export default function ProjectsPage() {
           </div>
         </footer>
       </div>
-    </main>
+    </div>
   );
 }
