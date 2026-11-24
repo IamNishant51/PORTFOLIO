@@ -154,35 +154,68 @@ export function ProjectsCatalogue({ flagships, experiments }: ProjectsCatalogueP
         <section aria-label="Projects Swiss Index" className="flex flex-col">
           <div className="hidden md:grid grid-cols-12 gap-6 pb-3 border-b border-ink/25 meta-label text-muted">
             <span className="col-span-1">NO.</span>
+            <span className="col-span-1">PREVIEW</span>
             <span className="col-span-3">SYSTEM</span>
             <span className="col-span-2">DISCIPLINE</span>
-            <span className="col-span-4">SUMMARY</span>
+            <span className="col-span-3">SUMMARY</span>
             <span className="col-span-2 text-right">DOSSIER</span>
           </div>
           <div className="divide-y divide-hairline border-b border-hairline">
             {visible.map(({ item }) => (
               <article
                 key={item.slug}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 py-6 md:py-7 items-baseline hover:bg-paper-soft/70 transition-colors px-2 -mx-2"
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 py-5 md:py-6 items-start md:items-center hover:bg-paper-soft/70 transition-colors px-2 -mx-2"
               >
-                <span className="md:col-span-1 font-serif text-2xl text-muted tabular-nums">
+                <span className="hidden md:block md:col-span-1 font-serif text-2xl text-muted tabular-nums">
                   {item.index}
                 </span>
-                <div className="md:col-span-3 flex flex-col gap-1">
+
+                <div className="md:col-span-1 flex items-center gap-4">
+                  <span className="md:hidden font-serif text-xl text-muted tabular-nums w-7 shrink-0">
+                    {item.index}
+                  </span>
+                  {item.image && (
+                    <Link
+                      href={`/work/${item.slug}`}
+                      className="relative block w-20 md:w-full max-w-[88px] aspect-[3/4] overflow-hidden shrink-0"
+                    >
+                      <SkeletonImage
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 768px) 80px, 96px"
+                        className="object-contain"
+                      />
+                    </Link>
+                  )}
+                  <div className="md:hidden flex flex-col gap-1 min-w-0">
+                    <Link
+                      href={`/work/${item.slug}`}
+                      className="font-serif text-2xl text-ink hover:underline underline-offset-4 leading-tight"
+                    >
+                      {item.title}
+                    </Link>
+                    <span className="meta-label text-muted">{item.category}</span>
+                  </div>
+                </div>
+
+                <div className="hidden md:flex md:col-span-3 flex-col gap-1">
                   <Link
                     href={`/work/${item.slug}`}
-                    className="font-serif text-2xl sm:text-3xl text-ink hover:underline underline-offset-4"
+                    className="font-serif text-2xl lg:text-3xl text-ink hover:underline underline-offset-4 leading-tight"
                   >
                     {item.title}
                   </Link>
-                  <span className="md:hidden meta-label text-muted">{item.category}</span>
                 </div>
+
                 <span className="hidden md:block md:col-span-2 font-mono text-xs text-muted uppercase tracking-wider">
                   {item.category}
                 </span>
-                <p className="md:col-span-4 body-sm text-body leading-relaxed">
+
+                <p className="md:col-span-3 body-sm text-body leading-relaxed">
                   {item.description}
                 </p>
+
                 <div className="md:col-span-2 flex items-center md:justify-end gap-4 pt-1 md:pt-0">
                   <Link
                     href={`/work/${item.slug}`}
