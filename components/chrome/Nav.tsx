@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { profile } from "@/content/profile";
-import { getLenis } from "@/lib/lenis";
+import { getLenis, scrollToSection, setPendingSection } from "@/lib/lenis";
 
 export function Nav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("arrival");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -69,6 +70,18 @@ export function Nav() {
 
   const isDark = false;
 
+  const handleSectionClick = (sectionId: "studio" | "contact") => {
+    setMobileMenuOpen(false);
+    if (pathname === "/") {
+      scrollToSection(sectionId);
+      return;
+    }
+    setPendingSection(sectionId);
+    router.push("/");
+  };
+
+  const isWorkRoute = pathname === "/projects" || pathname.startsWith("/work");
+
   // Transparent nav bar that seamlessly blends with the active section background
   const navBg = mobileMenuOpen
     ? "bg-paper border-b border-hairline/60"
@@ -118,56 +131,48 @@ export function Nav() {
           className="hidden md:flex items-center gap-6 lg:gap-8 text-[0.875rem] font-medium text-ink transition-colors"
           aria-label="Primary navigation"
         >
-          <a
-            href={pathname === "/" ? "#work" : "/#work"}
+          <Link
+            href="/projects"
             className={`transition-colors duration-hoverIn py-2 ${
-              activeSection === "work" && pathname === "/"
+              isWorkRoute
                 ? "text-ink underline underline-offset-4"
                 : "text-ink-soft hover:text-ink"
             }`}
           >
             Work
-          </a>
-          <Link
-            href="/projects"
-            className={`transition-colors duration-hoverIn py-2 ${
-              pathname === "/projects"
-                ? "text-ink underline underline-offset-4"
-                : "text-ink-soft hover:text-ink"
-            }`}
-          >
-            Projects
           </Link>
-          <a
-            href={pathname === "/" ? "#about" : "/#about"}
+          <Link
+            href="/about"
             className={`transition-colors duration-hoverIn py-2 ${
-              pathname === "/about" || (activeSection === "about" && pathname === "/")
+              pathname === "/about"
                 ? "text-ink underline underline-offset-4"
                 : "text-ink-soft hover:text-ink"
             }`}
           >
             About
-          </a>
-          <a
-            href={pathname === "/" ? "#studio" : "/#studio"}
-            className={`transition-colors duration-hoverIn py-2 ${
+          </Link>
+          <button
+            type="button"
+            onClick={() => handleSectionClick("studio")}
+            className={`transition-colors duration-hoverIn py-2 cursor-pointer ${
               activeSection === "studio" && pathname === "/"
                 ? "text-ink underline underline-offset-4"
                 : "text-ink-soft hover:text-ink"
             }`}
           >
             Studio
-          </a>
-          <a
-            href={pathname === "/" ? "#contact" : "/#contact"}
-            className={`transition-colors duration-hoverIn py-2 ${
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSectionClick("contact")}
+            className={`transition-colors duration-hoverIn py-2 cursor-pointer ${
               activeSection === "contact" && pathname === "/"
                 ? "text-ink underline underline-offset-4"
                 : "text-ink-soft hover:text-ink"
             }`}
           >
             Contact
-          </a>
+          </button>
         </nav>
 
         {/* Right: Resume Pill Button & Colophon Link */}
@@ -239,70 +244,47 @@ export function Nav() {
             NAVIGATION
           </div>
           <nav className="flex flex-col text-2xl font-serif">
-            <a
-              href={pathname === "/" ? "#work" : "/#work"}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-3 transition-colors border-b flex items-center min-h-[48px] ${
-                activeSection === "work" && pathname === "/"
-                  ? "text-terracotta font-semibold border-hairline/40"
-                  : isDark
-                  ? "text-on-dark hover:text-white border-white/10"
-                  : "text-ink hover:text-terracotta border-hairline/40"
-              }`}
-            >
-              Selected Work
-            </a>
             <Link
               href="/projects"
               onClick={() => setMobileMenuOpen(false)}
               className={`py-3 transition-colors border-b flex items-center min-h-[48px] ${
-                pathname === "/projects"
+                isWorkRoute
                   ? "text-ink font-semibold border-hairline/40"
                   : "text-ink hover:text-ink-soft border-hairline/40"
               }`}
             >
-              Projects Archive
+              Work & Projects
             </Link>
-            <a
-              href={pathname === "/" ? "#studio" : "/#studio"}
+            <Link
+              href="/about"
               onClick={() => setMobileMenuOpen(false)}
               className={`py-3 transition-colors border-b flex items-center min-h-[48px] ${
-                isDark
-                  ? "text-on-dark hover:text-white border-white/10"
-                  : "text-ink hover:text-terracotta border-hairline/40"
-              }`}
-            >
-              The Studio
-            </a>
-            <a
-              href={pathname === "/" ? "#about" : "/#about"}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-3 transition-colors border-b flex items-center min-h-[48px] ${
-                pathname === "/about" || activeSection === "about"
-                  ? "text-terracotta font-semibold border-hairline/40"
-                  : isDark
-                  ? "text-on-dark hover:text-white border-white/10"
-                  : "text-ink hover:text-terracotta border-hairline/40"
+                pathname === "/about"
+                  ? "text-ink font-semibold border-hairline/40"
+                  : "text-ink hover:text-ink-soft border-hairline/40"
               }`}
             >
               About Me
-            </a>
-            <a
-              href={pathname === "/" ? "#contact" : "/#contact"}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-3 transition-colors border-b flex items-center min-h-[48px] ${
-                isDark
-                  ? "text-on-dark hover:text-white border-white/10"
-                  : "text-ink hover:text-terracotta border-hairline/40"
-              }`}
+            </Link>
+            <button
+              type="button"
+              onClick={() => handleSectionClick("studio")}
+              className="py-3 transition-colors border-b flex items-center min-h-[48px] text-left text-ink hover:text-ink-soft border-hairline/40 cursor-pointer"
+            >
+              The Studio
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSectionClick("contact")}
+              className="py-3 transition-colors border-b flex items-center min-h-[48px] text-left text-ink hover:text-ink-soft border-hairline/40 cursor-pointer"
             >
               Contact
-            </a>
+            </button>
             <Link
               href="/colophon"
               onClick={() => setMobileMenuOpen(false)}
               className={`py-3 transition-colors flex items-center min-h-[48px] ${
-                isDark ? "text-on-dark hover:text-white" : "text-ink hover:text-terracotta"
+                pathname === "/colophon" ? "text-ink font-semibold" : "text-ink hover:text-ink-soft"
               }`}
             >
               Colophon

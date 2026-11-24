@@ -5,6 +5,7 @@ import Image from "next/image";
 import { profile } from "@/content/profile";
 import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { scrollToSection } from "@/lib/lenis";
 
 export function Act01Arrival() {
   const containerRef = useRef<HTMLElement>(null);
@@ -280,9 +281,10 @@ export function Act01Arrival() {
               ref={ctasRef}
               className="flex flex-wrap items-center gap-4 sm:gap-5 pt-2"
             >
-              <a
-                href="#work"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-pill bg-ink text-on-ink font-semibold text-[0.875rem] hover:bg-ink-soft transition-all min-h-[44px] shadow-sm group"
+              <button
+                type="button"
+                onClick={() => scrollToSection("work")}
+                className="inline-flex items-center justify-center px-6 py-3 rounded-pill bg-ink text-on-ink font-semibold text-[0.875rem] hover:bg-ink-soft transition-all min-h-[44px] shadow-sm group cursor-pointer"
               >
                 <span>View the work</span>
                 <span
@@ -291,7 +293,7 @@ export function Act01Arrival() {
                 >
                   →
                 </span>
-              </a>
+              </button>
 
               <a
                 href={profile.resumeUrl}

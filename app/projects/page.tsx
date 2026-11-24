@@ -31,7 +31,7 @@ export default function ProjectsPage() {
         {/* Top Utility Strip */}
         <div className="flex items-center justify-between border-b border-hairline pb-4">
           <Link
-            href="/#work"
+            href="/"
             className="meta-label text-ink hover:text-ink-soft transition-colors inline-flex items-center gap-2 py-2 pr-3 min-h-[44px]"
           >
             <span aria-hidden="true">←</span>
@@ -77,11 +77,11 @@ export default function ProjectsPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 meta-label text-muted">
             <div className="flex items-center gap-4">
               <Link
-                href="/#work"
+                href="/"
                 className="text-ink hover:text-ink-soft transition-colors flex items-center gap-1 py-2 min-h-[44px]"
               >
                 <span aria-hidden="true">←</span>
-                <span>HOME / SELECTED WORK</span>
+                <span>HOME / PORTFOLIO</span>
               </Link>
               <span aria-hidden="true">·</span>
               <Link href="/about" className="hover:text-ink transition-colors py-2 min-h-[44px] flex items-center">

@@ -6,6 +6,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { profile } from "@/content/profile";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { scrollToSection } from "@/lib/lenis";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
 import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 
@@ -257,16 +258,24 @@ export function Act06Horizon() {
           {/* Col 2: Navigate */}
           <div className="flex flex-col gap-2">
             <span className="meta-label text-muted">NAVIGATE</span>
-            <nav className="flex flex-col gap-1.5 font-medium" aria-label="Footer navigation">
-              <a href="#arrival" className="text-ink hover:text-ink-soft transition-colors py-1.5">
+            <nav className="flex flex-col items-start gap-1.5 font-medium" aria-label="Footer navigation">
+              <button
+                type="button"
+                onClick={() => scrollToSection("arrival")}
+                className="text-ink hover:text-ink-soft transition-colors py-1.5 cursor-pointer"
+              >
                 Arrival (Hero)
-              </a>
-              <a href="#work" className="text-ink hover:text-ink-soft transition-colors py-1.5">
+              </button>
+              <Link href="/projects" className="text-ink hover:text-ink-soft transition-colors py-1.5">
                 Selected Work
-              </a>
-              <a href="#studio" className="text-ink hover:text-ink-soft transition-colors py-1.5">
+              </Link>
+              <button
+                type="button"
+                onClick={() => scrollToSection("studio")}
+                className="text-ink hover:text-ink-soft transition-colors py-1.5 cursor-pointer"
+              >
                 The Studio
-              </a>
+              </button>
             </nav>
           </div>
 

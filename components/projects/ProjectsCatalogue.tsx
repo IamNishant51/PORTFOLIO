@@ -461,15 +461,17 @@ export function ProjectsCatalogue({ flagships, experiments }: ProjectsCatalogueP
                           <span aria-hidden="true">→</span>
                         </Link>
                       </Magnet>
-                      <a
-                        href={exp.links.live || exp.links.repo || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-wider font-medium text-muted hover:text-ink transition-colors py-2 min-h-[40px]"
-                      >
-                        <span>EXPLORE</span>
-                        <span aria-hidden="true">↗</span>
-                      </a>
+                      {(exp.links.live || exp.links.marketplace || exp.links.repo) && (
+                        <a
+                          href={exp.links.live || exp.links.marketplace || exp.links.repo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-wider font-medium text-muted hover:text-ink transition-colors py-2 min-h-[40px]"
+                        >
+                          <span>EXPLORE</span>
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
                     </CardFooter>
                   </Card>
                 ))}

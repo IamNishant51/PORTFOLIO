@@ -13,9 +13,35 @@ declare global {
 }
 
 let activeLenis: Lenis | null = null;
+let pendingSectionId: string | null = null;
 
 export function getLenis(): Lenis | null {
   return activeLenis;
+}
+
+export function setPendingSection(id: string | null): void {
+  pendingSectionId = id;
+}
+
+export function scrollToSection(id: string): void {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (activeLenis && !prefersReducedMotion) {
+    activeLenis.scrollTo(el, {
+      offset: -80,
+      duration: 0.85,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+    return;
+  }
+
+  const top = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({
+    top: Math.max(0, top),
+    behavior: prefersReducedMotion ? "auto" : "smooth",
+  });
 }
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
@@ -99,29 +125,43 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
   // Re-sync Lenis dimensions & GSAP ScrollTrigger on every Next.js route transition
   useEffect(() => {
     const lenis = lenisRef.current;
-    if (!lenis) return;
+    const pendingId = pendingSectionId;
 
     if (isFirstRouteRef.current) {
       isFirstRouteRef.current = false;
       return;
     }
 
-    const rafId = requestAnimationFrame(() => {
-      lenis.resize();
-      const hash = window.location.hash;
-      if (hash && hash.length > 1) {
-        const target = document.querySelector(hash);
-        if (target instanceof HTMLElement) {
-          lenis.scrollTo(target, {
-            offset: -80,
-            duration: 0.85,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          });
-        }
+    const runSync = () => {
+      lenis?.resize();
+      if (pendingId && pathname === "/") {
+        pendingSectionId = null;
+        scrollToSection(pendingId);
       } else {
-        lenis.scrollTo(0, { immediate: true });
+        const hash = window.location.hash;
+        if (hash && hash.length > 1) {
+          const target = document.querySelector(hash);
+          if (target instanceof HTMLElement) {
+            lenis?.scrollTo(target, {
+              offset: -80,
+              duration: 0.85,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
+          }
+        } else {
+          lenis?.scrollTo(0, { immediate: true });
+        }
       }
       ScrollTrigger.refresh();
+    };
+
+    const rafId = requestAnimationFrame(() => {
+      // Allow client sub-sections one extra frame if navigating back to /
+      if (pendingId && !document.getElementById(pendingId)) {
+        requestAnimationFrame(runSync);
+        return;
+      }
+      runSync();
     });
 
     return () => cancelAnimationFrame(rafId);
