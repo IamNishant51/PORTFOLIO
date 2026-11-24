@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { profile } from "@/content/profile";
-import { PlateFrame } from "@/components/primitives/PlateFrame";
 import { SkeletonImage } from "@/components/primitives/SkeletonImage";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
@@ -314,16 +313,23 @@ export function Act01Arrival() {
             className="lg:col-span-5 flex justify-center lg:justify-end pb-2 pt-6 lg:pt-0 will-change-transform"
           >
             <div className="w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[430px]">
-              <PlateFrame aspectRatio="3/4">
-                <SkeletonImage
-                  src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp"
-                  alt="Optical prism slit-scan portrait of Nishant Unavane with quote: Not every unanswered question needs an immediate answer, some clarity takes living."
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 360px, 430px"
-                  className="object-cover"
-                />
-              </PlateFrame>
+              <figure className="w-full flex flex-col gap-2.5 min-w-0">
+                <div
+                  className="w-full p-[10px] bg-[#E7DFCE] border border-[#C9BEA8] rounded-xs overflow-hidden relative shadow-[0_4px_24px_rgba(26,24,21,0.06)]"
+                  style={{ aspectRatio: "3/4" }}
+                >
+                  <div className="relative w-full h-full overflow-hidden rounded-[1px]">
+                    <SkeletonImage
+                      src="https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/02-act1-arrival/hero-slit-portrait.webp"
+                      alt="Optical prism slit-scan portrait of Nishant Unavane with quote: Not every unanswered question needs an immediate answer, some clarity takes living."
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 360px, 430px"
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+              </figure>
             </div>
           </div>
         </div>
