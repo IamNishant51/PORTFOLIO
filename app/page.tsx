@@ -1,5 +1,4 @@
 import { Act01Arrival } from "@/components/acts/Act01Arrival";
-import { Act02Colonnade } from "@/components/acts/Act02Colonnade";
 import { LandingProjectsSection } from "@/components/landing/LandingProjectsSection";
 import { Act04Sea } from "@/components/acts/Act04Sea";
 import { LandingAboutSection } from "@/components/about/LandingAboutSection";
@@ -12,9 +11,6 @@ export default function HomePage() {
       {/* Act 01: Arrival — open sky */}
       <Act01Arrival />
 
-      {/* Act 02: The Colonnade — 4 disciplines */}
-      <Act02Colonnade />
-
       {/* Act 03: Selected Work & Projects — Hand-crafted archive poster */}
       <LandingProjectsSection />
 
@@ -24,7 +20,7 @@ export default function HomePage() {
       {/* Act 04.5: Iconography & Identity — Nishant's Artworks */}
       <LandingAboutSection />
 
-      {/* Act 05: The Studio — the person, method, timeline (dark navy band) */}
+      {/* Act 05: The Studio — the person, method, timeline */}
       <Act05Studio />
 
       {/* Act 06: The Horizon — contact & editorial footer */}

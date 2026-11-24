@@ -27,7 +27,7 @@ export function Nav() {
     handleScroll();
 
     // IntersectionObserver for active section detection (zero layout reflow)
-    const sections = ["arrival", "colonnade", "work", "sea", "about", "studio", "contact"];
+    const sections = ["arrival", "work", "sea", "about", "studio", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -66,17 +66,13 @@ export function Nav() {
     };
   }, [mobileMenuOpen]);
 
-  const isDark = activeSection === "studio";
+  const isDark = false;
 
-  // Transparent nav bar that seamlessly blends with the active section background
+  // Paper nav bar that seamlessly blends with the active section background
   const navBg = mobileMenuOpen
-    ? isDark
-      ? "bg-navy border-b border-white/10"
-      : "bg-paper border-b border-hairline/60"
+    ? "bg-paper border-b border-hairline/60"
     : scrolled
-    ? isDark
-      ? "bg-transparent backdrop-blur-md border-b border-white/10"
-      : "bg-transparent backdrop-blur-md border-b border-hairline/40"
+    ? "bg-paper/95 border-b border-hairline/60"
     : "bg-transparent border-b border-transparent";
 
   return (
@@ -118,19 +114,15 @@ export function Nav() {
 
         {/* Center: Editorial Nav Links (Desktop) */}
         <nav
-          className={`hidden md:flex items-center gap-6 lg:gap-8 text-[0.875rem] font-medium transition-colors ${
-            isDark ? "text-on-dark/85" : "text-ink"
-          }`}
+          className="hidden md:flex items-center gap-6 lg:gap-8 text-[0.875rem] font-semibold text-ink transition-colors"
           aria-label="Primary navigation"
         >
           <a
             href={pathname === "/" ? "#work" : "/#work"}
             className={`transition-colors duration-hoverIn py-2 ${
               activeSection === "work" && pathname === "/"
-                ? "text-terracotta font-semibold"
-                : isDark
-                ? "hover:text-white"
-                : "hover:text-terracotta"
+                ? "text-ink underline underline-offset-4"
+                : "text-ink-soft hover:text-ink"
             }`}
           >
             Work
@@ -139,34 +131,18 @@ export function Nav() {
             href="/projects"
             className={`transition-colors duration-hoverIn py-2 ${
               pathname === "/projects"
-                ? "text-terracotta font-semibold"
-                : isDark
-                ? "hover:text-white"
-                : "hover:text-terracotta"
+                ? "text-ink underline underline-offset-4"
+                : "text-ink-soft hover:text-ink"
             }`}
           >
             Projects
           </Link>
           <a
-            href={pathname === "/" ? "#colonnade" : "/#colonnade"}
-            className={`transition-colors duration-hoverIn py-2 ${
-              activeSection === "colonnade" && pathname === "/"
-                ? "text-terracotta font-semibold"
-                : isDark
-                ? "hover:text-white"
-                : "hover:text-terracotta"
-            }`}
-          >
-            Disciplines
-          </a>
-          <a
             href={pathname === "/" ? "#about" : "/#about"}
             className={`transition-colors duration-hoverIn py-2 ${
               pathname === "/about" || (activeSection === "about" && pathname === "/")
-                ? "text-terracotta font-semibold"
-                : isDark
-                ? "hover:text-white"
-                : "hover:text-terracotta"
+                ? "text-ink underline underline-offset-4"
+                : "text-ink-soft hover:text-ink"
             }`}
           >
             About
@@ -175,10 +151,8 @@ export function Nav() {
             href={pathname === "/" ? "#studio" : "/#studio"}
             className={`transition-colors duration-hoverIn py-2 ${
               activeSection === "studio" && pathname === "/"
-                ? "text-terracotta font-semibold"
-                : isDark
-                ? "hover:text-white font-semibold"
-                : "hover:text-terracotta"
+                ? "text-ink underline underline-offset-4"
+                : "text-ink-soft hover:text-ink"
             }`}
           >
             Studio
@@ -187,10 +161,8 @@ export function Nav() {
             href={pathname === "/" ? "#contact" : "/#contact"}
             className={`transition-colors duration-hoverIn py-2 ${
               activeSection === "contact" && pathname === "/"
-                ? "text-terracotta font-semibold"
-                : isDark
-                ? "hover:text-white"
-                : "hover:text-terracotta"
+                ? "text-ink underline underline-offset-4"
+                : "text-ink-soft hover:text-ink"
             }`}
           >
             Contact
@@ -284,25 +256,12 @@ export function Nav() {
               onClick={() => setMobileMenuOpen(false)}
               className={`py-3 transition-colors border-b flex items-center min-h-[48px] ${
                 pathname === "/projects"
-                  ? "text-terracotta font-semibold border-hairline/40"
-                  : isDark
-                  ? "text-on-dark hover:text-white border-white/10"
-                  : "text-ink hover:text-terracotta border-hairline/40"
+                  ? "text-ink font-semibold border-hairline/40"
+                  : "text-ink hover:text-ink-soft border-hairline/40"
               }`}
             >
               Projects Archive
             </Link>
-            <a
-              href={pathname === "/" ? "#colonnade" : "/#colonnade"}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-3 transition-colors border-b flex items-center min-h-[48px] ${
-                isDark
-                  ? "text-on-dark hover:text-white border-white/10"
-                  : "text-ink hover:text-terracotta border-hairline/40"
-              }`}
-            >
-              The Colonnade
-            </a>
             <a
               href={pathname === "/" ? "#studio" : "/#studio"}
               onClick={() => setMobileMenuOpen(false)}

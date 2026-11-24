@@ -102,8 +102,8 @@ const PLATE_THEMES = [
   // 5: Plate VI — New Arrivals (Unakkul Naane) -> Botanical Warm Gold
   { bg: "#E8B87A", edge: "#D49E58", soft: "#EFC896", isDark: false },
 ];
-const DEFAULT_PAPER = "#FBF8F2";
-const DEFAULT_EDGE = "#E7DFCE";
+const DEFAULT_PAPER = "#F3F7EE";
+const DEFAULT_EDGE = "#DCE5D4";
 
 export function LandingAboutSection() {
   const carouselRef = useRef<FlexCarouselRef>(null);
@@ -131,17 +131,17 @@ export function LandingAboutSection() {
       root.style.backgroundColor = theme.bg;
 
       if (theme.isDark) {
-        root.style.setProperty("--color-ink", "#FBF8F2");
-        root.style.setProperty("--color-ink-soft", "#EFE9DC");
-        root.style.setProperty("--color-body", "#E7DFCE");
-        root.style.setProperty("--color-muted", "#C9BEA8");
+        root.style.setProperty("--color-ink", "#F9FBF7");
+        root.style.setProperty("--color-ink-soft", "#E6EDE0");
+        root.style.setProperty("--color-body", "#DCE5D4");
+        root.style.setProperty("--color-muted", "#B6C2AB");
         root.style.setProperty("--color-hairline", "rgba(255, 255, 255, 0.2)");
         root.style.setProperty("--color-hairline-strong", "rgba(255, 255, 255, 0.35)");
       } else {
-        root.style.setProperty("--color-ink", "#1A1815");
-        root.style.setProperty("--color-ink-soft", "#3D3931");
-        root.style.setProperty("--color-body", "#4A463D");
-        root.style.setProperty("--color-muted", "#6B6559");
+        root.style.setProperty("--color-ink", "#0A0B0A");
+        root.style.setProperty("--color-ink-soft", "#1D201C");
+        root.style.setProperty("--color-body", "#333731");
+        root.style.setProperty("--color-muted", "#555A52");
         root.style.setProperty("--color-hairline", "rgba(0, 0, 0, 0.15)");
         root.style.setProperty("--color-hairline-strong", "rgba(0, 0, 0, 0.28)");
       }
@@ -283,15 +283,8 @@ export function LandingAboutSection() {
               <Reveal>
                 <h2 className="display-xl text-ink font-normal leading-[0.94]">
                   The apparatus of a{" "}
-                  <em className="italic font-serif text-terracotta">builder.</em>
+                  <em className="italic font-serif text-ink">builder.</em>
                 </h2>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <p className="body-editorial text-body mt-3 text-base sm:text-lg">
-                  Six distinct artistic poster studies curated by Nishant Unavane, paired with
-                  bespoke musical compositions. Scroll through the plates to change tracks, press
-                  play to focus, and click the focused artwork to spin and flip into the official album sleeve.
-                </p>
               </Reveal>
             </div>
 
@@ -473,7 +466,7 @@ export function LandingAboutSection() {
                 <button
                   type="button"
                   onClick={() => carouselRef.current?.prev()}
-                  className="inline-flex items-center justify-center gap-1 min-w-[68px] min-h-[36px] px-3.5 py-1.5 rounded-full border border-hairline-strong bg-paper text-ink hover:border-terracotta hover:text-terracotta hover:bg-paper-soft transition-colors cursor-pointer focus-visible:outline-ink focus-visible:outline-2 text-[0.6875rem] active:scale-95"
+                  className="inline-flex items-center justify-center gap-1 min-w-[68px] min-h-[36px] px-3.5 py-1.5 rounded-full border border-hairline-strong bg-paper text-ink hover:border-ink hover:bg-paper-soft transition-colors cursor-pointer focus-visible:outline-ink focus-visible:outline-2 text-[0.6875rem] font-semibold active:scale-95"
                 >
                   <span aria-hidden="true">←</span>
                   <span>PREV</span>
@@ -481,25 +474,19 @@ export function LandingAboutSection() {
                 <button
                   type="button"
                   onClick={() => carouselRef.current?.next()}
-                  className="inline-flex items-center justify-center gap-1 min-w-[68px] min-h-[36px] px-3.5 py-1.5 rounded-full border border-hairline-strong bg-paper text-ink hover:border-terracotta hover:text-terracotta hover:bg-paper-soft transition-colors cursor-pointer focus-visible:outline-ink focus-visible:outline-2 text-[0.6875rem] active:scale-95"
+                  className="inline-flex items-center justify-center gap-1 min-w-[68px] min-h-[36px] px-3.5 py-1.5 rounded-full border border-hairline-strong bg-paper text-ink hover:border-ink hover:bg-paper-soft transition-colors cursor-pointer focus-visible:outline-ink focus-visible:outline-2 text-[0.6875rem] font-semibold active:scale-95"
                 >
                   <span>NEXT</span>
                   <span aria-hidden="true">→</span>
                 </button>
-                <span className="text-muted pl-2 hidden sm:inline">
-                  SCROLL / WHEEL CHANGES SONG · CLICK FOCUSED IMAGE TO SPIN & FLIP
-                </span>
               </div>
-              <div className="flex items-center gap-2 text-muted text-[0.625rem]">
-                <span
-                  className={`inline-block w-1.5 h-1.5 rounded-full ${
-                    isPlaying ? "bg-terracotta animate-ping" : "bg-muted animate-pulse"
-                  }`}
-                />
-                <span>
-                  {isPlaying ? (isFlipped ? "ALBUM COVER VIEW" : "PLATE ARTWORK VIEW") : "SPOTIFY SYNC READY"}
-                </span>
-              </div>
+              {isPlaying && (
+                <div className="flex items-center gap-2 text-ink text-[0.625rem]">
+                  <span>
+                    {isFlipped ? "ALBUM COVER VIEW" : "PLATE ARTWORK VIEW"}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </Reveal>

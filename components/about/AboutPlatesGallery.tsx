@@ -125,7 +125,7 @@ export function AboutPlatesGallery() {
                       onClick={() => setActiveIdx(idx)}
                       className={`relative aspect-[3/4] rounded-xs overflow-hidden border transition-all cursor-pointer group focus-visible:outline-ink focus-visible:outline-2 ${
                         isSelected
-                          ? "border-terracotta shadow-[0_0_0_2px_rgba(192,91,60,0.3)] scale-[1.03]"
+                          ? "border-ink shadow-[0_0_0_2px_rgba(10,11,10,0.25)] scale-[1.03]"
                           : "border-hairline-strong opacity-70 hover:opacity-100 hover:border-ink"
                       }`}
                       aria-label={`Select ${plate.plate}: ${plate.title}`}

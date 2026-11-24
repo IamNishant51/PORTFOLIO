@@ -30,7 +30,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = getSiteMetadata();
 
 export const viewport: Viewport = {
-  themeColor: "#F6F2E9",
+  themeColor: "#F3F7EE",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -64,7 +64,6 @@ export default function RootLayout({
             __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
           }}
         />
-        <meta name="theme-color" content="#F6F2E9" />
       </head>
       <body className="bg-paper text-ink selection:bg-paper-edge selection:text-ink min-h-screen antialiased">
         <SmoothScrollProvider>

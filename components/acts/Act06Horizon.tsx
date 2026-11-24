@@ -164,11 +164,6 @@ export function Act06Horizon() {
                 <br />
                 <em className="italic font-serif">worth keeping.</em>
               </h2>
-
-              <p className="body-editorial text-body text-base sm:text-lg max-w-[54ch]">
-                Open to full-stack and creative-engineering roles. Based in Pune,
-                working remotely.
-              </p>
             </div>
 
             {/* Email & Links */}
@@ -176,7 +171,7 @@ export function Act06Horizon() {
               <div>
                 <a
                   href={`mailto:${profile.email}`}
-                  className="font-serif text-[1.375rem] min-[400px]:text-2xl sm:text-3xl md:text-4xl lg:display-lg text-ink hover:text-terracotta transition-colors duration-hoverIn underline decoration-hairline-strong underline-offset-8 break-words inline-block hover:translate-x-1 transition-transform"
+                  className="font-serif text-[1.375rem] min-[400px]:text-2xl sm:text-3xl md:text-4xl lg:display-lg text-ink hover:text-ink-soft underline decoration-hairline-strong underline-offset-8 break-words inline-block hover:translate-x-1 transition-all duration-hoverIn"
                   aria-label={`Send email to ${profile.email}`}
                 >
                   {profile.email}
@@ -247,67 +242,58 @@ export function Act06Horizon() {
         </div>
       </div>
 
-      {/* 4-Column Editorial Footer */}
+      {/* 3-Column Editorial Footer */}
       <div className="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 mt-8 sm:mt-12 md:mt-14 pt-6 sm:pt-8 border-t border-hairline">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-[0.875rem]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-[0.875rem]">
           {/* Col 1: Identity */}
           <div className="flex flex-col gap-2">
             <span className="meta-label text-muted">IDENTITY</span>
             <p className="font-serif text-lg text-ink">{profile.name}</p>
-            <p className="body-sm text-body">{profile.location}</p>
+            <p className="body-sm text-ink-soft font-medium">{profile.location}</p>
             <p className="body-sm text-body">{profile.status}</p>
           </div>
 
           {/* Col 2: Navigate */}
           <div className="flex flex-col gap-2">
             <span className="meta-label text-muted">NAVIGATE</span>
-            <nav className="flex flex-col gap-1.5" aria-label="Footer navigation">
-              <a href="#arrival" className="hover:text-terracotta transition-colors py-1.5">
+            <nav className="flex flex-col gap-1.5 font-medium" aria-label="Footer navigation">
+              <a href="#arrival" className="text-ink hover:text-ink-soft transition-colors py-1.5">
                 Arrival (Hero)
               </a>
-              <a href="#colonnade" className="hover:text-terracotta transition-colors py-1.5">
-                Disciplines
-              </a>
-              <a href="#work" className="hover:text-terracotta transition-colors py-1.5">
+              <a href="#work" className="text-ink hover:text-ink-soft transition-colors py-1.5">
                 Selected Work
               </a>
-              <a href="#studio" className="hover:text-terracotta transition-colors py-1.5">
+              <a href="#studio" className="text-ink hover:text-ink-soft transition-colors py-1.5">
                 The Studio
               </a>
             </nav>
           </div>
 
           {/* Col 3: Elsewhere */}
-          <div className="flex flex-col gap-2">
-            <span className="meta-label text-muted">ELSEWHERE</span>
-            <div className="flex flex-col gap-1.5">
-              <a
-                href={profile.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-terracotta transition-colors py-1.5"
-              >
-                GitHub Profile ↗
-              </a>
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-terracotta transition-colors py-1.5"
-              >
-                LinkedIn Profile ↗
-              </a>
-              <Link href="/colophon" className="hover:text-terracotta transition-colors py-1.5">
-                Site Colophon
-              </Link>
-            </div>
-          </div>
-
-          {/* Col 4: Colophon & Copyright */}
           <div className="flex flex-col justify-between gap-4">
             <div className="flex flex-col gap-2">
-              <span className="meta-label text-muted">COLOPHON</span>
-              <p className="body-sm text-body">{profile.colophon}</p>
+              <span className="meta-label text-muted">ELSEWHERE</span>
+              <div className="flex flex-col gap-1.5 font-medium">
+                <a
+                  href={profile.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ink hover:text-ink-soft transition-colors py-1.5"
+                >
+                  GitHub Profile ↗
+                </a>
+                <a
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ink hover:text-ink-soft transition-colors py-1.5"
+                >
+                  LinkedIn Profile ↗
+                </a>
+                <Link href="/colophon" className="text-ink hover:text-ink-soft transition-colors py-1.5">
+                  Site Colophon
+                </Link>
+              </div>
             </div>
             <p className="meta-label text-muted text-[0.625rem]">
               {profile.copyright}

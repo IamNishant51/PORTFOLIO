@@ -3,14 +3,9 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { experiments } from "@/content/experiments";
 import { ActHeader } from "@/components/primitives/ActHeader";
 import { gsap } from "@/lib/gsap";
-
-const Grainient = dynamic(() => import("@/components/ui/Grainient"), {
-  ssr: false,
-});
 
 export function Act04Sea() {
   const containerRef = useRef<HTMLElement>(null);
@@ -70,21 +65,10 @@ export function Act04Sea() {
           {experiments.slice(0, 6).map((item, idx) => (
             <article
               key={item.title}
-              className={`group relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 md:p-8 lg:p-9 rounded-xs border border-hairline bg-paper/85 backdrop-blur-md shadow-[0_4px_24px_rgba(26,24,21,0.04)] ${
+              className={`group relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 md:p-8 lg:p-9 rounded-xs border border-hairline bg-paper-soft shadow-[0_4px_24px_rgba(10,11,10,0.04)] ${
                 idx === 1 ? "md:translate-y-6" : idx === 2 ? "md:translate-y-12" : ""
               }`}
             >
-              {/* Grainient ambient canvas */}
-              <div className="absolute inset-0 pointer-events-none opacity-25 group-hover:opacity-75 transition-opacity duration-calm">
-                <Grainient
-                  colors={["#FBF8F2", "#EFE9DC", "#E5DEC9", "#D8C6A6", "#C05B3C"]}
-                  flow={0.6}
-                  silk={0.35}
-                  grainAmount={0.06}
-                  speed={0.4}
-                />
-              </div>
-
               <div className="relative z-10 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                   <span className="meta-label text-terracotta text-xs font-semibold">
@@ -109,7 +93,7 @@ export function Act04Sea() {
                   </div>
                 )}
 
-                <p className="body-editorial text-body text-[0.9375rem] leading-relaxed">
+                <p className="body-editorial text-ink-soft font-medium text-[0.9375rem] leading-relaxed">
                   {item.line}
                 </p>
               </div>

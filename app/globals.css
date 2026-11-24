@@ -1,42 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #FBF8F2;
-  --color-paper-soft: #FBF8F2;
-  --color-paper-deep: #EFE9DC;
-  --color-paper-edge: #E7DFCE;
-  --color-paper-static: #FBF8F2;
-  --color-plate-wash-1: #EEDBB8;
-  --color-plate-wash-2: #ECD0C7;
-  --color-plate-wash-3: #DFD5EC;
-  --color-plate-wash-4: #D0DDE5;
-  --color-plate-wash-5: #DDDCD8;
-  --color-plate-wash-6: #D2E3D2;
-  --color-ink: #1A1815;
-  --color-ink-soft: #3D3931;
-  --color-body: #4A463D;
-  --color-muted: #6E6759;
-  --color-hairline: #DED6C6;
-  --color-hairline-strong: #C9BEA8;
-  --color-on-ink: #FBF8F2;
-  --color-on-dark: #F3EEE3;
+  --color-paper: #F3F7EE;
+  --color-paper-soft: #F9FBF7;
+  --color-paper-deep: #E6EDE0;
+  --color-paper-edge: #DCE5D4;
+  --color-paper-static: #F3F7EE;
+  --color-ink: #0A0B0A;
+  --color-ink-soft: #1D201C;
+  --color-body: #333731;
+  --color-muted: #555A52;
+  --color-hairline: #D2DACB;
+  --color-hairline-strong: #B6C2AB;
+  --color-on-ink: #F9FBF7;
+  --color-on-dark: #F9FBF7;
 
-  --color-sky: #A8C6DB;
-  --color-sky-deep: #6E93AE;
-  --color-sky-pale: #D6E4EC;
-  --color-sage: #BFCBB8;
-  --color-sage-deep: #93A88F;
-  --color-sand: #D8C6A6;
-  --color-sand-deep: #BFA783;
-  --color-terracotta: #B55032;
-  --color-rose: #D8AFA4;
-  --color-navy: #1F2C3D;
-  --color-success: #5C7A52;
-  --color-error: #A6402C;
+  --color-sky: #D5E2D0;
+  --color-sky-deep: #7B8E74;
+  --color-sky-pale: #E9F0E4;
+  --color-sage: #C4D2BC;
+  --color-sage-deep: #7D9173;
+  --color-sand: #D9E0D1;
+  --color-sand-deep: #AEB8A5;
+  --color-terracotta: #0A0B0A;
+  --color-rose: #CBD3C5;
+  --color-navy: #141814;
+  --color-success: #2F5229;
+  --color-error: #8C1D18;
 
   --font-serif: var(--font-instrument-serif), "Times New Roman", serif;
   --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --duration-hoverIn: 90ms;
+  --duration-hoverOut: 140ms;
+  --duration-quick: 160ms;
+  --duration-standard: 220ms;
+  --duration-calm: 320ms;
+  --duration-slow: 420ms;
 
   --radius-none: 0px;
   --radius-xs: 2px;
@@ -93,20 +94,7 @@ html, body {
 }
 
 .bg-paper-static {
-  background-color: var(--color-paper-static) !important;
-}
-
-#arrival {
-  --color-paper: #FBF8F2 !important;
-  --color-paper-soft: #FBF8F2 !important;
-  --color-paper-edge: #E7DFCE !important;
-  --color-hairline: #DED6C6 !important;
-  --color-hairline-strong: #C9BEA8 !important;
-  --color-ink: #1A1815 !important;
-  --color-ink-soft: #3D3931 !important;
-  --color-on-ink: #FBF8F2 !important;
-  --color-body: #4A463D !important;
-  --color-muted: #6E6759 !important;
+  background-color: var(--color-paper-static);
 }
 
 body {
@@ -183,42 +171,44 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-.title-ui {
-  font-family: var(--font-sans);
-  font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.35;
-  letter-spacing: -0.005em;
-}
+@layer components {
+  .title-ui {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
 
-.body-editorial {
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.65;
-  letter-spacing: 0.005em;
-  text-wrap: pretty;
-  max-width: 62ch;
-  color: var(--color-body);
-}
+  .body-editorial {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.65;
+    letter-spacing: 0.005em;
+    text-wrap: pretty;
+    max-width: 62ch;
+    color: var(--color-body);
+  }
 
-.body-sm {
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  font-weight: 400;
-  line-height: 1.6;
-  text-wrap: pretty;
-  color: var(--color-body);
-}
+  .body-sm {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.6;
+    text-wrap: pretty;
+    color: var(--color-body);
+  }
 
-.meta-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-muted);
+  .meta-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
 }
 
 @media (max-width: 639px) {
