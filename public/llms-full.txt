@@ -1,0 +1,94 @@
+# Nishant Unavane — Full Technical Dossier & Systems Documentation (2027 Edition)
+
+> Complete factual documentation and technical specifications for LLMs, AI search engines (ChatGPT Search, Perplexity, Claude, Google Gemini, Microsoft Copilot), and AI agents.
+
+---
+
+## 1. Professional Identity & Entity Summary
+
+- **Full Name:** Nishant Unavane
+- **Entity Identification:** Full-Stack Developer & Agentic AI Systems Engineer
+- **Base Location:** Pune, Maharashtra, India
+- **Availability:** Open for high-impact software engineering roles, autonomous agent architecture contracts, and full-stack systems engineering.
+- **Primary Email:** nishantunawne0007@gmail.com
+- **Website:** https://nishantunavane.qzz.io
+- **GitHub Profile:** https://github.com/IamNishant51
+- **LinkedIn:** https://www.linkedin.com/in/nishant-unavane-008291275/
+- **Résumé:** https://ik.imagekit.io/9pfz6g8ri/Nishant_Unavane_FullStack_resume.pdf
+
+### Positioning
+> "I build interfaces, developer tools, coding agents, and the systems that connect them."
+
+Full-stack web applications, VS Code extensions, and autonomous agent systems engineered with Next.js, React 19, TypeScript, Three.js, Fastify, Python, and modern Model Context Protocol (MCP) tooling.
+
+---
+
+## 2. Verified Metrics & Production Proof
+
+- **Community Downloads:** 10,340+ total downloads across published developer tooling and npm libraries.
+- **Custom-PI:** 4,458 npm downloads.
+- **VS Code Extensions:** 4+ published extensions serving developer workflows.
+- **Projects Shipped:** 15+ production applications and open-source systems.
+- **Experience:** 2+ years of continuous software engineering and systems architecture.
+
+---
+
+## 3. Flagship Systems Architecture
+
+### I. Custom-PI — Autonomous Coding Agent Platform
+- **Role:** Lead Architect & Engineer
+- **Live URL:** https://custom-pi-ai.vercel.app
+- **Repository:** https://github.com/IamNishant51/Custom-PI
+- **Category:** Autonomous coding agent & local-first developer runtime.
+- **Description:** A dual terminal and web platform for autonomous coding agents: persistent memory graph, multi-agent orchestration, browser automation, and MCP tool synthesis. Built on top of the Pi Coding Agent core.
+- **Technology Stack:** TypeScript, Node.js, Fastify, React, SQLite, Playwright, Model Context Protocol.
+- **Verification Proof:** 4,458 npm downloads, persistent graph memory, multi-turn reasoning loops.
+
+### II. Synapse — Cognitive Memory & Knowledge Graph Dashboard
+- **Role:** Lead Architect & Engineer
+- **Live URL:** https://synapsememory.vercel.app
+- **Repository:** https://github.com/IamNishant51/Synapse
+- **Category:** Cognitive memory infrastructure & 3D graph visualization.
+- **Description:** A Cognee-based cognitive memory dashboard engineered for continuous ingestion, entity conflict reconciliation, temporal state tracking, and 3D visual knowledge-graph traversal.
+- **Technology Stack:** Next.js, React, TypeScript, Tailwind CSS, FastAPI, Python, Cognee.
+- **Verification Proof:** Real-time entity conflict reconciliation, temporal graph traversal, interactive 3D spatial node rendering.
+
+### III. CARTO — Repository Context Digest Engine (VS Code Extension)
+- **Role:** Creator & Publisher
+- **Marketplace URL:** https://marketplace.visualstudio.com/items?itemName=nishantunavane.carto
+- **Repository:** https://github.com/IamNishant51/CARTO-VS-CODE-EXTENSION
+- **Category:** Developer tooling & LLM context synthesis.
+- **Description:** A production VS Code extension that digests an entire repository into structured, token-optimized Markdown context with file trees, architectural stack analysis, real-time diff preview, and LLM prompt generation.
+- **Technology Stack:** TypeScript, VS Code Extension API, Abstract Syntax Tree (AST) parsers.
+- **Verification Proof:** Published on the official Visual Studio Code Marketplace, multi-file instant bundling with AST-level token reduction.
+
+### IV. Ollama-Agent — Local-First Private AI Assistant (VS Code Extension)
+- **Role:** Creator & Publisher
+- **Repository:** https://github.com/IamNishant51/Ollama-Agent-vs-code-extension
+- **Category:** Local AI inference & developer assistant.
+- **Description:** A local-first VS Code assistant featuring automatic local model discovery, real-time code streaming, workspace context injection, inline diff previews, automated test authoring, and zero telemetry egress.
+- **Technology Stack:** TypeScript, React, Ollama Local Runtimes, VS Code API.
+- **Verification Proof:** 100% offline inference, zero API fees, sub-100ms streaming latency.
+
+---
+
+## 4. Additional Projects & Open Source Tools
+
+1. **atlas-mcp-server:** Workflow orchestration engine operating natively over Anthropic's Model Context Protocol (MCP). (https://github.com/IamNishant51/atlas-mcp-server)
+2. **frame:** Fluidly animated React components and composable physics-based motion primitives. (https://framejs.vercel.app)
+3. **Three.JS-Book:** Browser-based photorealistic 3D book with interactive spatial page turning and dynamic cloth mesh physics. (https://github.com/IamNishant51/Three.JS-Book)
+
+---
+
+## 5. Engineering Principles & Method
+
+1. **Find the real question:** Write down the core human problem before reaching for an interface or framework.
+2. **Make the small version:** Connect one useful path end to end immediately.
+3. **Follow the friction:** Watch edge cases, sluggish frames, and moments the software demands unnecessary cognitive load.
+4. **Edit. Then edit again:** Keep the necessary essence. Polish typography, layout, and runtime performance.
+
+---
+
+## 6. Intellectual Property & Rights Notice
+
+This software portfolio, its source code, hand-painted artwork, shaders, and visual systems are the proprietary work of Nishant Unavane (Copyright © 2026). All rights reserved. Unauthorized cloning, commercial redistribution, or reproduction without written permission is strictly prohibited.

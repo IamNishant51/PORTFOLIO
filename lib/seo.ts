@@ -54,46 +54,134 @@ export function getSiteMetadata(title?: string, description?: string): Metadata 
       description: pageDescription,
       images: ["https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/og-image.webp"],
     },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    },
   };
 }
 
 export function generatePersonJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.name,
-    jobTitle: profile.rolePrimary,
-    url: siteUrl,
-    sameAs: [profile.github, profile.linkedin],
-    knowsAbout: [
-      "TypeScript",
-      "Next.js",
-      "React",
-      "Node.js",
-      "Model Context Protocol",
-      "Autonomous Agents",
-      "VS Code Extensions",
-      "GSAP",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: siteUrl,
+        name: "Nishant Unavane · Portfolio 2027",
+        description: profile.subPositioning,
+        publisher: {
+          "@id": `${siteUrl}/#person`,
+        },
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": `${siteUrl}/#profilepage`,
+        url: siteUrl,
+        name: `${profile.name} — ${profile.rolePrimary}`,
+        mainEntity: {
+          "@id": `${siteUrl}/#person`,
+        },
+      },
+      {
+        "@type": "Person",
+        "@id": `${siteUrl}/#person`,
+        name: profile.name,
+        alternateName: [profile.handle, "Nishant"],
+        jobTitle: profile.rolePrimary,
+        description: profile.positioning,
+        url: siteUrl,
+        image:
+          "https://ik.imagekit.io/9pfz6g8ri/portfolio-images-for-imagekit/assets/09-brand/og-image.webp",
+        sameAs: [
+          profile.github,
+          profile.linkedin,
+          "https://marketplace.visualstudio.com/publishers/nishantunavane",
+          "https://www.npmjs.com/~iamnishant51",
+        ],
+        knowsAbout: [
+          "TypeScript",
+          "Next.js",
+          "React 19",
+          "Node.js",
+          "Python",
+          "Model Context Protocol (MCP)",
+          "Autonomous Coding Agents",
+          "VS Code Extensions",
+          "Cognitive Memory Graphs",
+          "GSAP",
+          "Three.js",
+          "WebGL",
+        ],
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Pune",
+          addressRegion: "Maharashtra",
+          addressCountry: "IN",
+        },
+      },
+      {
+        "@type": "ItemList",
+        name: "Flagship Autonomous Systems & Engineering Works",
+        itemListElement: projects.map((p, idx) => ({
+          "@type": "ListItem",
+          position: idx + 1,
+          item: {
+            "@type": "SoftwareApplication",
+            name: p.title,
+            description: p.description,
+            applicationCategory: p.category,
+            url: `${siteUrl}/work/${p.slug}`,
+            operatingSystem: "Cross-platform",
+            author: {
+              "@id": `${siteUrl}/#person`,
+            },
+          },
+        })),
+      },
     ],
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Pune",
-      addressCountry: "India",
-    },
   };
 }
 
 export function generateProjectJsonLd(project: Project) {
   return {
     "@context": "https://schema.org",
-    "@type": "SoftwareSourceCode",
-    name: project.title,
-    description: project.description,
-    codeRepository: project.links.repo || siteUrl,
-    programmingLanguage: project.stack,
-    author: {
-      "@type": "Person",
-      name: profile.name,
-    },
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        name: project.title,
+        description: project.description,
+        codeRepository: project.links.repo || siteUrl,
+        programmingLanguage: project.stack,
+        author: {
+          "@type": "Person",
+          name: profile.name,
+          url: siteUrl,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projects",
+            item: `${siteUrl}/projects`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: project.title,
+            item: `${siteUrl}/work/${project.slug}`,
+          },
+        ],
+      },
+    ],
   };
 }
