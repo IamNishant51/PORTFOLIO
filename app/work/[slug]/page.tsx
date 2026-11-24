@@ -24,6 +24,9 @@ export async function generateMetadata({ params }: CaseStudyProps): Promise<Meta
   return {
     title: `${project.title} — ${project.subtitle}`,
     description: project.description,
+    alternates: {
+      canonical: `https://nishantunavane.qzz.io/work/${slug}`,
+    },
     openGraph: {
       title: `${project.title} — ${project.subtitle}`,
       description: project.description,
@@ -48,7 +51,9 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
     <article className="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-24 px-5 sm:px-6 md:px-12 bg-paper text-ink">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(projectJsonLd).replace(/</g, "\\u003c"),
+        }}
       />
 
       <div className="max-w-[1200px] mx-auto flex flex-col gap-12 sm:gap-16">

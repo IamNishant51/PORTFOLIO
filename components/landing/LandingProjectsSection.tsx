@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import ScrollExpand from "@/components/ui/ScrollExpand";
+import dynamic from "next/dynamic";
+
+const ScrollExpand = dynamic(() => import("@/components/ui/ScrollExpand"), {
+  ssr: false,
+});
 
 export function LandingProjectsSection() {
   const sectionTitle = (

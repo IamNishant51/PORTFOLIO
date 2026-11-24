@@ -210,7 +210,7 @@ export function Act01Arrival() {
         ["--color-ink-soft" as string]: "#3D3931",
         ["--color-on-ink" as string]: "#FBF8F2",
         ["--color-body" as string]: "#4A463D",
-        ["--color-muted" as string]: "#8A8375",
+        ["--color-muted" as string]: "#6E6759",
       }}
       aria-label="Act 01: Arrival"
     >

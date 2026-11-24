@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Projects & Experiments — Nishant Unavane · Portfolio 2027",
   description:
     "A collection of 4 flagship autonomous systems, memory infrastructure, and 28 developer tools & visual experiments built by Nishant Unavane.",
+  alternates: {
+    canonical: "https://nishantunavane.qzz.io/projects",
+  },
   openGraph: {
     title: "Projects & Selected Works — Nishant Unavane",
     description:

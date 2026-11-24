@@ -15,7 +15,7 @@
   --color-ink: #1A1815;
   --color-ink-soft: #3D3931;
   --color-body: #4A463D;
-  --color-muted: #8A8375;
+  --color-muted: #6E6759;
   --color-hairline: #DED6C6;
   --color-hairline-strong: #C9BEA8;
   --color-on-ink: #FBF8F2;
@@ -28,7 +28,7 @@
   --color-sage-deep: #93A88F;
   --color-sand: #D8C6A6;
   --color-sand-deep: #BFA783;
-  --color-terracotta: #C05B3C;
+  --color-terracotta: #B55032;
   --color-rose: #D8AFA4;
   --color-navy: #1F2C3D;
   --color-success: #5C7A52;
@@ -106,7 +106,7 @@ html, body {
   --color-ink-soft: #3D3931 !important;
   --color-on-ink: #FBF8F2 !important;
   --color-body: #4A463D !important;
-  --color-muted: #8A8375 !important;
+  --color-muted: #6E6759 !important;
 }
 
 body {

@@ -50,9 +50,13 @@ export default function RootLayout({
       className={`${instrumentSerif.variable} ${geistSans.variable} ${geistMono.variable}`}
     >
       <head>
+        <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://ik.imagekit.io" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
         <meta name="theme-color" content="#F6F2E9" />
       </head>

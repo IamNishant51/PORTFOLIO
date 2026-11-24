@@ -227,7 +227,7 @@ export function SpotifyPlatePlayer({
 
   return (
     <div
-      className="w-full rounded-xs border border-hairline-strong bg-paper-edge shadow-[0_4px_24px_rgba(26,24,21,0.06)] px-4 sm:px-6 py-4 flex flex-col gap-3 select-none transition-all duration-300"
+      className="w-full rounded-xs border border-hairline-strong bg-paper shadow-[0_4px_24px_rgba(26,24,21,0.06)] px-4 sm:px-6 py-4 flex flex-col gap-3 select-none transition-all duration-300"
       role="region"
       aria-label="Spotify Archival Audio Player"
     >
@@ -288,12 +288,12 @@ export function SpotifyPlatePlayer({
               )}
             </div>
 
-            <span className="font-sans text-[0.75rem] text-muted truncate">
+            <span className="font-sans text-[0.75rem] text-body truncate">
               {currentTrack.artist}
             </span>
 
-            <div className="flex items-center gap-1.5 text-[0.625rem] font-mono text-muted/80 mt-0.5">
-              <span className="text-terracotta font-semibold">
+            <div className="flex items-center gap-1.5 text-[0.625rem] font-mono text-body mt-0.5">
+              <span className="text-terracotta font-bold">
                 PLATE 0{activeIdx + 1}
               </span>
               <span>·</span>
@@ -418,8 +418,8 @@ export function SpotifyPlatePlayer({
           </div>
 
           {/* Scrubber Progress Bar Row */}
-          <div className="flex items-center gap-2.5 w-full font-mono text-[0.6875rem] text-muted">
-            <span className="w-9 text-right tabular-nums">{formatTime(currentTime)}</span>
+          <div className="flex items-center gap-2.5 w-full font-mono text-[0.6875rem] text-body">
+            <span className="w-9 text-right tabular-nums text-body">{formatTime(currentTime)}</span>
             <div className="relative flex-1 flex items-center group cursor-pointer h-5">
               {/* Background Track */}
               <div className="w-full h-1 bg-hairline-strong rounded-full overflow-hidden">
@@ -440,7 +440,7 @@ export function SpotifyPlatePlayer({
                 aria-label="Seek audio position"
               />
             </div>
-            <span className="w-9 text-left tabular-nums">{formatTime(duration)}</span>
+            <span className="w-9 text-left tabular-nums text-body">{formatTime(duration)}</span>
           </div>
         </div>
 

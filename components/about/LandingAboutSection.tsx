@@ -298,12 +298,12 @@ export function LandingAboutSection() {
             <Reveal delay={0.12}>
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-black/30 bg-terracotta text-black font-extrabold font-mono text-[0.8125rem] tracking-wider uppercase hover:bg-terracotta/90 transition-all duration-200 whitespace-nowrap self-start md:self-end group shadow-sm focus-visible:outline-black focus-visible:outline-2"
-                aria-label="Read full biography and dossier on the about page"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-hairline-strong bg-ink text-on-ink font-semibold font-mono text-[0.8125rem] tracking-wider uppercase hover:bg-terracotta transition-all duration-200 whitespace-nowrap self-start md:self-end group shadow-sm focus-visible:outline-ink focus-visible:outline-2"
+                aria-label="Explore full dossier on Nishant Unavane"
               >
-                <span className="text-black font-extrabold">EXPLORE FULL DOSSIER</span>
+                <span>EXPLORE FULL DOSSIER</span>
                 <span
-                  className="text-black font-extrabold transition-transform group-hover:translate-x-1"
+                  className="transition-transform group-hover:translate-x-1"
                   aria-hidden="true"
                 >
                   →
@@ -474,25 +474,23 @@ export function LandingAboutSection() {
                   type="button"
                   onClick={() => carouselRef.current?.prev()}
                   className="inline-flex items-center justify-center gap-1 min-w-[68px] min-h-[36px] px-3.5 py-1.5 rounded-full border border-hairline-strong bg-paper text-ink hover:border-terracotta hover:text-terracotta hover:bg-paper-soft transition-colors cursor-pointer focus-visible:outline-ink focus-visible:outline-2 text-[0.6875rem] active:scale-95"
-                  aria-label="Previous plate"
                 >
-                  <span>←</span>
+                  <span aria-hidden="true">←</span>
                   <span>PREV</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => carouselRef.current?.next()}
                   className="inline-flex items-center justify-center gap-1 min-w-[68px] min-h-[36px] px-3.5 py-1.5 rounded-full border border-hairline-strong bg-paper text-ink hover:border-terracotta hover:text-terracotta hover:bg-paper-soft transition-colors cursor-pointer focus-visible:outline-ink focus-visible:outline-2 text-[0.6875rem] active:scale-95"
-                  aria-label="Next plate"
                 >
                   <span>NEXT</span>
-                  <span>→</span>
+                  <span aria-hidden="true">→</span>
                 </button>
-                <span className="text-muted/70 pl-2 hidden sm:inline">
+                <span className="text-muted pl-2 hidden sm:inline">
                   SCROLL / WHEEL CHANGES SONG · CLICK FOCUSED IMAGE TO SPIN & FLIP
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-muted/60 text-[0.625rem]">
+              <div className="flex items-center gap-2 text-muted text-[0.625rem]">
                 <span
                   className={`inline-block w-1.5 h-1.5 rounded-full ${
                     isPlaying ? "bg-terracotta animate-ping" : "bg-muted animate-pulse"

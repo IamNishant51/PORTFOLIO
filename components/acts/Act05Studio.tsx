@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { profile } from "@/content/profile";
 import { methodSteps } from "@/content/method";
 import { timeline } from "@/content/timeline";
-import Grainient from "@/components/ui/Grainient";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+const Grainient = dynamic(() => import("@/components/ui/Grainient"), {
+  ssr: false,
+});
 
 export function Act05Studio() {
   const sectionRef = useRef<HTMLElement>(null);

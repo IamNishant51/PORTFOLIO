@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "About Me — Nishant Unavane · Portfolio 2027",
   description:
     "Biography, verified facts, engineering principles, and curated iconographic plates of Nishant Unavane, Full-Stack Developer & Agentic AI Systems Engineer.",
+  alternates: {
+    canonical: "https://nishantunavane.qzz.io/about",
+  },
   openGraph: {
     title: "About Nishant Unavane — Portfolio 2027",
     description:

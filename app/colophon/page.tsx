@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Colophon — Nishant Unavane Portfolio 2027",
   description:
     "Typography, palette tokens, architecture, and craftsmanship principles behind the 2027 edition of Nishant Unavane's portfolio.",
+  alternates: {
+    canonical: "https://nishantunavane.qzz.io/colophon",
+  },
 };
 
 export default function ColophonPage() {

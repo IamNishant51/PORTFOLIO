@@ -2,11 +2,15 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { capabilities } from "@/content/capabilities";
 import { ActHeader } from "@/components/primitives/ActHeader";
 import { PlateFrame } from "@/components/primitives/PlateFrame";
-import Grainient from "@/components/ui/Grainient";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+const Grainient = dynamic(() => import("@/components/ui/Grainient"), {
+  ssr: false,
+});
 
 export function Act02Colonnade() {
   const sectionRef = useRef<HTMLElement>(null);

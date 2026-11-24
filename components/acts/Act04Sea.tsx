@@ -3,10 +3,14 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { experiments } from "@/content/experiments";
 import { ActHeader } from "@/components/primitives/ActHeader";
-import Grainient from "@/components/ui/Grainient";
 import { gsap } from "@/lib/gsap";
+
+const Grainient = dynamic(() => import("@/components/ui/Grainient"), {
+  ssr: false,
+});
 
 export function Act04Sea() {
   const containerRef = useRef<HTMLElement>(null);
